@@ -15,7 +15,7 @@ module.exports = {
       (err, user, info) => {
         message = info.message;
         if (!user) {
-          res.status(401).send({message, user });
+          res.status(401).send({ message, user });
         } else {
           // delete unnecessary fields
           delete user.password;

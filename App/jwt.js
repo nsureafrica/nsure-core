@@ -1,9 +1,13 @@
 const fs = require("fs");
+const path = require("path");
 const jwt = require("jsonwebtoken");
 // const privateKey = fs.readFileSync("./private.key", "utf8");
 // const publicKey = fs.readFileSync("./public.key", "utf8");
-const privateKey = fs.readFileSync("./private.key","utf8");
-const publicKey = fa.readFileSync("./public.key", "utf8");
+const privateKey = fs.readFileSync(
+  path.join(__dirname, "./private.key"),
+  "utf8"
+);
+const publicKey = fs.readFileSync(path.join(__dirname, "./public.key"), "utf8");
 const options = {
   // issuer: options.issuer,
   // subject: options.subject,
