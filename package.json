@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": " nodemon -r dotenv/config ./App/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gcloud app deploy",
+    "browse": "gcloud app browse"
   },
   "repository": {
     "type": "git",
@@ -33,7 +35,6 @@
     "express-session": "^1.16.2",
     "fs": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
-    "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
     "nodemon": "^1.19.1",
     "passport": "^0.4.0",
