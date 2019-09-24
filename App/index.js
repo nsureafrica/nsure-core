@@ -2,9 +2,12 @@ const express = require("express");
 require("./passport");
 const router = require("./Router/router");
 const port = process.env.PORT;
+const path = require('path');
 const database = require("./DB/database");
 const app = express();
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '../build')));
+
 router(app);
 
 app.listen(port, () => {
@@ -15,3 +18,7 @@ database.testConnection();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 
 sequelizeConnection.sync();
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
