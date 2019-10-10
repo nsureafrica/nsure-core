@@ -17,7 +17,7 @@ app.listen(port, () => {
 database.testConnection();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 
-sequelizeConnection.sync();
+// sequelizeConnection.sync();
 
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
