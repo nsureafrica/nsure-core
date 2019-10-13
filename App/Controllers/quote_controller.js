@@ -17,10 +17,7 @@ module.exports = {
                 req.body.vehicleEstimatedValue) /
               100)
           : req.body.coverType === "thirdParty" &&
-            (quoteAmount =
-              (MotorRates.heavyMachinery.thirdParty *
-                req.body.vehicleEstimatedValue) /
-              100);
+            (quoteAmount = MotorRates.heavyMachinery.thirdParty);
         break;
       case "tankers":
         req.body.coverType === "comprehensive"
@@ -29,9 +26,7 @@ module.exports = {
                 req.body.vehicleEstimatedValue) /
               100)
           : req.body.coverType === "thirdParty" &&
-            (quoteAmount =
-              (MotorRates.tankers.thirdParty * req.body.vehicleEstimatedValue) /
-              100);
+            (quoteAmount = MotorRates.tankers.thirdParty);
         break;
       case "PMO":
         req.body.coverType === "comprehensive"
@@ -39,9 +34,7 @@ module.exports = {
               (MotorRates.PMO.comprehensive * req.body.vehicleEstimatedValue) /
               100)
           : req.body.coverType === "thirdParty" &&
-            (quoteAmount =
-              (MotorRates.PMO.thirdParty * req.body.vehicleEstimatedValue) /
-              100);
+            (quoteAmount = MotorRates.PMO.thirdParty);
         break;
       case "specialTypes":
         req.body.coverType === "comprehensive"
@@ -50,10 +43,7 @@ module.exports = {
                 req.body.vehicleEstimatedValue) /
               100)
           : req.body.coverType === "thirdParty" &&
-            (quoteAmount =
-              (MotorRates.specialTypes.thirdParty *
-                req.body.vehicleEstimatedValue) /
-              100);
+            (quoteAmount = MotorRates.specialTypes.thirdParty);
         break;
       case "drivingSchools":
         req.body.coverType === "comprehensive"
@@ -62,10 +52,7 @@ module.exports = {
                 req.body.vehicleEstimatedValue) /
               100)
           : req.body.coverType === "thirdParty" &&
-            (quoteAmount =
-              (MotorRates.drivingSchools.thirdParty *
-                req.body.vehicleEstimatedValue) /
-              100);
+            (quoteAmount = MotorRates.drivingSchools.thirdParty);
         break;
       case "PSV":
         req.body.coverType === "comprehensive"
@@ -73,9 +60,7 @@ module.exports = {
               (MotorRates.PSV.comprehensive * req.body.vehicleEstimatedValue) /
               100)
           : req.body.coverType === "thirdParty" &&
-            (quoteAmount =
-              (MotorRates.PSV.thirdParty * req.body.vehicleEstimatedValue) /
-              100);
+            (quoteAmount = MotorRates.PSV.thirdParty);
         break;
     }
     req.body.vehicleType === "commercial"
@@ -85,10 +70,7 @@ module.exports = {
               req.body.vehicleEstimatedValue) /
             100)
         : req.body.coverType === "thirdParty" &&
-          (quoteAmount =
-            (MotorRates.motorCommercial.thirdParty *
-              req.body.vehicleEstimatedValue) /
-            100)
+          (quoteAmount = MotorRates.motorCommercial.thirdParty)
       : null;
     res.send({ quoteAmount: quoteAmount });
   }
