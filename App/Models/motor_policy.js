@@ -11,20 +11,21 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
     allowNull: false,
     defaultValue: uuidv1()
   },
+  motorcycle:{
+    type: Sequelize.BOOLEAN
+  },
   vehicleType: {
-    type: Sequelize.ENUM("Private", "Commercial"),
-    allowNull: false
+    type: Sequelize.ENUM("private", "commercial"),
   },
   coverType: {
-    type: Sequelize.ENUM("Comprehensive", "Third Party"),
-    allowNull: false
+    type: Sequelize.ENUM("comprehensive", "thirdParty"),
   },
   vehicleEstimatedValue: {
     type: Sequelize.FLOAT,
     allowNull: false
   },
   courtesyCarOption: {
-    type: Sequelize.ENUM(6, 10)
+    type: Sequelize.ENUM("6", "10")
   },
   politicalViolence: {
     type: Sequelize.BOOLEAN

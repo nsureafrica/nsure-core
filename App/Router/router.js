@@ -1,5 +1,6 @@
 const UserController = require("../Controllers/user_controller");
 const PolicyController = require("../Controllers/policy_controller");
+const QuoteController = require("../Controllers/quote_controller");
 
 module.exports = app => {
   app.route("/").get((req, res) => {
@@ -8,10 +9,8 @@ module.exports = app => {
   app.route("/signin").post(UserController.signin);
   app.route("/signup").post(UserController.signup);
 
-
   // All policies
   app.route("/policies/:userId").get(PolicyController.getAllUserPolicies);
-
 
   // Motor Policies
   app
@@ -22,6 +21,8 @@ module.exports = app => {
     .get(PolicyController.getMotorPolicy); // requires auth
   app.route("/policies/motor/policy").post(PolicyController.createMotorPolicy); // requires auth
 
+  // motor quote
+  app.route("/quotes/motor/").post(QuoteController.getMotorQuote);
 
   // Medical Policies
   app
@@ -34,7 +35,6 @@ module.exports = app => {
     .route("/policies/medical/policy")
     .post(PolicyController.createMedicalPolicy);
 
-    
   // Education Policies
   app
     .route("/policies/education/:userId")
