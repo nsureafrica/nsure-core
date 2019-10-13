@@ -1,5 +1,5 @@
 {
-  "name": "buslly_core",
+  "name": "nsure_core",
   "version": "1.0.0",
   "description": "Server side application + API",
   "main": "index.js",
@@ -9,20 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AntonyNyarangi/nsure-core"
+    "url": "https://github.com/nsureafrica/nsure-core.git"
   },
   "keywords": [
-    "Transport",
-    "Bus",
-    "Booking",
-    "Ticket"
+    "insurance",
+    "policy"
   ],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/buslly/buslly_core/issues"
+    "url": "https://github.com/nsureafrica/nsure-core/issues"
   },
-  "homepage": "https://github.com/buslly/buslly_core#readme",
+  "homepage": "https://github.com/nsureafrica/nsure-core#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
     "bcrypt-nodejs": "0.0.3",
