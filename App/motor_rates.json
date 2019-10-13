@@ -9,33 +9,33 @@
   },
   "motorCommercial": {
     "comprehensive": 6,
-    "thirdParty": 0,
+    "thirdParty": 7574,
     "ownGoods": 4.75,
     "generalCartage": 5.25,
     "passengers": 6
   },
   "heavyMachinery": {
     "comprehensive": 5.25,
-    "thirdParty": 0
+    "thirdParty": 7574
   },
   "tankers": {
     "comprehensive": 8,
-    "thirdParty": 0
+    "thirdParty": 7574
   },
   "PMO": {
     "comprehensive": 4,
-    "thirdParty": 0
+    "thirdParty": 7574
   },
   "specialTypes": {
     "comprehensive": 8,
-    "thirdParty": 0
+    "thirdParty": 7574
   },
   "PSV": {
     "comprehensive": 8,
-    "thirdParty": 0
+    "thirdParty": 7574
   },
   "drivingSchools": {
     "comprehensive": 9,
-    "thirdParty": 0
+    "thirdParty": 7574
   }
 }
