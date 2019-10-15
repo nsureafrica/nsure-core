@@ -4,7 +4,10 @@ const router = require("./Router/router");
 const port = process.env.PORT;
 const path = require('path');
 const database = require("./DB/database");
+var cors = require('cors')
+
 const app = express();
+app.use(cors())
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../build')));
 

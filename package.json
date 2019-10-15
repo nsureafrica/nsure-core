@@ -1,33 +1,30 @@
 {
-  "name": "buslly_core",
+  "name": "nsure_core",
   "version": "1.0.0",
   "description": "Server side application + API",
   "main": "index.js",
   "scripts": {
-    "start": " nodemon -r dotenv/config ./App/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "gcloud app deploy",
-    "browse": "gcloud app browse"
+    "start": "nodemon -r dotenv/config ./App/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AntonyNyarangi/nsure-core"
+    "url": "https://github.com/nsureafrica/nsure-core.git"
   },
   "keywords": [
-    "Transport",
-    "Bus",
-    "Booking",
-    "Ticket"
+    "insurance",
+    "policy"
   ],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/buslly/buslly_core/issues"
+    "url": "https://github.com/nsureafrica/nsure-core/issues"
   },
-  "homepage": "https://github.com/buslly/buslly_core#readme",
+  "homepage": "https://github.com/nsureafrica/nsure-core#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
     "bcrypt-nodejs": "0.0.3",
+    "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "env-cmd": "^9.0.3",
     "express": "^4.17.1",
@@ -35,6 +32,7 @@
     "express-session": "^1.16.2",
     "fs": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
     "nodemon": "^1.19.1",
     "passport": "^0.4.0",
