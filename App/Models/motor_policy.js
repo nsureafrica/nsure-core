@@ -5,20 +5,14 @@ const MotorCategory = require("./motor_category");
 const uuidv1 = require("uuid/v1");
 
 const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
-  id: {
-    primaryKey: true,
-    type: Sequelize.UUID,
-    allowNull: false,
-    defaultValue: uuidv1()
-  },
-  motorcycle:{
+  motorcycle: {
     type: Sequelize.BOOLEAN
   },
   vehicleType: {
-    type: Sequelize.ENUM("private", "commercial"),
+    type: Sequelize.ENUM("private", "commercial")
   },
   coverType: {
-    type: Sequelize.ENUM("comprehensive", "thirdParty"),
+    type: Sequelize.ENUM("comprehensive", "thirdParty")
   },
   vehicleEstimatedValue: {
     type: Sequelize.FLOAT,
