@@ -4,7 +4,7 @@
   "description": "Server side application + API",
   "main": "index.js",
   "scripts": {
-    "start": " nodemon -r dotenv/config ./App/index.js",
+    "start": "nodemon -r dotenv/config ./App/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
