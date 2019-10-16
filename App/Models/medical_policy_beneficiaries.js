@@ -7,12 +7,6 @@ const uuidv1 = require("uuid/v1");
 const MedicalBeneficiaries = sequelizeConnection.define(
   "MedicalBeneficiaries",
   {
-    id: {
-      primaryKey: true,
-      type: Sequelize.UUID,
-      allowNull: false,
-      defaultValue: uuidv1()
-    },
     fullNameOfBeneficiary: {
       type: Sequelize.STRING(50),
       allowNull: false

@@ -4,12 +4,6 @@ const UserCategory = require("./UserCategory");
 const uuidv1 = require("uuid/v1");
 
 const User = sequelizeConnection.define("User", {
-  id: {
-    primaryKey: true,
-    type: Sequelize.UUID,
-    allowNull: false,
-    defaultValue: uuidv1()
-  },
   firstName: {
     type: Sequelize.STRING(30),
     allowNull: false
