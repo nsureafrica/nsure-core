@@ -3,8 +3,11 @@ require("./passport");
 const router = require("./Router/router");
 const port = process.env.PORT;
 const database = require("./DB/database");
+const cors = require("cors");
+
 const app = express();
 app.use(express.json());
+app.use(cors());
 router(app);
 
 app.listen(port, () => {

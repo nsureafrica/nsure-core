@@ -22,7 +22,7 @@ module.exports = {
           delete user.createdAt;
           delete user.updatedAt;
           token = jwt.sign(user);
-          res.send({ message, token });
+          res.status(200).send({ message, token });
         }
       }
     )(req, res);
@@ -32,28 +32,40 @@ module.exports = {
     UserModel.findOne({ where: { email: req.body.email } })
       .then(user => {
         if (user) {
-          res.send("A User with that email exists");
+          res
+            .status(409)
+            .send({
+              message: "Failed",
+              error: "A user with that email exists"
+            });
+        } else {
+          // hash user password
+          hashedPassword = bCrypt.hashSync(
+            req.body.password,
+            bCrypt.genSaltSync(8),
+            null
+          );
+          // create user
+          UserModel.create({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            phoneNumber: req.body.phoneNumber,
+            email: req.body.email,
+            password: hashedPassword
+          })
+            .then(user => {
+              delete user.password;
+              delete user.createdAt;
+              delete user.updatedAt;
+              res.status(200).send({ message: "Success", user: user });
+            })
+            .catch(error => {
+              res.status(500).send({ message: "Failed", error: error });
+            });
         }
-        // hash user password
-        hashedPassword = bCrypt.hashSync(
-          req.body.password,
-          bCrypt.genSaltSync(8),
-          null
-        );
-        UserModel.create({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          phoneNumber: req.body.phoneNumber,
-          email: req.body.email,
-          password: hashedPassword
-        });
       })
-      .then(user => {
-        res.send(user);
+      .catch(error => {
+        res.status(500).send(error);
       });
-    // create user if they dont
   }
-  // signup: passport.authenticate('local-signup', {
-
-  // })
 };

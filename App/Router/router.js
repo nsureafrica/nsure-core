@@ -4,7 +4,7 @@ const QuoteController = require("../Controllers/quote_controller");
 
 module.exports = app => {
   app.route("/").get((req, res) => {
-    res.send("Welcome to bussly");
+    res.send("Welcome to Nsure");
   });
   app.route("/signin").post(UserController.signin);
   app.route("/signup").post(UserController.signup);
