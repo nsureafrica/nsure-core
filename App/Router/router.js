@@ -23,6 +23,12 @@ module.exports = app => {
 
   // motor quote
   app.route("/quotes/motor/").post(QuoteController.getMotorQuote);
+  // medical quote
+  app.route("/quotes/medical").post(QuoteController.getMedicalQuote);
+  // education quote
+  app.route("quotes/education").post(QuoteController.getEducationQuote);
+  // last respect quote
+  app.route("quotes/last-respect").post(QuoteController.getLastRespectQuote);
 
   // Medical Policies
   app
