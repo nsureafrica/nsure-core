@@ -1,77 +1,138 @@
 const MotorRates = require("../motor_rates.json");
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    type: "OAuth2",
+    user: process.env.user,
+    clientId: process.env.clientId,
+    clientSecret: process.env.clientSecret,
+    refreshToken: process.env.refreshToken,
+    accessToken: process.env.accessToken,
+    expires: Number.parseInt(process.env.expires, 10)
+  }
+});
+
 module.exports = {
   getMotorQuote: (req, res) => {
     console.log(req.body);
-    var quoteAmount = 0;
-    switch (req.body.category) {
-      case "motorcycle":
-        req.body.coverType === "comprehensive"
-          ? (quoteAmount = MotorRates.motorcycles.comprehensive)
-          : req.body.coverType === "thirdParty" &&
-            (quoteAmount = MotorRates.motorcycles.thirdParty);
-        break;
-      case "heavyMachinery":
-        req.body.coverType === "comprehensive"
-          ? (quoteAmount =
-              (MotorRates.heavyMachinery.comprehensive *
-                req.body.vehicleEstimatedValue) /
-              100)
-          : req.body.coverType === "thirdParty" &&
-            (quoteAmount = MotorRates.heavyMachinery.thirdParty);
-        break;
-      case "tankers":
-        req.body.coverType === "comprehensive"
-          ? (quoteAmount =
-              (MotorRates.tankers.comprehensive *
-                req.body.vehicleEstimatedValue) /
-              100)
-          : req.body.coverType === "thirdParty" &&
-            (quoteAmount = MotorRates.tankers.thirdParty);
-        break;
-      case "PMO":
-        req.body.coverType === "comprehensive"
-          ? (quoteAmount =
-              (MotorRates.PMO.comprehensive * req.body.vehicleEstimatedValue) /
-              100)
-          : req.body.coverType === "thirdParty" &&
-            (quoteAmount = MotorRates.PMO.thirdParty);
-        break;
-      case "specialTypes":
-        req.body.coverType === "comprehensive"
-          ? (quoteAmount =
-              (MotorRates.specialTypes.comprehensive *
-                req.body.vehicleEstimatedValue) /
-              100)
-          : req.body.coverType === "thirdParty" &&
-            (quoteAmount = MotorRates.specialTypes.thirdParty);
-        break;
-      case "drivingSchools":
-        req.body.coverType === "comprehensive"
-          ? (quoteAmount =
-              (MotorRates.drivingSchools.comprehensive *
-                req.body.vehicleEstimatedValue) /
-              100)
-          : req.body.coverType === "thirdParty" &&
-            (quoteAmount = MotorRates.drivingSchools.thirdParty);
-        break;
-      case "PSV":
-        req.body.coverType === "comprehensive"
-          ? (quoteAmount =
-              (MotorRates.PSV.comprehensive * req.body.vehicleEstimatedValue) /
-              100)
-          : req.body.coverType === "thirdParty" &&
-            (quoteAmount = MotorRates.PSV.thirdParty);
-        break;
+    var quote = [];
+    // console.log(MotorRates);
+    for (var i = 0; i < MotorRates.rates.length; i++) {
+      const rates = MotorRates.rates[i];
+      var quoteObj = {
+        companyName: MotorRates.rates[i].companyName,
+        amount: 0
+      };
+      // console.log(MotorRates.rates[i].companyName);
+      switch (req.body.coverType) {
+        case "comprehensive":
+          switch (req.body.category) {
+            case "motorcycle":
+              quoteObj.amount = rates.motorcycles.comprehensive;
+              break;
+            case "private":
+              quoteObj.amount =
+                (rates.motorPrivate.comprehensive *
+                  req.body.vehicleEstimatedValue) /
+                100;
+              break;
+            case "commercial":
+              quoteObj.amount =
+                (rates.motorCommercial.comprehensive *
+                  req.body.vehicleEstimatedValue) /
+                100;
+              break;
+            case "heavyMachinery":
+              quoteObj.amount =
+                (rates.heavyMachinery.comprehensive *
+                  req.body.vehicleEstimatedValue) /
+                100;
+              break;
+            case "tankers":
+              quoteObj.amount =
+                (rates.tankers.comprehensive * req.body.vehicleEstimatedValue) /
+                100;
+              break;
+            case "PMO":
+              quoteObj.amount =
+                (rates.PMO.comprehensive * req.body.vehicleEstimatedValue) /
+                100;
+              break;
+            case "specialTypes":
+              quoteObj.amount =
+                (rates.specialTypes.comprehensive *
+                  req.body.vehicleEstimatedValue) /
+                100;
+              break;
+            case "PSV":
+              quoteObj.amount =
+                (rates.PSV.comprehensive * req.body.vehicleEstimatedValue) /
+                100;
+              break;
+            case "drivingSchools":
+              quoteObj.amount =
+                (rates.drivingSchools.comprehensive *
+                  req.body.vehicleEstimatedValue) /
+                100;
+              break;
+          }
+          break;
+        case "thirdParty":
+          switch (req.body.category) {
+            case "motorcycle":
+              quoteObj.amount = rates.motorcycles.thirdParty;
+              break;
+            case "private":
+              quoteObj.amount = rates.motorPrivate.thirdParty;
+              break;
+            case "commercial":
+              quoteObj.amount = rates.motorCommercial.thirdParty;
+              break;
+            case "heavyMachinery":
+              quoteObj.amount = rates.heavyMachinery.thirdParty;
+              break;
+            case "tankers":
+              quoteObj.amount = rates.tankers.thirdParty;
+              break;
+            case "PMO":
+              quoteObj.amount = rates.PMO.thirdParty;
+              break;
+            case "specialTypes":
+              quoteObj.amount = rates.specialTypes.thirdParty;
+              break;
+            case "PSV":
+              quoteObj.amount = rates.PSV.thirdParty;
+              break;
+            case "drivingSchools":
+              quoteObj.amount = rates.drivingSchools.thirdParty;
+              break;
+          }
+          break;
+      }
+      quote.push(quoteObj);
     }
-    req.body.vehicleType === "commercial"
-      ? req.body.coverType === "comprehensive"
-        ? (quoteAmount =
-            (MotorRates.motorCommercial.comprehensive *
-              req.body.vehicleEstimatedValue) /
-            100)
-        : req.body.coverType === "thirdParty" &&
-          (quoteAmount = MotorRates.motorCommercial.thirdParty)
-      : null;
-    res.send({ quoteAmount: quoteAmount });
+    // send email to user if logged in
+    var mailOptions = {
+      from: "technical@nsureafrica.com",
+      to: "allanbmageto@gmail.com,nyaranam@gmail.com",
+      // to: `${user.email}, nyaranam@gmail.com`,
+      subject: "Motor Insurance Quote",
+      html: `<b>Dear Customer,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
+        req.body
+      )}<p><b>Quote</b></p>${JSON.stringify(quote)}`
+    };
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const notice = `Email sent: ` + info.response;
+        console.log(notice);
+      }
+    });
+    res.send(quote);
+  },
+  getMedicalQuote: (req, res) => {
+    console.log(req.body);
   }
 };
