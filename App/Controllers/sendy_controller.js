@@ -68,10 +68,13 @@ module.exports = {
         "request_token_id": "request_token_id"
       })
       .then(function(response) {
-        console.log(response);
+        console.log(response.data);
+        res.send(response.data)
+
       })
       .catch(function(error) {
         console.log(error);
+        res.send(error)
       });
   },
 
@@ -100,9 +103,12 @@ module.exports = {
       })
       .then(response => {
         console.log(response);
+        res.send(response.data)
+
       })
       .catch(error => {
         console.log(error);
+        res.send(error)
       });
   },
 
@@ -120,9 +126,10 @@ module.exports = {
       })
       .then(response => {
         console.log(response);
+        res.send(response)
       })
       .catch(error => {
-        console.log(error);
+        res.send(error)
       });
   },
 
@@ -140,9 +147,12 @@ module.exports = {
       })
       .then(response => {
         console.log(response);
+        res.send(response.data)
+
       })
       .catch(error => {
         console.log(error);
+        res.send(error)
       });
   }
 };
