@@ -1,7 +1,7 @@
 const UserController = require("../Controllers/user_controller");
 const PolicyController = require("../Controllers/policy_controller");
 const QuoteController = require("../Controllers/quote_controller");
-
+const SendyController = require("../Controllers/sendy_controller");
 module.exports = app => {
   app.route("/").get((req, res) => {
     res.send("Welcome to Nsure");
@@ -51,4 +51,13 @@ module.exports = app => {
   app
     .route("/policies/education/policy")
     .post(PolicyController.createEducationPolicy);
+
+  // Sendy
+  app.route("/sendy/requestDelivery").post(SendyController.requestDelivery);
+
+  app.route("/sendy/completeDelivery").post(SendyController.completeDelivery);
+
+  app.route("/sendy/trackDelivery").post(SendyController.trackDelivery);
+
+  app.route("/sendy/cancelDelivery").post(SendyController.cancelDelivery);
 };

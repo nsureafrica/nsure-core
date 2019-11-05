@@ -1,0 +1,19 @@
+{
+  "main.css": "/static/css/main.358dcb13.chunk.css",
+  "main.js": "/static/js/main.b426df64.chunk.js",
+  "main.js.map": "/static/js/main.b426df64.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+  "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+  "static/js/2.bf84e453.chunk.js": "/static/js/2.bf84e453.chunk.js",
+  "static/js/2.bf84e453.chunk.js.map": "/static/js/2.bf84e453.chunk.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.ec83387b9ecde4089f7cee2734f0d126.js": "/precache-manifest.ec83387b9ecde4089f7cee2734f0d126.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/main.358dcb13.chunk.css.map": "/static/css/main.358dcb13.chunk.css.map",
+  "static/media/argon-react-white.png": "/static/media/argon-react-white.275a2629.png",
+  "static/media/all.min.css": "/static/media/fa-solid-900.815694de.woff",
+  "static/media/nucleo.css": "/static/media/nucleo-icons.f82ec6ba.ttf",
+  "static/media/profile-cover.jpg": "/static/media/profile-cover.e2582654.jpg",
+  "static/media/team-1-800x800.jpg": "/static/media/team-1-800x800.53033970.jpg",
+  "static/media/team-4-800x800.jpg": "/static/media/team-4-800x800.23007132.jpg"
+}
