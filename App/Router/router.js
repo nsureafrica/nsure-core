@@ -3,10 +3,39 @@ const PolicyController = require("../Controllers/policy_controller");
 const QuoteController = require("../Controllers/quote_controller");
 const SendyController = require("../Controllers/sendy_controller");
 module.exports = app => {
+  /**
+   * @swagger
+   * /:
+   *  get:
+   *    description: Use to request all customers
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   */
   app.route("/").get((req, res) => {
     res.send("Welcome to Nsure");
   });
+
+  /**
+   * @swagger
+   * /signin:
+   *  get:
+   *    description: Use to request all customers
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   */
   app.route("/signin").post(UserController.signin);
+
+  /**
+   * @swagger
+   * /signin:
+   *  post:
+   *    description: Use to request all customers
+   *    responses:
+   *      '200':
+   *        description: A successful response
+   */
   app.route("/signup").post(UserController.signup);
 
   // All policies
@@ -24,11 +53,11 @@ module.exports = app => {
   // motor quote
   app.route("/quotes/motor/").post(QuoteController.getMotorQuote);
   // medical quote
-  app.route("/quotes/medical").post(QuoteController.getMedicalQuote);
+  // app.route("/quotes/medical").post(QuoteController.getMedicalQuote);
   // education quote
-  app.route("quotes/education").post(QuoteController.getEducationQuote);
+  // app.route("quotes/education").post(QuoteController.getEducationQuote);
   // last respect quote
-  app.route("quotes/last-respect").post(QuoteController.getLastRespectQuote);
+  // app.route("quotes/last-respect").post(QuoteController.getLastRespectQuote);
 
   // Medical Policies
   app
