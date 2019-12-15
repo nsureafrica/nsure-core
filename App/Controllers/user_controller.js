@@ -81,9 +81,7 @@ module.exports = {
               delete user.createdAt;
               delete user.updatedAt;
               console.log(notice);
-              res
-                .status(200)
-                .send({ message: "Success", user: user});
+              res.status(200).send({ message: "Success", user: user });
             })
             .catch(error => {
               res.status(500).send({ message: "Failed1", error: error });

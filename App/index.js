@@ -7,8 +7,10 @@ const path = require('path');
 const database = require("./DB/database");
 const cors = require("cors");
 
+
 const app = express();
-app.use(morgan())
+
+app.use(morgan('combined'))
 app.use(cors())
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../build')));
@@ -46,7 +48,9 @@ app.listen(port, () => {
 database.testConnection();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 
-sequelizeConnection.sync();
+
+//remember to disable alter
+// sequelizeConnection.sync({alter: true});
 
 
 app.get('/', function(req, res) {

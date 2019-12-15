@@ -3,6 +3,7 @@ MotorCategory = require("../Models/motor_category");
 MedicalPolicy = require("../Models/medical_policy");
 MedicalBeneficiaries = require("../Models/medical_policy_beneficiaries");
 EducationPolicy = require("../Models/education_policy");
+PolicyType = require("../Models/policy_type")
 module.exports = {
   getAllUserPolicies: (req, res) => {},
   getUserMotorPolicies: (req, res) => {
@@ -109,5 +110,18 @@ module.exports = {
       .catch(err => {
         res.send(err);
       });
+  },
+
+  //this is for internal use to create policies and their description and store them in the db
+  createPolicy: (req, res) => {
+    PolicyType.create({
+      policyTypeName: req.body.policyTypeName,
+      policyTypeDesc: req.body.policyTypeDesc
+    }).then(response => {
+      res.send(response)
+    }).catch(err => {
+      console.log(err)
+      res.send(err)
+    })
   }
 };

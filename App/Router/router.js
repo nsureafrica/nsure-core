@@ -2,6 +2,30 @@ const UserController = require("../Controllers/user_controller");
 const PolicyController = require("../Controllers/policy_controller");
 const QuoteController = require("../Controllers/quote_controller");
 const SendyController = require("../Controllers/sendy_controller");
+const ClaimController = require("../Controllers/claim_controller");
+
+//move all storage functions to different files
+const path = require("path");
+
+const multer = require("multer");
+
+const claimDocsStorage = multer.diskStorage({
+  destination: function(req, res, cb) {
+    cb(null, "./documentsStorage/claimsDocuments");
+  },
+  filename: function(req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now()+ path.extname(file.originalname)
+    );
+  }
+});
+
+var uploadClaimDocs = multer({
+  storage: claimDocsStorage,
+  limits: { fileSize: 1000000 }
+});
+
 module.exports = app => {
   /**
    * @swagger
@@ -89,4 +113,20 @@ module.exports = app => {
   app.route("/sendy/trackDelivery").post(SendyController.trackDelivery);
 
   app.route("/sendy/cancelDelivery").post(SendyController.cancelDelivery);
+
+  //policy types
+  app.post("/createPolicyType", PolicyController.createPolicy);
+
+  // Claims
+  app.post(
+    "/createClaim",
+    uploadClaimDocs.fields([
+      { name: "claimPhotos", maxCount: 5 },
+      { name: "claimDocs", maxCount: 5 }
+    ]),
+    ClaimController.uploadClaim
+  );
+
+  app.get("/getClaim",ClaimController.getClaim)
+  app.get("/getUserClaims",ClaimController.getUserClaims)
 };

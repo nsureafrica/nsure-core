@@ -6,10 +6,18 @@ const Claim = sequelizeConnection.define("Claim", {
     descriptionOfClaim: {
         type: Sequelize.STRING(),
         allowNull: false
+    },
+    claimForms:{
+        type:Sequelize.STRING(),
+        allowNull: true
+    },
+    claimPhotos:{
+        type:Sequelize.STRING(),
+        allowNull: true
     }
 })
 
 Claim.belongsTo(User);
-Claim.hasMany(PolicyType)
+Claim.belongsTo(PolicyType)
 
 module.exports = Claim
