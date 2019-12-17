@@ -1,5 +1,6 @@
 const MotorRates = require("../motor_rates.json");
 const nodemailer = require("nodemailer");
+const endpointAuthenticator = require("../endpointAuthenticator");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -15,6 +16,8 @@ const transporter = nodemailer.createTransport({
 
 module.exports = {
   getMotorQuote: (req, res) => {
+    var userID = endpointAuthenticator.authenticateUser(req, res);
+    console.log(userID);
     console.log(req.body);
     var quote = [];
     // console.log(MotorRates);
