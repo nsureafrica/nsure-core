@@ -4,6 +4,7 @@ const User = require("./User");
 const uuidv1 = require("uuid/v1");
 
 const EducationPolicy = sequelizeConnection.define("EducationPolicy", {
+  
   fullNameOfChild: {
     type: Sequelize.STRING(50),
     allowNull: false

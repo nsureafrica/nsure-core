@@ -50,7 +50,7 @@ const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 
 
 //remember to disable alter
-// sequelizeConnection.sync({alter: true});
+sequelizeConnection.sync({alter: true});
 
 
 app.get('/', function(req, res) {

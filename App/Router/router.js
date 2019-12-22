@@ -4,6 +4,9 @@ const QuoteController = require("../Controllers/quote_controller");
 const SendyController = require("../Controllers/sendy_controller");
 const ClaimController = require("../Controllers/claim_controller");
 
+//policy controllers ; well the ones i moved
+const SalamahTransitionController = require("../Controllers/PolicyControllers/salamah_policy_controller");
+const TravelPolicyController = require("../Controllers/PolicyControllers/travel_policy_controller");
 //move all storage functions to different files
 const path = require("path");
 
@@ -16,7 +19,7 @@ const claimDocsStorage = multer.diskStorage({
   filename: function(req, file, cb) {
     cb(
       null,
-      file.fieldname + "-" + Date.now()+ path.extname(file.originalname)
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
     );
   }
 });
@@ -105,6 +108,29 @@ module.exports = app => {
     .route("/policies/education/policy")
     .post(PolicyController.createEducationPolicy);
 
+  // Salamah Transition Policies
+  app
+    .route("/policies/salamahTransition/:userId")
+    .get(SalamahTransitionController.getUserSalamahTransitionPolicies);
+
+  app
+    .route("/policies/salamahTransition/:policyId")
+    .get(SalamahTransitionController.getSalamahTransitionPolicy);
+
+  app
+    .route("/policies/salamahTransition/policy")
+    .post(SalamahTransitionController.createSalamahTransitionPolicy);
+
+  //Travel policy routes
+  app
+    .route("/policies/travel/:userId")
+    .get(TravelPolicyController.getUserTravelPolicy);
+  app
+    .route("/policies/travel/:policyId")
+    .get(TravelPolicyController.getTravelPolicy);
+  app
+    .route("/policies/travel/policy")
+    .post(TravelPolicyController.createTravelPolicy);
   // Sendy
   app.route("/sendy/requestDelivery").post(SendyController.requestDelivery);
 
@@ -127,6 +153,6 @@ module.exports = app => {
     ClaimController.uploadClaim
   );
 
-  app.get("/getClaim",ClaimController.getClaim)
-  app.get("/getUserClaims",ClaimController.getUserClaims)
+  app.get("/getClaim", ClaimController.getClaim);
+  app.get("/getUserClaims", ClaimController.getUserClaims);
 };
