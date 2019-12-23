@@ -11,5 +11,8 @@ module.exports = {
     } else {
       return user.id;
     }
-  }
+  },
+
+  //TODO
+  checkUserRole:(user,req,res)=>{}
 };

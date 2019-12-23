@@ -1,9 +1,14 @@
-MotorPolicy = require("../Models/motor_policy");
-MotorCategory = require("../Models/motor_category");
-MedicalPolicy = require("../Models/medical_policy");
-MedicalBeneficiaries = require("../Models/medical_policy_beneficiaries");
-EducationPolicy = require("../Models/education_policy");
-PolicyType = require("../Models/policy_type")
+// @ts-check
+
+
+const MotorPolicy = require("../Models/motor_policy");
+const MotorCategory = require("../Models/motor_category");
+const MedicalPolicy = require("../Models/medical_policy");
+const MedicalBeneficiaries = require("../Models/medical_policy_beneficiaries");
+const EducationPolicy = require("../Models/education_policy");
+const PolicyType = require("../Models/policy_type")
+const endpointAuthenticator = require("../endpointAuthenticator");
+
 module.exports = {
   getAllUserPolicies: (req, res) => {},
   getUserMotorPolicies: (req, res) => {

@@ -1,3 +1,6 @@
+// @ts-check
+
+
 const axios = require('axios');
 const sendyBaseUrl = "https://apitest.sendyit.com/v1/";
 const sendyApiKey = process.env.sendyApiKey;
@@ -8,7 +11,7 @@ const sendyFromName = "SpireSure";
 module.exports = {
   //request delivery
   requestDelivery: (req, res) => {
-    axios
+    axios.default
       .post(sendyBaseUrl + "##request", {
         "command": "request",
         "data": {
@@ -80,7 +83,7 @@ module.exports = {
 
   //complete delivery
   completeDelivery: (req, res) => {
-    axios
+    axios.default
       .post(sendyBaseUrl + "#complete", {
         command: "complete",
         data: {
@@ -114,7 +117,7 @@ module.exports = {
 
   //track sendy delivery
   trackDelivery: (req, res) => {
-    axios
+    axios.default
       .post(sendyBaseUrl + "#track", {
         command: "track",
         data: {
@@ -135,7 +138,7 @@ module.exports = {
 
   //Cancel Deliery
   cancelDelivery: (req,res) => {
-    axios
+    axios.default
       .post(sendyBaseUrl + "#cancel", {
         command: "track",
         data: {

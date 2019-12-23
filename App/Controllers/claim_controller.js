@@ -1,9 +1,12 @@
+// @ts-check
+
+
 const ClaimModel = require("../Models/Claim");
 
 module.exports = {
   uploadClaim: (req, res) => {
-    photosNameArray = [];
-    claimFormsArray = [];
+    var photosNameArray = [];
+    var claimFormsArray = [];
     req.files.claimPhotos.forEach(fileName => {
       photosNameArray.push(fileName.filename);
     });

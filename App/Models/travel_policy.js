@@ -1,3 +1,5 @@
+// @ts-check
+
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const User = require("./User");
@@ -8,52 +10,58 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
     type: Sequelize.FLOAT,
     allowNull: false
   },
-  followUpTreatmentInCountryOfResidence:{
+  followUpTreatmentInCountryOfResidence: {
     type: Sequelize.BOOLEAN,
     allowNull: false
   },
-  medicalEvaluationExpenses:{
+  medicalEvaluationExpenses: {
     type: Sequelize.FLOAT,
     allowNull: false
   },
-  repartriationOfMortalRemains:{
+  repartriationOfMortalRemains: {
     type: Sequelize.BOOLEAN
   },
-  accompanyingFamilyMember:{
+  accompanyingFamilyMember: {
     type: Sequelize.STRING
   },
 
   //TRAVEL ASSISTANCE SERVICES
 
-  prematureReturn:{
-    type: Sequelize.BOOLEAN
+  prematureReturn: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   },
-  legalAssisntace:{
+  legalAssisntace: {
     type: Sequelize.BOOLEAN
   },
   // LUGGAGE,TRADE SAMPLES OR PERSONAL EFFECTS
 
-  lossOrTheft:{
-    type: Sequelize.BOOLEAN
+  lossOrTheft: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   },
-  luggageDelay:{
-    type: Sequelize.BOOLEAN
+  luggageDelay: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   },
-  destination:{
-      type: Sequelize.STRING
+  destination: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
-  periodOfStay:{
-      type: Sequelize.INTEGER
+  periodOfStay: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
-  nationalId:{
-      type:Sequelize.STRING
+  nationalId: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
-  kraPin:{
-      type:Sequelize.STRING
+  kraPin: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 });
 
 TravelPolicy.belongsTo(User);
 
-
-module.exports = TravelPolicy
+module.exports = TravelPolicy;

@@ -1,4 +1,6 @@
-SalamahTransitionPolicy = require("../../Models/salamah_policy");
+// @ts-check
+
+const SalamahTransitionPolicy = require("../../Models/salamah_policy");
 const endpointAuthenticator = require("../../endpointAuthenticator");
 
 module.exports = {

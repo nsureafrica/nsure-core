@@ -1,3 +1,5 @@
+// @ts-check
+
 const passport = require("passport");
 const jwt = require("../jwt");
 const UserModel = require("../Models/User");
@@ -24,7 +26,7 @@ module.exports = {
       "signin",
       { failureRedirect: "/signin" },
       (err, user, info) => {
-        message = info.message;
+        var message = info.message;
         if (!user) {
           res.status(401).send({ message, user });
         } else {
@@ -32,7 +34,7 @@ module.exports = {
           delete user.password;
           delete user.createdAt;
           delete user.updatedAt;
-          token = jwt.sign(user);
+          var token = jwt.sign(user);
           res.status(200).send({ message, token });
         }
       }
@@ -49,7 +51,7 @@ module.exports = {
           });
         } else {
           // hash user password
-          hashedPassword = bCrypt.hashSync(
+          var hashedPassword = bCrypt.hashSync(
             req.body.password,
             bCrypt.genSaltSync(8),
             null
@@ -80,7 +82,6 @@ module.exports = {
               delete user.password;
               delete user.createdAt;
               delete user.updatedAt;
-              console.log(notice);
               res.status(200).send({ message: "Success", user: user });
             })
             .catch(error => {

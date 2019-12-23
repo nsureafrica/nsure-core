@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const User = require("./User");
 
-const SalamahPolicy = sequelizeConnection.define("TravelPolicy", {
+const SalamahPolicy = sequelizeConnection.define("SalamahPolicy", {
   // SPOUSE INFORMATION
   nameOfSpouse: {
     type: Sequelize.STRING,
@@ -33,3 +33,5 @@ const SalamahPolicy = sequelizeConnection.define("TravelPolicy", {
 });
 
 SalamahPolicy.belongsTo(User);
+
+module.exports = SalamahPolicy;
