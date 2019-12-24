@@ -1,5 +1,7 @@
-export * from "./user_controller"
-export * from "./policy_controller"
-export * from "./quote_controller"
-export * from "./sendy_controller"
-export * from "./claim_controller"
+//@ts-check
+
+require( "./user_controller")
+require( "./policy_controller")
+require( "./quote_controller")
+require( "./sendy_controller")
+require( "./claim_controller")

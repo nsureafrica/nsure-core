@@ -1,15 +1,6 @@
 //@ts-check
 
-const os = require("os");
-const cluster = require("cluster");
 
-if (cluster.isMaster) {
-  const numberOfCpus = os.cpus().length;
-  console.log(`forking ${numberOfCpus} CPUS`);
-  for (let i = 0; i < numberOfCpus; i++) {
-    cluster.fork();
-  }
-}else{
 const express = require("express");
 const morgan = require("morgan");
 // require("./passport");
@@ -65,4 +56,4 @@ const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "../build", "index.html"));
 });
-}
+

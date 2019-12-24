@@ -1,9 +1,9 @@
-export * from "./Claim"
-export * from "./ClaimForm"
-export * from "./ClaimPhoto"
-export * from "./education_policy"
-export * from "./medical_policy_beneficiaries"
-export * from "./medical_policy"
-export * from "./policy_type"
-export * from "./User"
-export * from "./UserCategory"
+require("./Claim")
+require("./ClaimForm")
+require("./ClaimPhoto")
+require("./education_policy")
+require("./medical_policy_beneficiaries")
+require("./medical_policy")
+require("./policy_type")
+require("./User")
+require("./UserCategory")

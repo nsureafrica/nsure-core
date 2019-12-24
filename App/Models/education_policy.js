@@ -1,3 +1,5 @@
+// @ts-check
+
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const User = require("./User");
@@ -10,6 +12,7 @@ const EducationPolicy = sequelizeConnection.define("EducationPolicy", {
     allowNull: false
   },
   ageOfChild: {
+    // @ts-ignore
     type: Sequelize.INTEGER(3),
     allowNull: false
   },

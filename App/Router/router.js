@@ -10,6 +10,8 @@ const ClaimController = require("../Controllers/claim_controller");
 const SalamahTransitionController = require("../Controllers/PolicyControllers/salamah_policy_controller");
 const TravelPolicyController = require("../Controllers/PolicyControllers/travel_policy_controller");
 const MotorPolicyController = require("../Controllers/PolicyControllers/motor_policy_controller");
+const EducationPolicyController = require("../Controllers/PolicyControllers/education_policy_controller")
+const MedicalPolicyController = require("../Controllers/PolicyControllers/medical_policy_controller")
 
 //Storage Controller
 const Storage = require("../Storage/storage");
@@ -81,24 +83,24 @@ module.exports = app => {
   // Medical Policies
   app
     .route("/policies/medical/:userId")
-    .get(PolicyController.getUserMedicalPolicies);
+    .get(MedicalPolicyController.getUserMedicalPolicies);
   app
     .route("/policies/medical/policy/:policyId")
-    .get(PolicyController.getMedicalPolicy);
+    .get(MedicalPolicyController.getMedicalPolicy);
   app
     .route("/policies/medical/policy")
-    .post(PolicyController.createMedicalPolicy);
+    .post(MedicalPolicyController.createMedicalPolicy);
 
   // Education Policies
   app
     .route("/policies/education/:userId")
-    .get(PolicyController.getUserEducationPolicies);
+    .get(EducationPolicyController.getUserEducationPolicies);
   app
     .route("/policies/education/policy/:policyId")
-    .get(PolicyController.getEducationPolicy);
+    .get(EducationPolicyController.getEducationPolicy);
   app
     .route("/policies/education/policy")
-    .post(PolicyController.createEducationPolicy);
+    .post(EducationPolicyController.createEducationPolicy);
 
   // Salamah Transition Policies
   app

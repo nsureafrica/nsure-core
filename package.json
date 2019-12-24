@@ -2,9 +2,9 @@
   "name": "nsure_core",
   "version": "1.0.0",
   "description": "Server side application + API",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon -r dotenv/config ./App/index.js",
+    "start": "nodemon -r dotenv/config ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "gcloud app deploy",
     "browse": "gcloud app browse"
