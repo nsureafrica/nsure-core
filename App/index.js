@@ -11,6 +11,7 @@ const database = require("./DB/database");
 const cors = require("cors");
 
 const app = express();
+const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 
 app.use(morgan("combined"));
 app.use(cors());
@@ -48,10 +49,15 @@ app.listen(port, () => {
 });
 
 database.testConnection();
-const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 
 //remember to disable alter
-// sequelizeConnection.sync({alter: true});
+
+if (process.env.NODE_ENV === "DEVELOPMENT") {
+  console.log(process.env.NODE_ENV)
+  sequelizeConnection.sync({alter: true});
+} else {
+  sequelizeConnection.sync();
+}
 
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "../build", "index.html"));

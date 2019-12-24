@@ -15,7 +15,7 @@ module.exports = {
         res.send(policies);
       })
       .catch(err => {
-        res.send(err);
+        res.status(500).send(err)
       });
   },
   getTravelPolicy: (req, res) => {
@@ -29,7 +29,7 @@ module.exports = {
         res.send(policy);
       })
       .catch(err => {
-        res.send(err);
+        res.status(500).send(err)
       });
   },
   createTravelPolicy: (req, res) => {
@@ -39,7 +39,7 @@ module.exports = {
         res.send(response);
       })
       .catch(err => {
-        res.send(err);
+        res.status(500).send(err)
       });
   }
 };

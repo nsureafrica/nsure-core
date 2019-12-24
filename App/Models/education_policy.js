@@ -27,6 +27,5 @@ const EducationPolicy = sequelizeConnection.define("EducationPolicy", {
 });
 
 EducationPolicy.belongsTo(User);
-User.hasMany(EducationPolicy);
 
 module.exports = EducationPolicy;

@@ -1,7 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const UserCategory = require("./UserCategory");
-const uuidv1 = require("uuid/v1");
 
 const User = sequelizeConnection.define("User", {
   firstName: {

@@ -24,7 +24,7 @@ module.exports = {
         res.send(res);
       })
       .catch(err => {
-        res.send(err);
+        res.status(500).send(err)
       });
   },
   getClaim: (req, res) => {
@@ -33,7 +33,7 @@ module.exports = {
         res.send(claim);
       })
       .catch(err => {
-        res.send(err);
+        res.status(500).send(err)
       });
   },
   getUserClaims: (req, res) => {
@@ -42,7 +42,7 @@ module.exports = {
         res.send(userClaims);
       })
       .catch(err => {
-        res.send(err);
+        res.status(500).send(err)
       });
   }
 };

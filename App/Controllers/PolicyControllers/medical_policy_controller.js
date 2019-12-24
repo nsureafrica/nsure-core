@@ -16,7 +16,7 @@ module.exports = {
         res.send(policies);
       })
       .catch(err => {
-        res.send(err);
+        res.status(500).send(err)
       });
   },
   getMedicalPolicy: (req, res) => {
@@ -30,7 +30,7 @@ module.exports = {
         res.send(policy);
       })
       .catch(err => {
-        res.send(err);
+        res.status(500).send(err)
       });
   },
   createMedicalPolicy: (req, res) => {
@@ -40,7 +40,7 @@ module.exports = {
         res.send(response);
       })
       .catch(err => {
-        res.send(err);
+        res.status(500).send(err)
       });
   },
 }

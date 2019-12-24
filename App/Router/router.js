@@ -6,7 +6,7 @@ const QuoteController = require("../Controllers/quote_controller");
 const SendyController = require("../Controllers/sendy_controller");
 const ClaimController = require("../Controllers/claim_controller");
 
-//policy controllers well the ones i moved
+//Policy controllers
 const SalamahTransitionController = require("../Controllers/PolicyControllers/salamah_policy_controller");
 const TravelPolicyController = require("../Controllers/PolicyControllers/travel_policy_controller");
 const MotorPolicyController = require("../Controllers/PolicyControllers/motor_policy_controller");

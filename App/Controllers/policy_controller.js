@@ -1,6 +1,5 @@
 // @ts-check
 
-const MedicalPolicy = require("../Models/medical_policy");
 const PolicyType = require("../Models/policy_type")
 const endpointAuthenticator = require("../endpointAuthenticator");
 
@@ -16,7 +15,7 @@ module.exports = {
       res.send(response)
     }).catch(err => {
       console.log(err)
-      res.send(err)
+      res.status(500).send(err)
     })
   }
 };

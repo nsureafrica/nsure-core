@@ -1,5 +1,7 @@
 // @ts-check
 
+
+//@ts-ignore
 const MotorRates = require("../motor_rates.json");
 const nodemailer = require("nodemailer");
 const endpointAuthenticator = require("../endpointAuthenticator");

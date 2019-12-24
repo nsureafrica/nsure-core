@@ -75,9 +75,9 @@ module.exports = {
         res.send(response.data)
 
       })
-      .catch(function(error) {
-        console.log(error);
-        res.send(error)
+      .catch(function(err) {
+        console.log(err);
+        res.status(500).send(err)
       });
   },
 
@@ -131,8 +131,8 @@ module.exports = {
         console.log(response);
         res.send(response)
       })
-      .catch(error => {
-        res.send(error)
+      .catch(err => {
+        res.status(500).send(err)
       });
   },
 
@@ -153,9 +153,9 @@ module.exports = {
         res.send(response.data)
 
       })
-      .catch(error => {
-        console.log(error);
-        res.send(error)
+      .catch(err => {
+        console.log(err);
+        res.status(500).send(err)
       });
   }
 };
