@@ -56,7 +56,7 @@ if (process.env.NODE_ENV === "DEVELOPMENT") {
   console.log(process.env.NODE_ENV)
   sequelizeConnection.sync({alter: true});
 } else {
-  sequelizeConnection.sync();
+  // sequelizeConnection.sync();
 }
 
 app.get("/", function(req, res) {
