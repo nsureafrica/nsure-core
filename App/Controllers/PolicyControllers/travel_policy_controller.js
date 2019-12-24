@@ -5,7 +5,7 @@ const endpointAuthenticator = require("../../endpointAuthenticator");
 
 module.exports = {
   getUserTravelPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     TravelPolicy.findAll({
       where: {
         userId: req.params.userId
@@ -19,7 +19,7 @@ module.exports = {
       });
   },
   getTravelPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     TravelPolicy.findOne({
       where: {
         id: req.params.policyId
@@ -33,7 +33,7 @@ module.exports = {
       });
   },
   createTravelPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     TravelPolicy.create(req.body)
       .then(response => {
         res.send(response);

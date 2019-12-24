@@ -11,48 +11,11 @@ const endpointAuthenticator = require("../endpointAuthenticator");
 
 module.exports = {
   getAllUserPolicies: (req, res) => {},
-  getUserMotorPolicies: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
-    MotorPolicy.findAll({
-      where: {
-        userId: req.params.userId
-      }
-    })
-      .then(policies => {
-        res.send(policies);
-      })
-      .catch(err => {
-        res.send(err);
-      });
-  },
-  getMotorPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
-    MotorPolicy.findOne({
-      where: {
-        id: req.params.policyId
-      }
-    })
-      .then(policy => {
-        res.send(policy);
-      })
-      .catch(err => {
-        res.send(err);
-      });
-  },
-  createMotorPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
-    MotorPolicy.create(req.body)
-      .then(response => {
-        res.send(response);
-      })
-      .catch(err => {
-        res.send(err);
-      });
-  },
+  
 
   //medical policy
   getUserMedicalPolicies: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     MedicalPolicy.findAll({
       where: {
         userId: req.params.userId
@@ -66,7 +29,7 @@ module.exports = {
       });
   },
   getMedicalPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     MedicalPolicy.findOne({
       where: {
         id: req.params.policyId
@@ -80,7 +43,7 @@ module.exports = {
       });
   },
   createMedicalPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     MedicalPolicy.create(req.body)
       .then(response => {
         res.send(response);
@@ -92,7 +55,7 @@ module.exports = {
 
   //education policies
   getUserEducationPolicies: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     EducationPolicy.findAll({
       where: {
         userId: req.params.userId
@@ -106,7 +69,7 @@ module.exports = {
       });
   },
   getEducationPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     EducationPolicy.findOne({
       where: {
         id: req.params.policyId
@@ -120,7 +83,7 @@ module.exports = {
       });
   },
   createEducationPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     EducationPolicy.create(req.body)
       .then(response => {
         res.send(response);
@@ -132,7 +95,7 @@ module.exports = {
 
   //this is for internal use to create policies and their description and store them in the db
   createPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     PolicyType.create({
       policyTypeName: req.body.policyTypeName,
       policyTypeDesc: req.body.policyTypeDesc

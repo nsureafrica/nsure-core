@@ -22,7 +22,8 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
     type: Sequelize.BOOLEAN
   },
   accompanyingFamilyMember: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: true
   },
 
   //TRAVEL ASSISTANCE SERVICES
@@ -32,7 +33,8 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
     allowNull: false
   },
   legalAssisntace: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   },
   // LUGGAGE,TRADE SAMPLES OR PERSONAL EFFECTS
 

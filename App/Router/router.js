@@ -1,33 +1,18 @@
+// @ts-check
+
 const UserController = require("../Controllers/user_controller");
 const PolicyController = require("../Controllers/policy_controller");
 const QuoteController = require("../Controllers/quote_controller");
 const SendyController = require("../Controllers/sendy_controller");
 const ClaimController = require("../Controllers/claim_controller");
 
-//policy controllers ; well the ones i moved
+//policy controllers well the ones i moved
 const SalamahTransitionController = require("../Controllers/PolicyControllers/salamah_policy_controller");
 const TravelPolicyController = require("../Controllers/PolicyControllers/travel_policy_controller");
-//move all storage functions to different files
-const path = require("path");
+const MotorPolicyController = require("../Controllers/PolicyControllers/motor_policy_controller");
 
-const multer = require("multer");
-
-const claimDocsStorage = multer.diskStorage({
-  destination: function(req, res, cb) {
-    cb(null, "./documentsStorage/claimsDocuments");
-  },
-  filename: function(req, file, cb) {
-    cb(
-      null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-    );
-  }
-});
-
-var uploadClaimDocs = multer({
-  storage: claimDocsStorage,
-  limits: { fileSize: 1000000 }
-});
+//Storage Controller
+const Storage = require("../Storage/storage");
 
 module.exports = app => {
   /**
@@ -71,14 +56,21 @@ module.exports = app => {
   // Motor Policies
   app
     .route("/policies/motor/:userId")
-    .get(PolicyController.getUserMotorPolicies); // requires auth
+    .get(MotorPolicyController.getUserMotorPolicies); // requires auth
   app
     .route("/policies/motor/policy/:policyId")
-    .get(PolicyController.getMotorPolicy); // requires auth
-  app.route("/policies/motor/policy").post(PolicyController.createMotorPolicy); // requires auth
+    .get(MotorPolicyController.getMotorPolicy); // requires auth
+  app.post(
+    "/policies/motor/policy",
+    Storage.uploadLogbook.fields([
+      { name: "logbook", maxCount: 5 },
+    ]),
+    MotorPolicyController.createMotorPolicy
+  ); // requires auth
 
   // motor quote
   app.route("/quotes/motor/").post(QuoteController.getMotorQuote);
+
   // medical quote
   // app.route("/quotes/medical").post(QuoteController.getMedicalQuote);
   // education quote
@@ -131,6 +123,7 @@ module.exports = app => {
   app
     .route("/policies/travel/policy")
     .post(TravelPolicyController.createTravelPolicy);
+
   // Sendy
   app.route("/sendy/requestDelivery").post(SendyController.requestDelivery);
 
@@ -146,13 +139,13 @@ module.exports = app => {
   // Claims
   app.post(
     "/createClaim",
-    uploadClaimDocs.fields([
+    Storage.uploadClaimDocs.fields([
       { name: "claimPhotos", maxCount: 5 },
       { name: "claimDocs", maxCount: 5 }
     ]),
     ClaimController.uploadClaim
   );
 
-  app.get("/getClaim", ClaimController.getClaim);
-  app.get("/getUserClaims", ClaimController.getUserClaims);
+  app.get("/getClaim/:claimId", ClaimController.getClaim);
+  app.get("/getUserClaims/:userId", ClaimController.getUserClaims);
 };

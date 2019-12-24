@@ -6,7 +6,7 @@ const endpointAuthenticator = require("../../endpointAuthenticator");
 module.exports = {
 
   getUserSalamahTransitionPolicies: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     SalamahTransitionPolicy.findAll({
       where: {
         userId: req.params.userId
@@ -20,7 +20,7 @@ module.exports = {
       });
   },
   getSalamahTransitionPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     SalamahTransitionPolicy.findOne({
       where: {
         id: req.params.policyId
@@ -34,7 +34,7 @@ module.exports = {
       });
   },
   createSalamahTransitionPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     SalamahTransitionPolicy.create(req.body)
       .then(response => {
         res.send(response);

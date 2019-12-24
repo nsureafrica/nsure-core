@@ -1,6 +1,8 @@
+//@ts-check
+
 const express = require("express");
 const morgan = require('morgan')
-require("./passport");
+// require("./passport");
 const router = require("./Router/router");
 const port = process.env.PORT;
 const path = require('path');
@@ -36,6 +38,7 @@ const swaggerOptions = {
   apis: ["App/Router/router.js"]
 };
 
+// @ts-ignore
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
@@ -50,7 +53,7 @@ const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 
 
 //remember to disable alter
-sequelizeConnection.sync({alter: true});
+// sequelizeConnection.sync({alter: true});
 
 
 app.get('/', function(req, res) {

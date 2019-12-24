@@ -8,11 +8,11 @@ const MedicalPolicy = sequelizeConnection.define("MedicalPolicy", {
 
   firstName: {
     type: Sequelize.STRING,
-    allowNull: true
+    allowNull: false
   },
   secondName: {
     type: Sequelize.STRING,
-    allowNull: true
+    allowNull: false
   },
 
   // CORE COVER
