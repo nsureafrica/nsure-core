@@ -1,24 +1,32 @@
 //@ts-check
 
+const os = require("os");
+const cluster = require("cluster");
+
+if (cluster.isMaster) {
+  const numberOfCpus = os.cpus().length;
+  console.log(`forking ${numberOfCpus} CPUS`);
+  for (let i = 0; i < numberOfCpus; i++) {
+    cluster.fork();
+  }
+}else{
 const express = require("express");
-const morgan = require('morgan')
+const morgan = require("morgan");
 // require("./passport");
 const router = require("./Router/router");
 const port = process.env.PORT;
-const path = require('path');
+const path = require("path");
 const database = require("./DB/database");
 const cors = require("cors");
 
-
 const app = express();
 
-app.use(morgan('combined'))
-app.use(cors())
+app.use(morgan("combined"));
+app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static(path.join(__dirname, "../build")));
 
-
-//swagger 
+//swagger
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -51,11 +59,10 @@ app.listen(port, () => {
 database.testConnection();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 
-
 //remember to disable alter
 // sequelizeConnection.sync({alter: true});
 
-
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "../build", "index.html"));
 });
+}
