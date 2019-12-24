@@ -13,19 +13,20 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
     type: Sequelize.STRING,
     allowNull: false
   },
-  // category: {
-  //   type: Sequelize.ENUM(
-  //     "motorcycle",
-  //     "motorPrivate",
-  //     "motorCommercial",
-  //     "heavyMachinery",
-  //     "tankers",
-  //     "pmo",
-  //     "specialTypes",
-  //     "psv",
-  //     "drivingSchools"
-  //   )
-  // },
+  category: {
+    type: Sequelize.ENUM(
+      "motorcycle",
+      "motorPrivate",
+      "motorCommercial",
+      "heavyMachinery",
+      "tankers",
+      "pmo",
+      "specialTypes",
+      "psv",
+      "drivingSchools"
+    ),
+    allowNull: false
+  },
   //will remove this from the db
   motorcycle: {
     type: Sequelize.BOOLEAN,

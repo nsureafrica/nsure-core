@@ -106,7 +106,7 @@ module.exports = app => {
     .get(SalamahTransitionController.getUserSalamahTransitionPolicies);
 
   app
-    .route("/policies/salamahTransition/:policyId")
+    .route("/policies/salamahTransition/policy/:policyId")
     .get(SalamahTransitionController.getSalamahTransitionPolicy);
 
   app
@@ -118,7 +118,7 @@ module.exports = app => {
     .route("/policies/travel/:userId")
     .get(TravelPolicyController.getUserTravelPolicy);
   app
-    .route("/policies/travel/:policyId")
+    .route("/policies/travel/policy/:policyId")
     .get(TravelPolicyController.getTravelPolicy);
   app
     .route("/policies/travel/policy")

@@ -15,7 +15,7 @@ module.exports = {
     });
     ClaimModel.create({
       descriptionOfClaim: req.body.descriptionOfClaim,
-      UserId: req.body.userId,
+      UserId: req.body.UserId,
       PolicyTypeId: req.body.policyTypeId,
       claimForms: claimFormsArray.toString(),
       claimPhotos: photosNameArray.toString()
@@ -37,7 +37,7 @@ module.exports = {
       });
   },
   getUserClaims: (req, res) => {
-    ClaimModel.findAll()
+    ClaimModel.findOne({where: { UserId: req.params.userId}})
       .then(userClaims => {
         res.send(userClaims);
       })

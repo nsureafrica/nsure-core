@@ -42,6 +42,7 @@ module.exports = {
       carModel: req.body.carModel,
       motorcycle: req.body.motorcycle,
       vehicleType: req.body.vehicleType,
+      category: req.body.category,
       coverType: req.body.coverType,
       courtesyCarOption: req.body.courtesyCarOption,
       registrationNumber: req.body.registrationNumber,
@@ -54,7 +55,8 @@ module.exports = {
       emailAddress: req.body.emailAddress,
       city: req.body.city,
       country: req.body.country,
-      postalCode: req.body.postalCode
+      postalCode: req.body.postalCode,
+      UserId:req.body.UserId
     })
       .then(response => {
         res.send(response);
