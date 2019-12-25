@@ -2,46 +2,31 @@
 
 
 const express = require("express");
-const morgan = require("morgan");
 // require("./passport");
 const router = require("./Router/router");
 const port = process.env.PORT;
 const path = require("path");
 const database = require("./DB/database");
 const cors = require("cors");
+var compression = require('compression')
 
 const app = express();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
+// morgan
+const morgan = require("./Utils/logger")
+morgan(app)
 
-app.use(morgan("combined"));
+
+app.use(compression())
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../build")));
 
 //swagger
-const swaggerJsDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
+const swagger = require("./Utils/swagger")
+swagger(app)
 
-// Extended: https://swagger.io/specification/#infoObject
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      title: "NSURE API",
-      description: "NSURE API Information",
-      contact: {
-        name: "Allan Mageto"
-      },
-      servers: ["http://localhost:8080"]
-    }
-  },
-  // ['.routes/*.js']
-  apis: ["App/Router/router.js"]
-};
-
-// @ts-ignore
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
+//Routes
 router(app);
 
 app.listen(port, () => {
@@ -55,8 +40,10 @@ database.testConnection();
 if (process.env.NODE_ENV === "DEVELOPMENT") {
   console.log(process.env.NODE_ENV)
   sequelizeConnection.sync({alter: true});
+} if (process.env.NODE_ENV === "TEST") {
+    // sequelizeConnection.sync();
 } else {
-  // sequelizeConnection.sync();
+    // sequelizeConnection.sync();
 }
 
 app.get("/", function(req, res) {

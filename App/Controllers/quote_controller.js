@@ -2,9 +2,9 @@
 
 
 //@ts-ignore
-const MotorRates = require("../motor_rates.json");
+const MotorRates = require("../Rates/motor_rates.json");
 const nodemailer = require("nodemailer");
-const endpointAuthenticator = require("../endpointAuthenticator");
+const endpointAuthenticator = require("../Utils/endpointAuthenticator");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {

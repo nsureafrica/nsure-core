@@ -1,6 +1,6 @@
 // @ts-check
 const MotorPolicy = require("../../Models/motor_policy");
-const endpointAuthenticator = require("../../endpointAuthenticator");
+const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
 
 module.exports = {
   getUserMotorPolicies: (req, res) => {

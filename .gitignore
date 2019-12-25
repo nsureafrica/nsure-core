@@ -4,3 +4,4 @@ public.key
 .env
 build
 documentsStorage
+log

@@ -1,13 +1,18 @@
 // @ts-check
 
 const path = require("path");
-
 const multer = require("multer");
+const fs = require("fs");
 
 
-var claimDocsStorage = multer.diskStorage({
+const claimDocsStorage = multer.diskStorage({
   destination: function(req, res, cb) {
-    cb(null, "./documentsStorage/claimsDocuments");
+
+    const claimDocsStorageDirectory = "./documentsStorage/claimsDocuments";
+    // ensure directory exists
+    fs.existsSync(claimDocsStorageDirectory) || fs.mkdirSync(claimDocsStorageDirectory);
+
+    cb(null, claimDocsStorageDirectory);
   },
   filename: function(req, file, cb) {
     cb(
@@ -19,7 +24,12 @@ var claimDocsStorage = multer.diskStorage({
 
 var logbookStorage = multer.diskStorage({
   destination: function(req,res,cb){
-    cb(null, "./documentsStorage/logbooks");
+
+    const logbookStorageDirectory = "./documentsStorage/claimsDocuments";
+    // ensure directory exists
+    fs.existsSync(logbookStorageDirectory) || fs.mkdirSync(logbookStorageDirectory);
+
+    cb(null, logbookStorageDirectory);
   },
   filename: function(req,file,cb){
     cb(null,

@@ -1,7 +1,7 @@
 // @ts-check
 
 const TravelPolicy = require("../../Models/travel_policy");
-const endpointAuthenticator = require("../../endpointAuthenticator");
+const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
 
 module.exports = {
   getUserTravelPolicy: (req, res) => {

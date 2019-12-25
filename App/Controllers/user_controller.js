@@ -1,7 +1,7 @@
 // @ts-check
 
 const passport = require("passport");
-const jwt = require("../jwt");
+const jwt = require("../Utils/jwt");
 const UserModel = require("../Models/User");
 const bCrypt = require("bcrypt-nodejs");
 const nodemailer = require("nodemailer");

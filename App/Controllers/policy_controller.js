@@ -1,7 +1,7 @@
 // @ts-check
 
 const PolicyType = require("../Models/policy_type")
-const endpointAuthenticator = require("../endpointAuthenticator");
+const endpointAuthenticator = require("../Utils/endpointAuthenticator");
 
 module.exports = {
   getAllUserPolicies: (req, res) => {},
