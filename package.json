@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/nsureafrica/nsure-core#readme",
   "dependencies": {
+    "archiver": "^3.1.1",
     "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
     "bcrypt-nodejs": "0.0.3",

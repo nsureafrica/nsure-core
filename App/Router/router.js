@@ -3,10 +3,6 @@
 const UserController = require("../Controllers/user_controller");
 const PolicyController = require("../Controllers/policy_controller");
 const QuoteController = require("../Controllers/quote_controller");
-const ClaimController = require("../Controllers/claim_controller");
-
-//Storage Controller
-const Storage = require("../Storage/storage");
 
 module.exports = app => {
   /**
@@ -73,24 +69,18 @@ module.exports = app => {
 
   //Travel policy routes
   const travelPolicyRourtes = require("./PolicyRoutes/travel_policy_routes");
-  travelPolicyRourtes(app)
-  
+  travelPolicyRourtes(app);
+
   // Sendy Routes
-  const sendyRoutes = require("./sendy_routes")
-  sendyRoutes(app)
+  const sendyRoutes = require("./sendy_routes");
+  sendyRoutes(app);
   //policy types
   app.post("/createPolicyType", PolicyController.createPolicy);
 
+  // Download Routes
+  const downloadRoutes = require("./downloadRoutes/download_routes");
+  downloadRoutes(app);
   // Claims
-  app.post(
-    "/createClaim",
-    Storage.uploadClaimDocs.fields([
-      { name: "claimPhotos", maxCount: 5 },
-      { name: "claimDocs", maxCount: 5 }
-    ]),
-    ClaimController.uploadClaim
-  );
-
-  app.get("/getClaim/:claimId", ClaimController.getClaim);
-  app.get("/getUserClaims/:userId", ClaimController.getUserClaims);
+  const claimRoutes = require("./claimRoutes");
+  claimRoutes(app);
 };
