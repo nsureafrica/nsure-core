@@ -8,11 +8,11 @@ const fs = require("fs");
 const claimDocsStorage = multer.diskStorage({
   destination: function(req, res, cb) {
 
-    const claimDocsStorageDirectory = "./documentsStorage/claimsDocuments";
+    const claimDocStorageDirectory = "./documentsStorage/claimDocuments";
     // ensure directory exists
-    fs.existsSync(claimDocsStorageDirectory) || fs.mkdirSync(claimDocsStorageDirectory);
+    fs.existsSync(claimDocStorageDirectory) || fs.mkdirSync(claimDocStorageDirectory);
 
-    cb(null, claimDocsStorageDirectory);
+    cb(null, claimDocStorageDirectory);
   },
   filename: function(req, file, cb) {
     cb(
@@ -25,7 +25,7 @@ const claimDocsStorage = multer.diskStorage({
 var logbookStorage = multer.diskStorage({
   destination: function(req,res,cb){
 
-    const logbookStorageDirectory = "./documentsStorage/claimsDocuments";
+    const logbookStorageDirectory = "./documentsStorage/claimDocuments";
     // ensure directory exists
     fs.existsSync(logbookStorageDirectory) || fs.mkdirSync(logbookStorageDirectory);
 
