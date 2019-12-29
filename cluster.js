@@ -12,6 +12,7 @@ if (cluster.isMaster) {
 
   //incase a worker dies lazarus it!
   cluster.on("exit", function() {
+    console.log("one died");
     cluster.fork();
   });
 } else {

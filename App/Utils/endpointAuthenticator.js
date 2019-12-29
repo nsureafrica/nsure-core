@@ -14,5 +14,5 @@ module.exports = {
   },
 
   //TODO
-  checkUserRole:(user,req,res)=>{}
+  checkUserPermission:(user,req,res)=>{}
 };

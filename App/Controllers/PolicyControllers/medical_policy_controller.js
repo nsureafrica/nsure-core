@@ -1,10 +1,10 @@
 //@ts-check
 
 const MedicalPolicy = require("../../Models/medical_policy");
-
+const endpointAuthenticator = require("../../Utils/endpointAuthenticator")
 
 module.exports = {
-    //medical policy
+  //medical policy
   getUserMedicalPolicies: (req, res) => {
     // endpointAuthenticator.authenticateUser(req, res);
     MedicalPolicy.findAll({
@@ -16,7 +16,7 @@ module.exports = {
         res.send(policies);
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(500).send(err);
       });
   },
   getMedicalPolicy: (req, res) => {
@@ -30,17 +30,31 @@ module.exports = {
         res.send(policy);
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(500).send(err);
       });
   },
   createMedicalPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
+    endpointAuthenticator.authenticateUser(req, res);
     MedicalPolicy.create(req.body)
       .then(response => {
         res.send(response);
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(500).send(err);
       });
   },
-}
+
+  //custom filter
+  customfilterMedicalPolicy: (req, res) => {
+    // endpointAuthenticator.authenticateUser(req, res);
+    MedicalPolicy.findAll({
+      where: req.body.customFilter
+    })
+      .then(policy => {
+        res.send(policy);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
+  }
+};

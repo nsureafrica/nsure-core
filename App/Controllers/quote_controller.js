@@ -1,6 +1,5 @@
 // @ts-check
 
-
 //@ts-ignore
 const MotorRates = require("../Rates/motor_rates.json");
 const nodemailer = require("nodemailer");
