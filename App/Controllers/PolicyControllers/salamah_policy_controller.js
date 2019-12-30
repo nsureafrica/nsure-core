@@ -2,6 +2,7 @@
 
 const SalamahTransitionPolicy = require("../../Models/salamah_policy");
 const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
+const CustomFilter = require("./custom_filter_policy_controller")
 
 module.exports = {
 
@@ -42,5 +43,7 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err)
       });
-  }
+  },
+  //custom filter
+  customFilterSalamahTransitionPolicy:(req,res)=>CustomFilter.customPolicyFilter(SalamahTransitionPolicy,req,res)
 };

@@ -1,10 +1,9 @@
 //@ts-check
 
-
 const EducationPolicy = require("../../Models/education_policy");
-
+const CustomFilter = require("./custom_filter_policy_controller")
 module.exports = {
-    //education policies
+  //education policies
   getUserEducationPolicies: (req, res) => {
     // endpointAuthenticator.authenticateUser(req, res);
     EducationPolicy.findAll({
@@ -16,7 +15,7 @@ module.exports = {
         res.send(policies);
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(500).send(err);
       });
   },
   getEducationPolicy: (req, res) => {
@@ -30,7 +29,7 @@ module.exports = {
         res.send(policy);
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(500).send(err);
       });
   },
   createEducationPolicy: (req, res) => {
@@ -40,7 +39,9 @@ module.exports = {
         res.send(response);
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(500).send(err);
       });
   },
-}
+  //custom filter
+  customFilterEducationPolicy:(req,res)=>CustomFilter.customPolicyFilter(EducationPolicy,req,res)
+};

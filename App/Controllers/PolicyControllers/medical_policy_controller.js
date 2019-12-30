@@ -2,6 +2,7 @@
 
 const MedicalPolicy = require("../../Models/medical_policy");
 const endpointAuthenticator = require("../../Utils/endpointAuthenticator")
+const CustomFilter = require("./custom_filter_policy_controller")
 
 module.exports = {
   //medical policy
@@ -56,5 +57,7 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err);
       });
-  }
+  },
+  //custom filter
+  customFilterMedicalPolicy:(req,res)=>CustomFilter.customPolicyFilter(MedicalPolicy,req,res)
 };

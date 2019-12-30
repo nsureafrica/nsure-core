@@ -2,6 +2,7 @@
 
 const TravelPolicy = require("../../Models/travel_policy");
 const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
+const CustomFilter = require("./custom_filter_policy_controller")
 
 module.exports = {
   getUserTravelPolicy: (req, res) => {
@@ -41,5 +42,7 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err)
       });
-  }
+  },
+  //custom filter
+  customFilterTravelPolicy:(req,res)=>CustomFilter.customPolicyFilter(TravelPolicy,req,res)
 };

@@ -1,6 +1,7 @@
 // @ts-check
 const MotorPolicy = require("../../Models/motor_policy");
 const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
+const CustomFilter = require("./custom_filter_policy_controller")
 
 module.exports = {
   getUserMotorPolicies: (req, res) => {
@@ -64,5 +65,7 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err);
       });
-  }
+  },
+  //custom filter
+  customFilterMotorPolicy:(req,res)=>CustomFilter.customPolicyFilter(MotorPolicy,req,res)
 };
