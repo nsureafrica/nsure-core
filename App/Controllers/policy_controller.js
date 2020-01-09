@@ -1,6 +1,6 @@
 // @ts-check
 
-const PolicyType = require("../Models/policy_type")
+const PolicyType = require("../Models/policy_type");
 const endpointAuthenticator = require("../Utils/endpointAuthenticator");
 
 module.exports = {
@@ -10,12 +10,24 @@ module.exports = {
     // endpointAuthenticator.authenticateUser(req, res);
     PolicyType.create({
       policyTypeName: req.body.policyTypeName,
-      policyTypeDesc: req.body.policyTypeDesc
-    }).then(response => {
-      res.send(response)
-    }).catch(err => {
-      console.log(err)
-      res.status(500).send(err)
+      policyTypeDesc: req.body.policyTypeDesc,
+      policyTypeAvailability: req.body.policyTypeAvailability
     })
+      .then(response => {
+        res.send(response);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).send(err);
+      });
+  },
+  getPolicies: (req, res) => {
+    PolicyType.findAll()
+      .then(response => {
+        res.send(response);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
   }
 };

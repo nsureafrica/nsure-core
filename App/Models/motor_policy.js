@@ -15,7 +15,6 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
   },
   category: {
     type: Sequelize.ENUM(
-      "motorcycle",
       "motorPrivate",
       "motorCommercial",
       "heavyMachinery",

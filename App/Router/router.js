@@ -40,9 +40,9 @@ module.exports = app => {
    */
   app.route("/signup").post(UserController.signup);
 
-  // All policies
-  app.route("/policies/:userId").get(PolicyController.getAllUserPolicies);
+  app.route("/forgotPassword").put(UserController.forgotPassword);
 
+  app.route("/changePassword").post(UserController.changePassword);
   //Motor Policies
   const motorPolicyRoutes = require("./PolicyRoutes/motor_policy_routes");
   motorPolicyRoutes(app);
@@ -76,6 +76,7 @@ module.exports = app => {
   sendyRoutes(app);
   //policy types
   app.post("/createPolicyType", PolicyController.createPolicy);
+  app.route("/companyPolicies").get(PolicyController.getPolicies);
 
   // Download Routes
   const downloadRoutes = require("./downloadRoutes/download_routes");

@@ -7,7 +7,8 @@ const port = process.env.PORT;
 const path = require("path");
 const database = require("./DB/database");
 const cors = require("cors");
-var compression = require("compression");
+const compression = require("compression");
+const helmet = require('helmet')
 
 const app = express();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
@@ -15,6 +16,7 @@ const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 const morgan = require("./Utils/logger");
 morgan(app);
 
+app.use(helmet())
 app.use(compression());
 app.use(cors());
 app.use(express.json());
@@ -37,19 +39,15 @@ database.testConnection();
 
 if (process.env.NODE_ENV === "DEVELOPMENT") {
   console.log(process.env.NODE_ENV);
-  sequelizeConnection.sync({ alter: true });
+  // sequelizeConnection.sync({ alter: true });
 }
 if (process.env.NODE_ENV === "TEST") {
-  // sequelizeConnection.sync();
+  sequelizeConnection.sync();
 } else {
-  // sequelizeConnection.sync();
+  sequelizeConnection.sync();
 }
 
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "../build", "index.html"));
-});
-
-app.get("/testAuth", (req, res) => {
-  var endpointAuthenticator = require("./Utils/endpointAuthenticator");
-  endpointAuthenticator.authenticateUser(req, res);
+  //log number of visits
 });

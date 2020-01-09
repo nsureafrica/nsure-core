@@ -2,11 +2,17 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const UserModel = require("./Models/User");
 const bCrypt = require("bcrypt-nodejs");
+const UserCategory = require("./Models/UserCategory");
 
+//TODO add sign in with google and facebook methods
 passport.use(
   "signin",
   new LocalStrategy(function(username, password, done) {
-    UserModel.findOne({ where: { email: username } }).then(user => {
+    UserModel.findOne({
+      include: [UserCategory],
+      where: { email: username }
+    }).then(user => {
+      console.log(user)
       if (!user) {
         return done(null, null, { message: "User does not exist" });
       } else {
@@ -22,39 +28,3 @@ passport.use(
     });
   })
 );
-
-// passport.use(
-//   "local-signin",
-//   new LocalStrategy(
-//     {
-//       usernameField: "email",
-//       passwordField: "password"
-//     },
-//     (email, password, done) => {
-//       UserModel.findOne({
-//         where: {
-//           email: email
-//           // password: password
-//         }
-//       })
-//         .then(user => {
-//           if (!user) {
-//             console.log(21);
-//             return done(null, false, {
-//               message: "Incorrect email or password"
-//             });
-//           } else {
-//             console.log(26);
-//             return done(null, user, {
-//               message: "logged in successfully"
-//             });
-//           }
-//         })
-//         .catch(err => {
-//           console.log(33);
-//           console.log(err);
-//           return done(err, false, { message: "Something isn't right, unable to login" });
-//         });
-//     }
-//   )
-// );

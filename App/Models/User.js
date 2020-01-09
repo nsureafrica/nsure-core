@@ -28,6 +28,10 @@ const User = sequelizeConnection.define("User", {
     type: Sequelize.STRING,
     allowNull: false,
     min: 7
+  },
+  tempPassword: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true
   }
 });
 
