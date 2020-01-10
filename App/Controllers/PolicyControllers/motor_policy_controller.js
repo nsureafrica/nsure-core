@@ -2,13 +2,13 @@
 const MotorPolicy = require("../../Models/motor_policy");
 const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
 const CustomFilter = require("./custom_filter_policy_controller")
-
+const quoteController = require("../quote_controller")
 module.exports = {
   getUserMotorPolicies: (req, res) => {
     // endpointAuthenticator.authenticateUser(req, res);
     MotorPolicy.findAll({
       where: {
-        userId: req.params.userId
+        emailAddress: req.params.email
       }
     })
       .then(policies => {
@@ -40,8 +40,7 @@ module.exports = {
     });
     MotorPolicy.create({
       vehicleEstimatedValue: req.body.vehicleEstimatedValue,
-      carModel: req.body.carModel,
-      motorcycle: req.body.motorcycle,
+      vehicleModel: req.body.vehicleModel,
       vehicleType: req.body.vehicleType,
       category: req.body.category,
       coverType: req.body.coverType,
@@ -57,10 +56,14 @@ module.exports = {
       city: req.body.city,
       country: req.body.country,
       postalCode: req.body.postalCode,
-      UserId:req.body.UserId
+      paid: req.body.paid,
+      paidAmount: req.body.paidAmount,
+      yearOfManufacture: req.body.yearOfManufacture,
+      quoteAmount: 0
     })
       .then(response => {
-        res.send(response);
+        //Generate quote here
+        quoteController.getMotorQuote(req,res,response)
       })
       .catch(err => {
         res.status(500).send(err);

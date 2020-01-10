@@ -66,7 +66,8 @@ module.exports = {
             phoneNumber: req.body.phoneNumber,
             email: req.body.email,
             password: hashedPassword,
-            tempPassword: false
+            tempPassword: false,
+            isVerified:true
           })
             .then(user => {
               var mailOptions = {

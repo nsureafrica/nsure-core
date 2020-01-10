@@ -15,4 +15,5 @@ module.exports = app => {
 
   app.get("/getClaim/:claimId", ClaimController.getClaim);
   app.get("/getUserClaims/:userId", ClaimController.getUserClaims);
+  // app.get("/ge")
 };

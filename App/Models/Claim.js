@@ -14,6 +14,10 @@ const Claim = sequelizeConnection.define("Claim", {
     claimPhotos:{
         type:Sequelize.STRING(),
         allowNull: true
+    },
+    policyId:{
+        type:Sequelize.INTEGER,
+        allowNull:false
     }
 })
 

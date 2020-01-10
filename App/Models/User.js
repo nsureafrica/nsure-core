@@ -32,6 +32,10 @@ const User = sequelizeConnection.define("User", {
   tempPassword: {
     type: Sequelize.BOOLEAN,
     allowNull: true
+  },
+  isVerified: {
+    type:Sequelize.BOOLEAN,
+    allowNull: false
   }
 });
 

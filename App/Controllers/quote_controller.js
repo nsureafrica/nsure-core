@@ -2,25 +2,13 @@
 
 //@ts-ignore
 const MotorRates = require("../Rates/motor_rates.json");
-const nodemailer = require("nodemailer");
 const endpointAuthenticator = require("../Utils/endpointAuthenticator");
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    type: "OAuth2",
-    user: process.env.user,
-    clientId: process.env.clientId,
-    clientSecret: process.env.clientSecret,
-    refreshToken: process.env.refreshToken,
-    accessToken: process.env.accessToken,
-    expires: Number.parseInt(process.env.expires, 10)
-  }
-});
+const transporter = require("../Utils/mailService")
 
 module.exports = {
-  getMotorQuote: (req, res) => {
-    var userID = endpointAuthenticator.authenticateUser(req, res);
-    console.log(userID);
+  getMotorQuote: (req, res,response) => {
+    // var userID = endpointAuthenticator.authenticateUser(req, res);
+    // console.log(userID);
     console.log(req.body);
     var quote = [];
     // console.log(MotorRates);
@@ -128,7 +116,7 @@ module.exports = {
         req.body
       )}<p><b>Quote</b></p>${JSON.stringify(quote)}`
     };
-    transporter.sendMail(mailOptions, (err, info) => {
+    transporter.transporter.sendMail(mailOptions, (err, info) => {
       if (err) {
         console.log(err);
       } else {
@@ -136,7 +124,7 @@ module.exports = {
         console.log(notice);
       }
     });
-    res.send(quote);
+    res.status(200).send(quote);
   },
   getMedicalQuote: (req, res) => {
     console.log(req.body);

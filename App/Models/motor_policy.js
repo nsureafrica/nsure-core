@@ -9,7 +9,7 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
     type: Sequelize.FLOAT,
     allowNull: false
   },
-  carModel: {
+  vehicleModel: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -26,11 +26,6 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
     ),
     allowNull: false
   },
-  //will remove this from the db
-  motorcycle: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false
-  },
   vehicleType: {
     type: Sequelize.ENUM("private", "commercial"),
     allowNull: false
@@ -38,7 +33,6 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
   coverType: {
     type: Sequelize.ENUM("comprehensive", "thirdParty"),
     allowNull: false
-
   },
   courtesyCarOption: {
     type: Sequelize.ENUM("6", "10"),
@@ -57,7 +51,8 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
     allowNull: false
   },
   yearOfManufacture: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
   logbookPath: {
     type: Sequelize.STRING,
@@ -98,10 +93,23 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
     type: Sequelize.STRING,
     allowNull: false
   },
-  postalCode: { type: Sequelize.STRING, allowNull: false }
+  postalCode: { type: Sequelize.STRING, allowNull: false },
+
+  //quote or paid policy
+  paid: {
+    type: Sequelize.BOOLEAN, allowNull: false,defaultValue:false
+  },
+  paidAmount: {
+    type: Sequelize.FLOAT,
+    allowNull: true
+  },
+  quoteAmount: {
+    type: Sequelize.FLOAT,
+    allowNull: true
+  }
 });
 
-MotorPolicy.belongsTo(User);
+MotorPolicy.belongsTo(User,{foreignKey:"emailAddress",targetKey:"email"});
 MotorPolicy.hasOne(MotorCategory);
 
 module.exports = MotorPolicy;

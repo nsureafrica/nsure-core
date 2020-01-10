@@ -6,7 +6,7 @@ const Storage = require("../../Storage/storage");
 module.exports = app => {
 // Motor Policies
 app
-.route("/policies/motor/:userId")
+.route("/policies/motor/:email")
 .get(MotorPolicyController.getUserMotorPolicies); // requires auth
 app
 .route("/policies/motor/policy/:policyId")

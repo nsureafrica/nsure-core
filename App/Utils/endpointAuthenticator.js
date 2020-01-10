@@ -9,7 +9,7 @@ module.exports = {
     if (!user) {
       res.status(401).send({ auth: false, message: "Invalid token provided" });
     } else {
-      return user.id;
+      return user;
     }
   },
 

@@ -42,9 +42,9 @@ if (process.env.NODE_ENV === "DEVELOPMENT") {
   // sequelizeConnection.sync({ alter: true });
 }
 if (process.env.NODE_ENV === "TEST") {
-  sequelizeConnection.sync();
+  // sequelizeConnection.sync();
 } else {
-  sequelizeConnection.sync();
+  // sequelizeConnection.sync();
 }
 
 app.get("/", function(req, res) {
