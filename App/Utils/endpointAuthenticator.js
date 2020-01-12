@@ -13,6 +13,6 @@ module.exports = {
     }
   },
 
-  //TODO
-  checkUserPermission:(user,req,res)=>{}
+  //TODO check user permissions 
+  checkUserPermission:(user)=>{}
 };

@@ -5,3 +5,4 @@ public.key
 build
 documentsStorage
 log
+ecosystem.config.js

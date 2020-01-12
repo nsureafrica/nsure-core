@@ -63,7 +63,8 @@ module.exports = {
     })
       .then(response => {
         //Generate quote here
-        quoteController.getMotorQuote(req,res,response)
+        console.log(response)
+        quoteController.getMotorQuote(req,res)
       })
       .catch(err => {
         res.status(500).send(err);

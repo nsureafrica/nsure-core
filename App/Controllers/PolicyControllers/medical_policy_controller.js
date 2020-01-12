@@ -1,8 +1,9 @@
 //@ts-check
 
 const MedicalPolicy = require("../../Models/medical_policy");
-const endpointAuthenticator = require("../../Utils/endpointAuthenticator")
-const CustomFilter = require("./custom_filter_policy_controller")
+const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
+const CustomFilter = require("./custom_filter_policy_controller");
+const QuoteController = require("../quote_controller");
 
 module.exports = {
   //medical policy
@@ -14,7 +15,7 @@ module.exports = {
       }
     })
       .then(policies => {
-        res.send(policies);
+        res.status(200).send(policies);
       })
       .catch(err => {
         res.status(500).send(err);
@@ -38,7 +39,8 @@ module.exports = {
     endpointAuthenticator.authenticateUser(req, res);
     MedicalPolicy.create(req.body)
       .then(response => {
-        res.send(response);
+        console.log(response);
+        QuoteController.getMedicalQuote(req, res);
       })
       .catch(err => {
         res.status(500).send(err);
@@ -59,5 +61,6 @@ module.exports = {
       });
   },
   //custom filter
-  customFilterMedicalPolicy:(req,res)=>CustomFilter.customPolicyFilter(MedicalPolicy,req,res)
+  customFilterMedicalPolicy: (req, res) =>
+    CustomFilter.customPolicyFilter(MedicalPolicy, req, res)
 };
