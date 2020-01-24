@@ -12,7 +12,7 @@ module.exports = {
       }
     })
       .then(policies => {
-        res.send(policies);
+        res.status(200).send(policies);
       })
       .catch(err => {
         res.status(500).send(err);

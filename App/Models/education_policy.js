@@ -1,7 +1,7 @@
 // @ts-check
 
 const Sequelize = require("sequelize");
-const sequelizeConnection = require("../DB/database").sequelizeConnection;
+const sequelizeConnection = require("../DB/database").sequelizeCoCnnection;
 const User = require("./User");
 const uuidv1 = require("uuid/v1");
 

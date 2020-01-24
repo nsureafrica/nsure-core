@@ -9,6 +9,7 @@ const database = require("./DB/database");
 const cors = require("cors");
 const compression = require("compression");
 const helmet = require('helmet')
+const models = require("./Models")
 
 const app = express();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
@@ -39,7 +40,7 @@ database.testConnection();
 
 if (process.env.NODE_ENV === "DEVELOPMENT") {
   console.log(process.env.NODE_ENV);
-  // sequelizeConnection.sync({ alter: true });
+  sequelizeConnection.sync();
 }
 if (process.env.NODE_ENV === "TEST") {
   // sequelizeConnection.sync();

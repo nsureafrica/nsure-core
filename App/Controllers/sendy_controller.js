@@ -37,7 +37,7 @@ module.exports = {
             "recepient_notes": "recepient specific Notes"
           },
           "sender": {
-            "sender_name": "Sendyer Name",
+            "sender_name": sendyFromName,
             "sender_phone": "0709 779 779",
             "sender_email": "sendyer@gmail.com",
             "sender_notes": "Sender specific notes"
