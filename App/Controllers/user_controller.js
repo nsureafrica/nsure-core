@@ -1,9 +1,12 @@
+// @ts-check
+
 const passport = require("passport");
-const jwt = require("../jwt");
+const jwt = require("../Utils/jwt");
 const UserModel = require("../Models/User");
 const bCrypt = require("bcrypt-nodejs");
 const nodemailer = require("nodemailer");
 require("../passport");
+const passwordGenerator = require("./../Utils/passwordGenerator");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -24,7 +27,7 @@ module.exports = {
       "signin",
       { failureRedirect: "/signin" },
       (err, user, info) => {
-        message = info.message;
+        var message = info.message;
         if (!user) {
           res.status(401).send({ message, user });
         } else {
@@ -32,7 +35,7 @@ module.exports = {
           delete user.password;
           delete user.createdAt;
           delete user.updatedAt;
-          token = jwt.sign(user);
+          var token = jwt.sign(user);
           res.status(200).send({ message, token });
         }
       }
@@ -40,7 +43,9 @@ module.exports = {
   },
   signup: (req, res) => {
     // check if user exists
-    UserModel.findOne({ where: { email: req.body.email } })
+    UserModel.findOne({
+      where: { email: req.body.email }
+    })
       .then(user => {
         if (user) {
           res.status(409).send({
@@ -49,7 +54,7 @@ module.exports = {
           });
         } else {
           // hash user password
-          hashedPassword = bCrypt.hashSync(
+          var hashedPassword = bCrypt.hashSync(
             req.body.password,
             bCrypt.genSaltSync(8),
             null
@@ -60,7 +65,9 @@ module.exports = {
             lastName: req.body.lastName,
             phoneNumber: req.body.phoneNumber,
             email: req.body.email,
-            password: hashedPassword
+            password: hashedPassword,
+            tempPassword: false,
+            isVerified:true
           })
             .then(user => {
               var mailOptions = {
@@ -80,18 +87,126 @@ module.exports = {
               delete user.password;
               delete user.createdAt;
               delete user.updatedAt;
-              console.log(notice);
-              res
-                .status(200)
-                .send({ message: "Success", user: user});
+              res.status(200).send({ message: "Success", user: user });
             })
             .catch(error => {
-              res.status(500).send({ message: "Failed1", error: error });
+              res
+                .status(500)
+                .send({ message: "Unable to send email", error: error });
             });
         }
       })
       .catch(error => {
         res.status(500).send({ message: "Failed2", error: error });
       });
+  },
+  forgotPassword: (req, res) => {
+    const newPassword = passwordGenerator.simplePassword();
+    var hashedPassword = bCrypt.hashSync(
+      newPassword,
+      bCrypt.genSaltSync(8),
+      null
+    );
+    UserModel.update(
+      { password: hashedPassword, tempPassword: true },
+      { returning: true, where: { email: req.body.email } }
+    )
+      .then(user => {
+        console.log(user[1]);
+        if (user[1] === 0) {
+          res
+            .status(500)
+            .send({ message: "User not found", error: "User doesnt exist" });
+        } else {
+          UserModel.findOne({ where: { email: req.body.email } })
+            .then(user => {
+              var mailOptions = {
+                from: "technical@nsureafrica.com",
+                to: `${user.email}`,
+                subject: "Password Reset",
+                text: `Hello ${user.firstName} ${user.lastName}, Your Spiresure password has been reset. Your new password is ${newPassword}`
+              };
+              transporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  const notice = `Email sent: ` + info.response;
+                  res.status(200).send({ message: "Email sent" });
+                }
+              });
+            })
+            .catch(err => {
+              res.status(500).send(err);
+            });
+        }
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
+  },
+
+  //change password
+  changePassword: (req, res) => {
+    passport.authenticate(
+      "signin",
+      { failureRedirect: "/signin" },
+      (err, user, info) => {
+        var message = info.message;
+        if (!user) {
+          res.status(401).send({ message, user });
+        } else {
+          //update user with new password
+          var hashedPassword = bCrypt.hashSync(
+            req.body.newPassword,
+            bCrypt.genSaltSync(8),
+            null
+          );
+          UserModel.update(
+            { password: hashedPassword, tempPassword: false },
+            { returning: true, where: { email: req.body.username } }
+          )
+            .then(user => {
+              console.log(user[1]);
+              if (user[1] === 0) {
+                res.status(500).send({
+                  message: "User not found",
+                  error: "User doesnt exist"
+                });
+              } else {
+                UserModel.findOne({ where: { email: req.body.username } })
+                  .then(user => {
+                    console.log(user.email);
+                    var mailOptions = {
+                      from: "technical@nsureafrica.com",
+                      to: `${user.email}`,
+                      subject: "Password Changed",
+                      text: `Hello ${user.firstName} ${user.lastName}, Your Spiresure password has been changed.`
+                    };
+                    transporter.sendMail(mailOptions, (err, info) => {
+                      if (err) {
+                        console.log(err);
+                      } else {
+                        const notice = `Email sent: ` + info.response;
+                      }
+                    });
+                  })
+                  .catch(err => {
+                    res.status(500).send(err);
+                  });
+              }
+            })
+            .catch(err => {
+              res.status(500).send(err);
+            });
+          // delete unnecessary fields
+
+          delete user.password;
+          delete user.createdAt;
+          delete user.updatedAt;
+          var token = jwt.sign(user);
+          res.status(200).send({ message: "Email sent", token });
+        }
+      }
+    )(req, res);
   }
 };

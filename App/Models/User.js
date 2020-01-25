@@ -1,7 +1,8 @@
+//@ts-check
+
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const UserCategory = require("./UserCategory");
-const uuidv1 = require("uuid/v1");
 
 const User = sequelizeConnection.define("User", {
   firstName: {
@@ -29,6 +30,14 @@ const User = sequelizeConnection.define("User", {
     type: Sequelize.STRING,
     allowNull: false,
     min: 7
+  },
+  tempPassword: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true
+  },
+  isVerified: {
+    type:Sequelize.BOOLEAN,
+    allowNull: false
   }
 });
 

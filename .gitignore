@@ -3,3 +3,6 @@ private.key
 public.key
 .env
 build
+documentsStorage
+log
+ecosystem.config.js

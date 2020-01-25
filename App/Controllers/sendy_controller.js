@@ -1,3 +1,6 @@
+// @ts-check
+
+
 const axios = require('axios');
 const sendyBaseUrl = "https://apitest.sendyit.com/v1/";
 const sendyApiKey = process.env.sendyApiKey;
@@ -8,7 +11,7 @@ const sendyFromName = "SpireSure";
 module.exports = {
   //request delivery
   requestDelivery: (req, res) => {
-    axios
+    axios.default
       .post(sendyBaseUrl + "##request", {
         "command": "request",
         "data": {
@@ -34,7 +37,7 @@ module.exports = {
             "recepient_notes": "recepient specific Notes"
           },
           "sender": {
-            "sender_name": "Sendyer Name",
+            "sender_name": sendyFromName,
             "sender_phone": "0709 779 779",
             "sender_email": "sendyer@gmail.com",
             "sender_notes": "Sender specific notes"
@@ -68,16 +71,19 @@ module.exports = {
         "request_token_id": "request_token_id"
       })
       .then(function(response) {
-        console.log(response);
+        console.log(response.data);
+        res.send(response.data)
+
       })
-      .catch(function(error) {
-        console.log(error);
+      .catch(function(err) {
+        console.log(err);
+        res.status(500).send(err)
       });
   },
 
   //complete delivery
   completeDelivery: (req, res) => {
-    axios
+    axios.default
       .post(sendyBaseUrl + "#complete", {
         command: "complete",
         data: {
@@ -100,15 +106,18 @@ module.exports = {
       })
       .then(response => {
         console.log(response);
+        res.send(response.data)
+
       })
       .catch(error => {
         console.log(error);
+        res.send(error)
       });
   },
 
   //track sendy delivery
   trackDelivery: (req, res) => {
-    axios
+    axios.default
       .post(sendyBaseUrl + "#track", {
         command: "track",
         data: {
@@ -120,15 +129,16 @@ module.exports = {
       })
       .then(response => {
         console.log(response);
+        res.send(response)
       })
-      .catch(error => {
-        console.log(error);
+      .catch(err => {
+        res.status(500).send(err)
       });
   },
 
   //Cancel Deliery
   cancelDelivery: (req,res) => {
-    axios
+    axios.default
       .post(sendyBaseUrl + "#cancel", {
         command: "track",
         data: {
@@ -140,9 +150,12 @@ module.exports = {
       })
       .then(response => {
         console.log(response);
+        res.send(response.data)
+
       })
-      .catch(error => {
-        console.log(error);
+      .catch(err => {
+        console.log(err);
+        res.status(500).send(err)
       });
   }
 };

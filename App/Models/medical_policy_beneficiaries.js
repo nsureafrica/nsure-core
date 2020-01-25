@@ -39,6 +39,5 @@ const MedicalBeneficiaries = sequelizeConnection.define(
 );
 
 MedicalBeneficiaries.belongsTo(MedicalPolicy);
-MedicalPolicy.hasMany(MedicalBeneficiaries);
 
 module.exports = MedicalBeneficiaries;
