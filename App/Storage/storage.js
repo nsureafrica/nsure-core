@@ -25,7 +25,7 @@ const claimDocsStorage = multer.diskStorage({
 var logbookStorage = multer.diskStorage({
   destination: function(req,res,cb){
 
-    const logbookStorageDirectory = "./documentsStorage/claimDocuments";
+    const logbookStorageDirectory = "./documentsStorage/logbooks";
     // ensure directory exists
     fs.existsSync(logbookStorageDirectory) || fs.mkdirSync(logbookStorageDirectory);
 

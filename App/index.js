@@ -9,7 +9,6 @@ const database = require("./DB/database");
 const cors = require("cors");
 const compression = require("compression");
 const helmet = require('helmet')
-const models = require("./Models")
 
 const app = express();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
@@ -48,7 +47,7 @@ if (process.env.NODE_ENV === "TEST") {
   // sequelizeConnection.sync();
 }
 
-app.get("/", function(req, res) {
+app.get("/*", function(req, res) {
   res.sendFile(path.join(__dirname, "../build", "index.html"));
   //log number of visits
 });
