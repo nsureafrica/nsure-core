@@ -8,7 +8,7 @@ const path = require("path");
 const database = require("./DB/database");
 const cors = require("cors");
 const compression = require("compression");
-const helmet = require('helmet')
+const helmet = require("helmet");
 
 const app = express();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
@@ -16,7 +16,8 @@ const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 const morgan = require("./Utils/logger");
 morgan(app);
 
-app.use(helmet())
+//add middleware here
+app.use(helmet());
 app.use(compression());
 app.use(cors());
 app.use(express.json());
