@@ -4,15 +4,15 @@ const Transporter = require("../../Utils/mailService")
 //@ts-ignore
 const MotorRates = require("../../Rates/motor_rates.json")
 module.exports = {
-    getMotorQuote: (req, res, response) => {
-        // var userID = endpointAuthenticator.authenticateUser(req, res);
+    getMotorQuote: (req, res ,sequelizeResponse) => {
+      // var userID = endpointAuthenticator.authenticateUser(req, res);
         // console.log(userID);
-        console.log(req.body);
         var quote = [];
         // console.log(MotorRates);
         for (var i = 0; i < MotorRates.rates.length; i++) {
           const rates = MotorRates.rates[i];
           var quoteObj = {
+            policyId:sequelizeResponse.dataValues.id,
             companyName: MotorRates.rates[i].companyName,
             amount: 0
           };
@@ -107,7 +107,7 @@ module.exports = {
         // send email to user if logged in
         var mailOptions = {
           from: "technical@nsureafrica.com",
-          to: `${req.body.email}, nyaranam@gmail.com`,
+          to: req.body.emailAddress,
           subject: "Motor Insurance Quote",
           html: `<b>Dear Customer,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
             req.body

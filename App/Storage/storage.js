@@ -25,7 +25,7 @@ const claimDocsStorage = multer.diskStorage({
 var logbookStorage = multer.diskStorage({
   destination: function(req,res,cb){
 
-    const logbookStorageDirectory = "./documentsStorage/claimDocuments";
+    const logbookStorageDirectory = "./documentsStorage/logbooks";
     // ensure directory exists
     fs.existsSync(logbookStorageDirectory) || fs.mkdirSync(logbookStorageDirectory);
 
@@ -40,10 +40,10 @@ var logbookStorage = multer.diskStorage({
 module.exports = {
    uploadClaimDocs:multer({
     storage: claimDocsStorage,
-    limits: { fileSize: 1000000 }
+    limits: { fileSize: 2097152 }
   }),
   uploadLogbook:multer({
     storage: logbookStorage,
-    limits: {fileSize: 100000}
+    limits: {fileSize:2097152}
   })
 };

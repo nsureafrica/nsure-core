@@ -61,12 +61,12 @@ module.exports = {
       yearOfManufacture: req.body.yearOfManufacture,
       quoteAmount: 0
     })
-      .then(response => {
+      .then(sequelizeResponse => {
         //Generate quote here
-        console.log(response)
-        quoteController.getMotorQuote(req,res)
+        quoteController.getMotorQuote(req,res,sequelizeResponse)
       })
       .catch(err => {
+        console.log(err)
         res.status(500).send(err);
       });
   },

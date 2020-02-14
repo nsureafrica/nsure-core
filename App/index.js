@@ -8,8 +8,7 @@ const path = require("path");
 const database = require("./DB/database");
 const cors = require("cors");
 const compression = require("compression");
-const helmet = require('helmet')
-const models = require("./Models")
+const helmet = require("helmet");
 
 const app = express();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
@@ -17,7 +16,8 @@ const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
 const morgan = require("./Utils/logger");
 morgan(app);
 
-app.use(helmet())
+//add middleware here
+app.use(helmet());
 app.use(compression());
 app.use(cors());
 app.use(express.json());
@@ -48,7 +48,7 @@ if (process.env.NODE_ENV === "TEST") {
   // sequelizeConnection.sync();
 }
 
-app.get("/", function(req, res) {
+app.get("/*", function(req, res) {
   res.sendFile(path.join(__dirname, "../build", "index.html"));
   //log number of visits
 });
