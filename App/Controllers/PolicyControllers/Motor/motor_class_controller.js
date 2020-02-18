@@ -1,17 +1,22 @@
 //@ts-check
 const chalk = require("chalk");
-const MotorRates = require("../../../Models/motor_rates");
+const MotorClass = require("../../../Models/motor_vehicle_class");
 
 module.exports = {
   getMotorClass: (req, res) => {
     // endpointAuthenticator.authenticateUser(req, res);
-    MotorRates.findAll({
-      where: {
-        id: req.params.id
-      }
-    })
+    MotorClass.findAll()
       .then(classes => {
-        console.log(chalk.blue(classes));
+        res.send(classes);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
+  },
+  getOneMotorClass: (req, res) => {
+    // endpointAuthenticator.authenticateUser(req, res);
+    MotorClass.findAll()
+      .then(classes => {
         res.send(classes);
       })
       .catch(err => {
@@ -21,7 +26,7 @@ module.exports = {
   //Create a motor class
   createMotorClass: (req, res) => {
     // endpointAuthenticator.authenticateUser(req, res);
-    MotorRates.create(req.body)
+    MotorClass.create(req.body)
       .then(response => {
         res.send(response);
       })

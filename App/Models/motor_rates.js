@@ -3,7 +3,7 @@
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const underWriters = require("./underwriters");
-const vehicleClass = require("./vehicleClass");
+const vehicleClass = require("./motor_vehicle_class");
 const MotorRates = sequelizeConnection.define("MotorRates", {
   basic: {
     type: Sequelize.DOUBLE,
@@ -40,11 +40,6 @@ const MotorRates = sequelizeConnection.define("MotorRates", {
     allowNull: false,
     defaultValue: 0
   },
-  fixedAmount: {
-    type: Sequelize.DOUBLE,
-    allowNull: false,
-    defaultValue: 0
-  },
   roadsideAssistance: {
     type: Sequelize.DOUBLE,
     allowNull: false,
@@ -60,7 +55,12 @@ const MotorRates = sequelizeConnection.define("MotorRates", {
     allowNull: false
   },
   coverType: {
-    type: Sequelize.ENUM("comprehensive", "thirdParty")
+    type: Sequelize.ENUM("comprehensive", "thirdParty"),
+    allowNull: false
+  },
+  natureOfGoods:{
+    type: Sequelize.ENUM("comprehensive", "thirdParty"),
+    allowNull: true
   }
 });
 MotorRates.belongsTo(underWriters);
