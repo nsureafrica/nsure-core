@@ -14,7 +14,7 @@ const User = sequelizeConnection.define("User", {
     allowNull: false
   },
   phoneNumber: {
-    type: Sequelize.STRING(10),
+    type: Sequelize.STRING(12),
     allowNull: false,
     unique: true
   },

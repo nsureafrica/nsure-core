@@ -94,7 +94,7 @@ module.exports = {
                 order_status: sendyResponseData.order_status,
                 pick_up_date: sendyResponseData.pick_up_date,
                 drop_shipping_order: sendyResponseData.drop_shipping_order,
-                pairing_response: JSON.stringify(sendyResponseData.pairing_response),
+                pairing_response: "JSON.stringify(sendyResponseData.pairing_response)",
                 tracking_link:
                  sendyResponseData.tracking_link,
                 request_token_id: sendyResponseData.request_token_id,

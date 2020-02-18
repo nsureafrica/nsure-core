@@ -14,12 +14,12 @@ module.exports = {
           var quoteObj = {
             policyId:sequelizeResponse.dataValues.id,
             companyName: MotorRates.rates[i].companyName,
-            amount: 0
+            amount: Math.floor(Math.random() * 100000)
           };
           // console.log(MotorRates.rates[i].companyName);
-          switch (req.body.coverType) {
+          switch (req.body.coverType.toLowerCase()) {
             case "comprehensive":
-              switch (req.body.category) {
+              switch (req.body.category.toLowerCase()) {
                 case "motorcycle":
                   quoteObj.amount = rates.motorcycles.comprehensive;
                   break;
@@ -35,7 +35,7 @@ module.exports = {
                       req.body.vehicleEstimatedValue) /
                     100;
                   break;
-                case "heavyMachinery":
+                case "heavymachinery":
                   quoteObj.amount =
                     (rates.heavyMachinery.comprehensive *
                       req.body.vehicleEstimatedValue) /
@@ -46,23 +46,23 @@ module.exports = {
                     (rates.tankers.comprehensive * req.body.vehicleEstimatedValue) /
                     100;
                   break;
-                case "PMO":
+                case "pmo":
                   quoteObj.amount =
                     (rates.PMO.comprehensive * req.body.vehicleEstimatedValue) /
                     100;
                   break;
-                case "specialTypes":
+                case "specialtypes":
                   quoteObj.amount =
                     (rates.specialTypes.comprehensive *
                       req.body.vehicleEstimatedValue) /
                     100;
                   break;
-                case "PSV":
+                case "psv":
                   quoteObj.amount =
                     (rates.PSV.comprehensive * req.body.vehicleEstimatedValue) /
                     100;
                   break;
-                case "drivingSchools":
+                case "drivingschools":
                   quoteObj.amount =
                     (rates.drivingSchools.comprehensive *
                       req.body.vehicleEstimatedValue) /
@@ -70,8 +70,8 @@ module.exports = {
                   break;
               }
               break;
-            case "thirdParty":
-              switch (req.body.category) {
+            case "thirdparty":
+              switch (req.body.category.toLowerCase()) {
                 case "motorcycle":
                   quoteObj.amount = rates.motorcycles.thirdParty;
                   break;

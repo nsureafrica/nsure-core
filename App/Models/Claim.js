@@ -1,3 +1,4 @@
+'use strict';
 const Sequelize = require("sequelize");
 const User = require("./User");
 const PolicyType = require("./policy_type");
