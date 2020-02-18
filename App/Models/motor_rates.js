@@ -2,7 +2,7 @@
 
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
-const underWriters = require("./undewriters");
+const underWriters = require("./underwriters");
 const vehicleClass = require("./vehicleClass");
 const MotorRates = sequelizeConnection.define("MotorRates", {
   basic: {
@@ -63,6 +63,6 @@ const MotorRates = sequelizeConnection.define("MotorRates", {
     type: Sequelize.ENUM("comprehensive", "thirdParty")
   }
 });
-MotorRates.belongTo(underWriters);
-MotorRates.belongTo(vehicleClass);
+MotorRates.belongsTo(underWriters);
+MotorRates.belongsTo(vehicleClass);
 module.exports = MotorRates;

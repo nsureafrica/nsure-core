@@ -3,7 +3,7 @@
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 
-const MotorRates = sequelizeConnection.define("MotorRates", {
+const Underwriters = sequelizeConnection.define("Underwriters", {
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -25,4 +25,4 @@ const MotorRates = sequelizeConnection.define("MotorRates", {
     allowNull: false
   }
 });
-module.exports = MotorRates;
+module.exports = Underwriters;

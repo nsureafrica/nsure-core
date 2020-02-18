@@ -57,7 +57,7 @@ module.exports = {
           var hashedPassword = bCrypt.hashSync(
             req.body.password,
             bCrypt.genSaltSync(8),
-            null
+            
           );
           // create user
           UserModel.create({
@@ -105,7 +105,7 @@ module.exports = {
     var hashedPassword = bCrypt.hashSync(
       newPassword,
       bCrypt.genSaltSync(8),
-      null
+      
     );
     UserModel.update(
       { password: hashedPassword, tempPassword: true },
@@ -159,7 +159,7 @@ module.exports = {
           var hashedPassword = bCrypt.hashSync(
             req.body.newPassword,
             bCrypt.genSaltSync(8),
-            null
+            
           );
           UserModel.update(
             { password: hashedPassword, tempPassword: false },

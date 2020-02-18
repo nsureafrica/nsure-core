@@ -5,7 +5,7 @@ const Transporter = require("../../Utils/mailService")
 const MotorRates = require("../../Rates/motor_rates.json")
 module.exports = {
     getMotorQuote: (req, res ,sequelizeResponse) => {
-      // var userID = endpointAuthenticator.authenticateUser(req, res);
+        // var userID = endpointAuthenticator.authenticateUser(req, res);
         // console.log(userID);
         var quote = [];
         // console.log(MotorRates);

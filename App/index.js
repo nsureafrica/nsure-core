@@ -40,12 +40,12 @@ database.testConnection();
 
 if (process.env.NODE_ENV === "DEVELOPMENT") {
   console.log(process.env.NODE_ENV);
-  // sequelizeConnection.sync({alter:true});
+  sequelizeConnection.sync({alter:true});
 }
 if (process.env.NODE_ENV === "TEST") {
-  // sequelizeConnection.sync({alter:true});
+  sequelizeConnection.sync({force:true});
 } else {
-  // sequelizeConnection.sync({alter:true});
+  sequelizeConnection.sync({alter:true});
 }
 
 app.get("/*", function(req, res) {

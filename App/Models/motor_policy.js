@@ -61,11 +61,13 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
 
   politicalViolence: {
     type: Sequelize.BOOLEAN,
-    allowNull: true
+    allowNull: true,
+    defaultValue: false
   },
   excessProtector: {
     type: Sequelize.BOOLEAN,
-    allowNull: true
+    allowNull: true,
+    defaultValue: false
   },
 
   //CONTACT INFORMATION

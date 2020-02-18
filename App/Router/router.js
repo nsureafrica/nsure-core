@@ -84,4 +84,16 @@ module.exports = app => {
   // Claims
   const claimRoutes = require("./claimRoutes");
   claimRoutes(app);
+
+  // underwriter routes
+  const underwriterRoutes = require('./underwritter_routes')
+  underwriterRoutes(app)
+  
+  //motor class routes
+  const motorClassRoutes = require('./PolicyRoutes/Motor/motor_class_routes')
+  motorClassRoutes(app)
+
+  // motor rates routes
+  const motorRatesRoutes = require('./PolicyRoutes/Motor/motor_rates_routes')
+  motorRatesRoutes(app)
 };
