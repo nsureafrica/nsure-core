@@ -49,7 +49,7 @@ const Sendy = sequelizeConnection.define("Sendy", {
         allowNull: true
     },
     pairing_response:{
-        type:Sequelize.STRING(),
+        type:Sequelize.TEXT,
         allowNull:true
     },
     tracking_link: {

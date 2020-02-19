@@ -1,117 +1,125 @@
 //@ts-check
 
-const Transporter = require("../../Utils/mailService")
-//@ts-ignore
-const MotorRates = require("../../Rates/motor_rates.json")
+const Transporter = require("../../Utils/mailService");
+const MotorRates = require("./../../Models/motor_rates");
+const UnderwriterModel = require("../../Models/underwriters");
+const chalk =require('chalk');
+
+const senderEmailAdress = process.env.senderEmailAdress
+//get motor rates model
 module.exports = {
-    getMotorQuote: (req, res ,sequelizeResponse) => {
-        // var userID = endpointAuthenticator.authenticateUser(req, res);
-        // console.log(userID);
-        var quote = [];
-        // console.log(MotorRates);
-        for (var i = 0; i < MotorRates.rates.length; i++) {
-          const rates = MotorRates.rates[i];
-          var quoteObj = {
-            policyId:sequelizeResponse.dataValues.id,
-            companyName: MotorRates.rates[i].companyName,
-            amount: Math.floor(Math.random() * 100000)
-          };
-          // console.log(MotorRates.rates[i].companyName);
-          switch (req.body.coverType.toLowerCase()) {
-            case "comprehensive":
-              switch (req.body.category.toLowerCase()) {
-                case "motorcycle":
-                  quoteObj.amount = rates.motorcycles.comprehensive;
-                  break;
-                case "private":
-                  quoteObj.amount =
-                    (rates.motorPrivate.comprehensive *
-                      req.body.vehicleEstimatedValue) /
-                    100;
-                  break;
-                case "commercial":
-                  quoteObj.amount =
-                    (rates.motorCommercial.comprehensive *
-                      req.body.vehicleEstimatedValue) /
-                    100;
-                  break;
-                case "heavymachinery":
-                  quoteObj.amount =
-                    (rates.heavyMachinery.comprehensive *
-                      req.body.vehicleEstimatedValue) /
-                    100;
-                  break;
-                case "tankers":
-                  quoteObj.amount =
-                    (rates.tankers.comprehensive * req.body.vehicleEstimatedValue) /
-                    100;
-                  break;
-                case "pmo":
-                  quoteObj.amount =
-                    (rates.PMO.comprehensive * req.body.vehicleEstimatedValue) /
-                    100;
-                  break;
-                case "specialtypes":
-                  quoteObj.amount =
-                    (rates.specialTypes.comprehensive *
-                      req.body.vehicleEstimatedValue) /
-                    100;
-                  break;
-                case "psv":
-                  quoteObj.amount =
-                    (rates.PSV.comprehensive * req.body.vehicleEstimatedValue) /
-                    100;
-                  break;
-                case "drivingschools":
-                  quoteObj.amount =
-                    (rates.drivingSchools.comprehensive *
-                      req.body.vehicleEstimatedValue) /
-                    100;
-                  break;
+  getMotorQuote: (req, res) => {
+    var classId = req.body.classId;
+    var vehicleType = req.body.vehicleType;
+    var coverType = req.body.coverType;
+    var estimatedCarValue = req.body.estimatedCarValue;
+    var roadsideAssistance = req.body.roadsideAssistance;
+    var courtesyCar = req.body.courtesyCar;
+    var politicalViolenceTerrorism = req.body.politicalViolenceTerrorism;
+    var excessProtector = req.body.excessProtector;
+    var noOfSeats = req.body.noOfSeats
+    var natureOfGoods;
+    if (req.body.natureOfGoods == "") {
+      natureOfGoods = null;
+    } else {
+      natureOfGoods = req.body.natureOfGoods;
+    }
+
+    MotorRates.findAll({
+      order: [["UnderwriterId", "ASC"]],
+      include: [UnderwriterModel],
+      where: {
+        VehicleClassId: classId,
+        vehicleType: vehicleType,
+        coverType: coverType,
+        natureOfGoods: natureOfGoods
+      }
+    })
+      .then(rates => {
+        var quoteObjectsArray = [];
+        rates.map(rate => {
+          if (coverType == "thirdParty") {
+            var quoteAmount = rate.minimumPremium;
+            var quoteObject = {
+              quoteAmount: quoteAmount,
+              basic: 0,
+              excessProtector: 0,
+              politicalViolenceTerrorism: 0,
+              passengerLegalLiability: 0,
+              roadsideAssistance: 0,
+              courtesyCar: 0,
+              underwriterName: rate.Underwriter.name,
+              underwriterLogo: rate.Underwriter.logo
+            };
+            quoteObjectsArray.push(quoteObject);
+          } else {
+            //calculate basic
+            var basicAmount = 0
+            var tempAmount = (estimatedCarValue * rate.basic) / 100;
+            if (tempAmount < rate.minimumPremium) {
+              basicAmount = rate.minimumPremium;
+            } else {
+              basicAmount = tempAmount;
+            }
+            //calculate excessProtector
+            var excessProtectorAmount = 0;
+            if (excessProtector) {
+                tempAmount = (estimatedCarValue * rate.excessProtector) / 100;
+              if (tempAmount < rate.minimumExcess) {
+                excessProtectorAmount = rate.minimumExcess;
+              } else {
+                excessProtectorAmount = tempAmount;
               }
-              break;
-            case "thirdparty":
-              switch (req.body.category.toLowerCase()) {
-                case "motorcycle":
-                  quoteObj.amount = rates.motorcycles.thirdParty;
-                  break;
-                case "private":
-                  quoteObj.amount = rates.motorPrivate.thirdParty;
-                  break;
-                case "commercial":
-                  quoteObj.amount = rates.motorCommercial.thirdParty;
-                  break;
-                case "heavyMachinery":
-                  quoteObj.amount = rates.heavyMachinery.thirdParty;
-                  break;
-                case "tankers":
-                  quoteObj.amount = rates.tankers.thirdParty;
-                  break;
-                case "PMO":
-                  quoteObj.amount = rates.PMO.thirdParty;
-                  break;
-                case "specialTypes":
-                  quoteObj.amount = rates.specialTypes.thirdParty;
-                  break;
-                case "PSV":
-                  quoteObj.amount = rates.PSV.thirdParty;
-                  break;
-                case "drivingSchools":
-                  quoteObj.amount = rates.drivingSchools.thirdParty;
-                  break;
+            }
+            //calculate PLT
+            var politicalViolenceTerrorismAmount = 0;
+            if (politicalViolenceTerrorism) {
+              tempAmount =
+                (estimatedCarValue * rate.politicalViolenceTerrorism) / 100;
+              if (tempAmount < rate.minimumPremium) {
+                politicalViolenceTerrorismAmount =
+                  rate.minimumPoliticalViolenceTerrorism;
+              } else {
+                politicalViolenceTerrorismAmount = tempAmount;
               }
-              break;
+            }
+            //calculate pll
+            var passengerLegalLiability = passengerLegalLiability * noOfSeats
+            //Assign Roadside  Asssistance
+            var roadsideAssistanceAmount = 0;
+            if (roadsideAssistance) {
+              roadsideAssistanceAmount = rate.roadsideAssistance;
+            }
+            //Courtesy Car
+            var courtesyCarAmount = 0;
+            if (courtesyCar) {
+              courtesyCarAmount = rate.courtesyCar;
+            }
+
+            quoteAmount = courtesyCarAmount + roadsideAssistanceAmount + politicalViolenceTerrorismAmount + excessProtectorAmount + basicAmount
+            var quoteObject = {
+              quoteAmount: quoteAmount,
+              basic: basicAmount,
+              excessProtector: excessProtectorAmount,
+              politicalViolenceTerrorism: politicalViolenceTerrorismAmount,
+              passengerLegalLiability: 0,
+              roadsideAssistance: roadsideAssistanceAmount,
+              courtesyCar: courtesyCarAmount,
+              underwriterName: rate.Underwriter.name,
+              underwriterLogo: rate.Underwriter.logo
+            };
+            quoteObjectsArray.push(quoteObject);
+
           }
-          quote.push(quoteObj);
-        }
-        // send email to user if logged in
+        });
+        res.send(quoteObjectsArray);
         var mailOptions = {
-          from: "technical@nsureafrica.com",
-          to: req.body.emailAddress,
+          from: senderEmailAdress,
+          to: "allanmageto@yopmail.com",
           subject: "Motor Insurance Quote",
           html: `<b>Dear Customer,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
             req.body
-          )}<p><b>Quote</b></p>${JSON.stringify(quote)}`
+          )}<p><b>Quote</b></p>${JSON.stringify(quoteObjectsArray)}`
         };
         Transporter.transporter.sendMail(mailOptions, (err, info) => {
           if (err) {
@@ -122,6 +130,9 @@ module.exports = {
             console.log(notice);
           }
         });
-        res.status(200).send(quote);
-      }
-}
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
+  }
+};
