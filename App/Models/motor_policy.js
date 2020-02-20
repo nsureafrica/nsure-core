@@ -117,6 +117,11 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
   quoteAmount: {
     type: Sequelize.FLOAT,
     allowNull: true
+  },
+  active: {
+    type: Sequelize.BOOLEAN, 
+    allowNull: false,
+    defaultValue: false
   }
 });
 

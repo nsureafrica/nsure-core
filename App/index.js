@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === "DEVELOPMENT") {
 else if (process.env.NODE_ENV === "TEST") {
   // sequelizeConnection.sync({force:true});
 } else if(process.env.NODE_ENV === "UAT"){
-  // sequelizeConnection.sync({alter:true});
+  sequelizeConnection.sync();
 }
 
 app.get("/*", function(req, res) {

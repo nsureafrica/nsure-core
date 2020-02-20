@@ -48,8 +48,8 @@ module.exports = {
               passengerLegalLiability: 0,
               roadsideAssistance: 0,
               courtesyCar: 0,
-              underwriterName: rate.Underwriter.name,
-              underwriterLogo: rate.Underwriter.logo
+              underwriter: rate.Underwriter,
+
             };
             quoteObjectsArray.push(quoteObject);
           } else {
@@ -105,8 +105,7 @@ module.exports = {
               passengerLegalLiability: 0,
               roadsideAssistance: roadsideAssistanceAmount,
               courtesyCar: courtesyCarAmount,
-              underwriterName: rate.Underwriter.name,
-              underwriterLogo: rate.Underwriter.logo
+              underwriter: rate.Underwriter,
             };
             quoteObjectsArray.push(quoteObject);
 
