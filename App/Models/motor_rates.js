@@ -59,7 +59,7 @@ const MotorRates = sequelizeConnection.define("MotorRates", {
     allowNull: false
   },
   natureOfGoods:{
-    type: Sequelize.ENUM("comprehensive", "thirdParty"),
+    type: Sequelize.ENUM("generalCartage", "ownGoods"),
     allowNull: true
   }
 });

@@ -3,7 +3,6 @@
 const Transporter = require("../../Utils/mailService");
 const MotorRates = require("./../../Models/motor_rates");
 const UnderwriterModel = require("../../Models/underwriters");
-const chalk =require('chalk');
 
 const senderEmailAdress = process.env.senderEmailAdress
 //get motor rates model
