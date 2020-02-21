@@ -30,11 +30,31 @@ const MedicalRates = sequelizeConnection.define("MedicalRate", {
     type: Sequelize.DOUBLE,
     allowNull: false
   },
+  spouseInpatientAnnualSenior: {
+    type: Sequelize.DOUBLE,
+    allowNull: false
+  },
   principalOutpatientAnnualYouth:{
     type: Sequelize.DOUBLE,
     allowNull: false
   },
   spouseOutpatientAnnualYouth:{
+    type: Sequelize.DOUBLE,
+    allowNull: false
+  },
+  principalOutpatientAnnualMiddleAge:{
+    type: Sequelize.DOUBLE,
+    allowNull: false
+  },
+  spouseOutpatientAnnualMiddleAge:{
+    type: Sequelize.DOUBLE,
+    allowNull: false
+  },
+  principalOutpatientAnnualSenior:{
+    type: Sequelize.DOUBLE,
+    allowNull: false
+  },
+  spouseOutpatientAnnualSenior:{
     type: Sequelize.DOUBLE,
     allowNull: false
   },

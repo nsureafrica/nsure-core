@@ -21,8 +21,8 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
   repartriationOfMortalRemains: {
     type: Sequelize.BOOLEAN
   },
-  accompanyingFamilyMember: {
-    type: Sequelize.STRING,
+  accompaniedByFamilyMember: {
+    type: Sequelize.BOOLEAN,
     allowNull: true
   },
 
@@ -32,7 +32,7 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
     type: Sequelize.BOOLEAN,
     allowNull: false
   },
-  legalAssisntace: {
+  legalAssistance: {
     type: Sequelize.BOOLEAN,
     allowNull: false
   },
@@ -48,10 +48,6 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
   },
   destination: {
     type: Sequelize.STRING,
-    allowNull: false
-  },
-  noOfDays: {
-    type: Sequelize.INTEGER,
     allowNull: false
   },
   startDate: {
@@ -100,11 +96,6 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
     allowNull: true,
     defaultValue: false
   },
-  minor:{
-    type: Sequelize.BOOLEAN,
-    allowNull: true,
-    defaultValue: false
-  }
 });
 
 TravelPolicy.belongsTo(User);

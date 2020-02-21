@@ -42,7 +42,6 @@ module.exports = {
       vehicleEstimatedValue: req.body.vehicleEstimatedValue,
       vehicleModelAndMake: req.body.vehicleModelAndMake,
       vehicleType: req.body.vehicleType,
-      category: req.body.category,
       coverType: req.body.coverType,
       courtesyCarOption: req.body.courtesyCarOption,
       registrationNumber: req.body.registrationNumber,

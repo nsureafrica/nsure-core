@@ -17,13 +17,14 @@ module.exports = {
     var politicalViolenceTerrorism = req.body.politicalViolenceTerrorism;
     var excessProtector = req.body.excessProtector;
     var noOfSeats = req.body.noOfSeats
-    var natureOfGoods;
-    if (req.body.natureOfGoods == "") {
+    var natureOfGoods = req.body.natureOfGoods;
+    if (req.body.natureOfGoods === "") {
       natureOfGoods = null;
     } else {
       natureOfGoods = req.body.natureOfGoods;
     }
 
+    console.log(natureOfGoods)
     MotorRates.findAll({
       order: [["UnderwriterId", "ASC"]],
       include: [UnderwriterModel],
@@ -83,7 +84,8 @@ module.exports = {
               }
             }
             //calculate pll
-            var passengerLegalLiability = passengerLegalLiability * noOfSeats
+            var passengerLegalLiability = rate.passengerLegalLiability * noOfSeats
+
             //Assign Roadside  Asssistance
             var roadsideAssistanceAmount = 0;
             if (roadsideAssistance) {
@@ -101,7 +103,7 @@ module.exports = {
               basic: basicAmount,
               excessProtector: excessProtectorAmount,
               politicalViolenceTerrorism: politicalViolenceTerrorismAmount,
-              passengerLegalLiability: 0,
+              passengerLegalLiability: passengerLegalLiability,
               roadsideAssistance: roadsideAssistanceAmount,
               courtesyCar: courtesyCarAmount,
               underwriter: rate.Underwriter,
