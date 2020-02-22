@@ -81,7 +81,7 @@ module.exports = app => {
   claimRoutes(app);
 
   // underwriter routes
-  const underwriterRoutes = require('./underwritter_routes')
+  const underwriterRoutes = require("./underwritter_routes")
   underwriterRoutes(app)
   
   //motor class routes
@@ -89,15 +89,15 @@ module.exports = app => {
   motorClassRoutes(app)
 
   // motor rates routes
-  const motorRatesRoutes = require('./PolicyRoutes/Motor/motor_rates_routes')
+  const motorRatesRoutes = require("./PolicyRoutes/Motor/motor_rates_routes")
   motorRatesRoutes(app)
 
   // medical rates routes
-  const medicalRatesRoutes = require('./RateRoutes/medical_rates_routes')
+  const medicalRatesRoutes = require("./RateRoutes/medical_rates_routes")
   medicalRatesRoutes(app)
 
   //medical plans routes
-  const medicalPlansRoutes = require('./RateRoutes/medical_plans_routes')
+  const medicalPlansRoutes = require("./RateRoutes/medical_plans_routes")
   medicalPlansRoutes(app)
 
 };
