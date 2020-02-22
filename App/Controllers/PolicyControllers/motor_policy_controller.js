@@ -40,9 +40,8 @@ module.exports = {
     });
     MotorPolicy.create({
       vehicleEstimatedValue: req.body.vehicleEstimatedValue,
-      vehicleModel: req.body.vehicleModel,
+      vehicleModelAndMake: req.body.vehicleModelAndMake,
       vehicleType: req.body.vehicleType,
-      category: req.body.category,
       coverType: req.body.coverType,
       courtesyCarOption: req.body.courtesyCarOption,
       registrationNumber: req.body.registrationNumber,
@@ -59,11 +58,17 @@ module.exports = {
       paid: req.body.paid,
       paidAmount: req.body.paidAmount,
       yearOfManufacture: req.body.yearOfManufacture,
-      quoteAmount: 0
+      numberOfSeats:req.body.numberOfSeats,
+      engineCapacity:req.body.engineCapacity,
+      kraPin: req.body.kraPin,
+      quoteAmount: req.body.quoteAmount,
+      idNumber: req.body.idNumber,
+      UnderwriterId: req.body.underWriter,
+      VehicleClassId: req.body.vehicleClass
     })
       .then(sequelizeResponse => {
         //Generate quote here
-        quoteController.getMotorQuote(req,res,sequelizeResponse)
+        res.status(200).send(sequelizeResponse)
       })
       .catch(err => {
         console.log(err)

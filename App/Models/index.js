@@ -1,29 +1,26 @@
-'use strict';
+var fs        = require('fs')
+, path      = require('path')
+, Sequelize = require('sequelize')
+, lodash    = require('lodash')
+, sequelize = require('../DB/database').sequelizeConnection
+, db        = {} 
 
-var fs        = require('fs');
-var path      = require('path');
-var sequelize = require("../DB/database")
-var basename  = path.basename(__filename);
-var db        = {};
+fs.readdirSync(__dirname)
+.filter(function(file) {
+  return (file.indexOf('.') !== 0) && (file !== 'index.js')
+})
+.forEach(function(file) {
+  var model = sequelize.import(path.join(__dirname, file))
+  db[model.name] = model
+})
 
+Object.keys(db).forEach(function(modelName) {
+if (db[modelName].options.hasOwnProperty('associate')) {
+  db[modelName].options.associate(db)
+}
+})
 
-
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(file => {
-    var model = sequelize['define'](path.join(__dirname, file));
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
-db.sequelize = sequelize;
-
-module.exports = db;
+module.exports = lodash.extend({
+sequelize: sequelize,
+Sequelize: Sequelize
+}, db)

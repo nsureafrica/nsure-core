@@ -2,7 +2,6 @@
 
 const UserController = require("../Controllers/user_controller");
 const PolicyController = require("../Controllers/policy_controller");
-const QuoteController = require("../Controllers/quote_controller");
 
 module.exports = app => {
   /**
@@ -46,14 +45,10 @@ module.exports = app => {
   //Motor Policies
   const motorPolicyRoutes = require("./PolicyRoutes/motor_policy_routes");
   motorPolicyRoutes(app);
-  // motor quote
-  app.route("/quotes/motor/").post(QuoteController.getMotorQuote);
-  // medical quote
-  // app.route("/quotes/medical").post(QuoteController.getMedicalQuote);
-  // education quote
-  // app.route("quotes/education").post(QuoteController.getEducationQuote);
-  // last respect quote
-  // app.route("quotes/last-respect").post(QuoteController.getLastRespectQuote);
+
+  //Quotes
+  const quotesRoutes = require("./QuoteRoutes/quoteRoutes")
+  quotesRoutes(app);
 
   // Medical Policies
   const medicalPolicyRoutes = require("./PolicyRoutes/medical_policy_routes");
@@ -84,4 +79,25 @@ module.exports = app => {
   // Claims
   const claimRoutes = require("./claimRoutes");
   claimRoutes(app);
+
+  // underwriter routes
+  const underwriterRoutes = require('./underwritter_routes')
+  underwriterRoutes(app)
+  
+  //motor class routes
+  const motorClassRoutes = require('./PolicyRoutes/Motor/motor_class_routes')
+  motorClassRoutes(app)
+
+  // motor rates routes
+  const motorRatesRoutes = require('./PolicyRoutes/Motor/motor_rates_routes')
+  motorRatesRoutes(app)
+
+  // medical rates routes
+  const medicalRatesRoutes = require('./RateRoutes/medical_rates_routes')
+  medicalRatesRoutes(app)
+
+  //medical plans routes
+  const medicalPlansRoutes = require('./RateRoutes/medical_plans_routes')
+  medicalPlansRoutes(app)
+
 };

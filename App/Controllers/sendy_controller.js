@@ -1,6 +1,7 @@
 // @ts-check
 
 const axios = require("axios");
+const chalk = require("chalk");
 const sendyBaseUrl = process.env.sendyBaseUrl;
 const sendyApiKey = process.env.sendyApiKey;
 const sendyApiUsername = process.env.sendyUsername;
@@ -18,6 +19,7 @@ module.exports = {
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${req.body.to_lat},${req.body.to_long}&key=${process.env.googleMapsApiKey}`
       )
       .then(googleMapsResponse => {
+        console.log(chalk.blueBright(googleMapsResponse.data.results[0].formatted_address));
         axios.default
           .post(sendyBaseUrl + "##request", {
             command: "request",
@@ -70,7 +72,7 @@ module.exports = {
                     height: 10,
                     width: 200,
                     length: 30,
-                    item_name: "Laptop"
+                    item_name: "Insuarance Policy"
                   }
                 ]
               }
@@ -82,6 +84,7 @@ module.exports = {
             if (sendyResponse.data.status) {
               //SAVE IT!
               const sendyResponseData = sendyResponse.data.data;
+              console.log(sendyResponseData)
               SendyModel.create({
                 order_no: sendyResponseData.order_no,
                 amount: sendyResponseData.amount,
@@ -96,17 +99,17 @@ module.exports = {
                 drop_shipping_order: sendyResponseData.drop_shipping_order,
                 pairing_response: JSON.stringify(sendyResponseData.pairing_response),
                 tracking_link:
-                 sendyResponseData.tracking_link,
+                sendyResponseData.tracking_link,
                 request_token_id: sendyResponseData.request_token_id,
                 policyId:req.body.policy_id,
                 PolicyTypeId:req.body.policy_type_id
               })
-                .then(sequelizeResponse => {
-                  res.status(200).send(sendyResponse);
+                .then(() => {
+                  res.status(200).send(sendyResponse.data.data);
                 })
-                .catch(err => {
-                  res.status(500).send(err);
-                });
+                
+            }else{
+              res.status(500).send(sendyResponse.data.message)
             }
           })
           .catch(function(err) {

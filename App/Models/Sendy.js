@@ -6,7 +6,7 @@ const PolicyType = require("./policy_type");
 const Sendy = sequelizeConnection.define("Sendy", {
     order_no: {
         type: Sequelize.STRING(),
-        allowNull: false
+        allowNull: true
     },
     amount:{
         type:Sequelize.INTEGER,
@@ -18,11 +18,11 @@ const Sendy = sequelizeConnection.define("Sendy", {
     },
     vendor:{
         type:Sequelize.STRING(),
-        allowNull:false
+        allowNull:true
     },
     distance: {
         type: Sequelize.STRING(),
-        allowNull: false
+        allowNull: true
     },
     eta:{
         type:Sequelize.STRING(),
@@ -34,11 +34,11 @@ const Sendy = sequelizeConnection.define("Sendy", {
     },
     amount_return:{
         type:Sequelize.INTEGER,
-        allowNull:false
+        allowNull:true
     },
     order_status: {
         type: Sequelize.STRING(),
-        allowNull: false
+        allowNull: true
     },
     pick_up_date:{
         type:Sequelize.STRING(),
@@ -49,16 +49,16 @@ const Sendy = sequelizeConnection.define("Sendy", {
         allowNull: true
     },
     pairing_response:{
-        type:Sequelize.STRING(),
-        allowNull:false
+        type:Sequelize.TEXT,
+        allowNull:true
     },
     tracking_link: {
         type: Sequelize.STRING(),
-        allowNull: false
+        allowNull: true
     },
     policyId:{
         type:Sequelize.INTEGER,
-        allowNull:false
+        allowNull:true
     }
 })
 Sendy.belongsTo(PolicyType)

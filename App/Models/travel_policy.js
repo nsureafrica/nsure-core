@@ -21,8 +21,8 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
   repartriationOfMortalRemains: {
     type: Sequelize.BOOLEAN
   },
-  accompanyingFamilyMember: {
-    type: Sequelize.STRING,
+  accompaniedByFamilyMember: {
+    type: Sequelize.BOOLEAN,
     allowNull: true
   },
 
@@ -32,7 +32,7 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
     type: Sequelize.BOOLEAN,
     allowNull: false
   },
-  legalAssisntace: {
+  legalAssistance: {
     type: Sequelize.BOOLEAN,
     allowNull: false
   },
@@ -50,18 +50,52 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
     type: Sequelize.STRING,
     allowNull: false
   },
-  periodOfStay: {
-    type: Sequelize.INTEGER,
+  startDate: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  endDate: {
+    type: Sequelize.STRING,
     allowNull: false
   },
   nationalId: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  kraPin: {
+  passportNumber:{
     type: Sequelize.STRING,
     allowNull: false
-  }
+  },
+  kraPin: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  nationalIdBackPhotoPath: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  nationalIdFrontPhotoPath: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  passportBackPhotoPath: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  passportFrontPhotoPath: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  paid:{
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    defaultValue: false
+  },
+  active:{
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    defaultValue: false
+  },
 });
 
 TravelPolicy.belongsTo(User);

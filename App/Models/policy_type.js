@@ -7,7 +7,7 @@ const PolicyType = sequelizeConnection.define("PolicyType", {
     allowNull: false
   },
   policyTypeDesc: {
-    type: Sequelize.STRING(30),
+    type: Sequelize.TEXT,
     allowNull: false
   }
 });

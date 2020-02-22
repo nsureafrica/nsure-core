@@ -36,11 +36,11 @@ module.exports = {
       });
   },
   createMedicalPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
+    // endpointAuthenticator.authenticateUser(req, res);
     MedicalPolicy.create(req.body)
       .then(response => {
         console.log(response);
-        QuoteController.getMedicalQuote(req, res);
+        res.status(200).send(response)
       })
       .catch(err => {
         res.status(500).send(err);

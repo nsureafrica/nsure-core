@@ -10,20 +10,31 @@ const MedicalPolicy = sequelizeConnection.define("MedicalPolicy", {
     type: Sequelize.STRING,
     allowNull: false
   },
-  secondName: {
+  lastName: {
     type: Sequelize.STRING,
     allowNull: false
   },
-
+  dateOfBirth: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  idNumber: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  kraPin: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  beneficiaries: {
+    type: Sequelize.TEXT,
+    allowNull: true
+  },
   // CORE COVER
 
   principalAgeDateOfBirth: {
-    type: Sequelize.DATE,
+    type: Sequelize.STRING,
     allowNull: false
-  },
-  spouseDateOfBirth: {
-    type: Sequelize.DATE,
-    allowNull: true
   },
   numberOfChildren: {
     type: Sequelize.INTEGER,
@@ -37,34 +48,20 @@ const MedicalPolicy = sequelizeConnection.define("MedicalPolicy", {
   },
   maternityCover: {
     type: Sequelize.BOOLEAN,
-    allowNull: false
+    allowNull: false,
+    defaultValue: false
   },
-  typeOfCover: {
-    type: Sequelize.ENUM(
-      "Royal",
-      "Premier",
-      "Executive",
-      "Advanced",
-      "Classic"
-    ),
-    allowNull: false
+  dentalCover: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   },
-  numberOfPeopleToReceiveDentalCover: {
-    type: Sequelize.INTEGER,
-    allowNull: true
+  opticalCover: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   },
-  numberOfPeopleToReceiveOpticalCover: {
-    type: Sequelize.INTEGER,
-    allowNull: true
-  },
-  numberOfMembersToBeCoveredUnderLastExpense: {
-    type: Sequelize.INTEGER,
-    allowNull: true
-  },
-  numberOfMembersToBeCoveredUnderPersonalAccident: {
-    type: Sequelize.INTEGER,
-    allowNull: true
-  }
+
 });
 
 MedicalPolicy.belongsTo(User);
