@@ -1,6 +1,7 @@
 //@ts-check
 
 const MedicalPlans = require('../../Models/medical_plans')
+const UnderwriterModel = require("../../Models/underwriters");
 
 module.exports = {
     createMedicalPlan: (req, res) => {
@@ -44,7 +45,9 @@ module.exports = {
       },
       getAllMedicalPlans: (req, res) => {
         // endpointAuthenticator.authenticateUser(req, res);
-        MedicalPlans.findAll()
+        MedicalPlans.findAll({
+          include: [UnderwriterModel],
+        })
           .then(rates => {
             res.send(rates);
           })
