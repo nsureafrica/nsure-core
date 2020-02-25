@@ -29,7 +29,7 @@ module.exports = {
       .then(response => {
         res.status(200).send(response);
         var mailOptions = {
-          from: "technical@nsureafrica.com",
+          from: process.env.mailFrom,
           to: `${user.email}`,
           subject: "Claim Created",
           text: `Hello ${user.firstName} ${user.lastName}, You have created a claim at Spiresure. Your claim id is ${response.id}`

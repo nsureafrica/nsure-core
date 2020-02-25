@@ -42,7 +42,7 @@ module.exports = {
         res.send(response);
         //SEND AN EMAIL
         var mailOptions = {
-          from: "technical@nsureafrica.com",
+          from: process.env.mailFrom,
           to: `${user.email}`,
           subject: "Education Quote Created",
           text: `Hello ${user.firstName} ${user.lastName}, You have requested for an education policy quote at Spiresure. Your education policy id is ${response.id}`

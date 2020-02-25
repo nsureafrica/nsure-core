@@ -71,7 +71,7 @@ module.exports = {
           })
             .then(user => {
               var mailOptions = {
-                from: "technical@nsureafrica.com",
+                from: process.env.mailFrom,
                 to: `${user.email}, nyaranam@gmail.com`,
                 subject: "Account Created",
                 text: `Hello ${user.firstName} ${user.lastName}, You have been created as a user at Spiresure. Your password is ${req.body.password}`
@@ -121,7 +121,7 @@ module.exports = {
           UserModel.findOne({ where: { email: req.body.email } })
             .then(user => {
               var mailOptions = {
-                from: "technical@nsureafrica.com",
+                from: process.env.mailFrom,
                 to: `${user.email}`,
                 subject: "Password Reset",
                 text: `Hello ${user.firstName} ${user.lastName}, Your Spiresure password has been reset. Your new password is ${newPassword}`
@@ -177,7 +177,7 @@ module.exports = {
                   .then(user => {
                     console.log(user.email);
                     var mailOptions = {
-                      from: "technical@nsureafrica.com",
+                      from: process.env.mailFrom,
                       to: `${user.email}`,
                       subject: "Password Changed",
                       text: `Hello ${user.firstName} ${user.lastName}, Your Spiresure password has been changed.`
