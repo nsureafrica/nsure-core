@@ -1,7 +1,8 @@
-'use strict';
+//@ts-check
 const Sequelize = require("sequelize");
 const User = require("./User");
 const PolicyType = require("./policy_type");
+const sequelizeConnection = require("../DB/database").sequelizeConnection;
 
 const Claim = sequelizeConnection.define("Claim", {
     descriptionOfClaim: {

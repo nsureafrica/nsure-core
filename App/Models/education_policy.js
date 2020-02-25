@@ -8,27 +8,46 @@ const uuidv1 = require("uuid/v1");
 
 //TODO what am i supposed to save on all policies
 const EducationPolicy = sequelizeConnection.define("EducationPolicy", {
-  policyNickName:{
-    type: Sequelize.STRING(50),
-    allowNull:false
-  },
-  fullNameOfChild: {
-    type: Sequelize.STRING(50),
+
+  firstName: {
+    type: Sequelize.STRING,
     allowNull: false
   },
-  ageOfChild: {
-    // @ts-ignore
-    type: Sequelize.INTEGER(3),
+  secondName: {
+    type: Sequelize.STRING,
     allowNull: false
   },
-  policyTerm: {
-    type: Sequelize.FLOAT,
+  dateOfBirth: {
+    type: Sequelize.STRING,
     allowNull: false
   },
-  premiumAmount: {
-    type: Sequelize.FLOAT,
+  expectedCommencementDate: {
+    type: Sequelize.STRING,
     allowNull: false
   },
+  ageNextBirthday:{
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  policyTerm:{
+    type: Sequelize.INTEGER,
+    allowNull: false},
+  sumAssured:{
+    type: Sequelize.DOUBLE,
+    allowNull: false
+  },
+  premium:{
+    type: Sequelize.DOUBLE,
+    allowNull: false
+  },
+  frequency:{
+    type: Sequelize.DOUBLE,
+    allowNull: false
+  },
+  targetAmount:{
+    type: Sequelize.DOUBLE,
+    allowNull: false
+  }
   
 });
 
