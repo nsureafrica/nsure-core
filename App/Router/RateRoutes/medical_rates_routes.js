@@ -1,6 +1,6 @@
 //@ts-check
 
-const medicalRatesController = require("./../../Controllers/RateControllers/medical_rate_controller");
+const medicalRatesController = require("../../Controllers/medical_rate_controller");
 
 module.exports = app => {
   app

@@ -1,7 +1,7 @@
 //@ts-check
 
-const MedicalPlans = require('../../Models/medical_plans')
-const UnderwriterModel = require("../../Models/underwriters");
+const MedicalPlans = require('../Models/medical_plans')
+const UnderwriterModel = require("../Models/underwriters");
 
 module.exports = {
     createMedicalPlan: (req, res) => {

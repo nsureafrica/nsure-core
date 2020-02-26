@@ -1,6 +1,6 @@
 //@ts-check
 
-const MedicalRates = require("../../Models/medical_rates");
+const MedicalRates = require("../Models/medical_rates");
 //create rate
 //get all rates
 //get one rate
