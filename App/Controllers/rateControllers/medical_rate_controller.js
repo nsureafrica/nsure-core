@@ -34,6 +34,7 @@ module.exports = {
   getMedicalRates: (req, res) => {
     // endpointAuthenticator.authenticateUser(req, res);
     MedicalRates.findAll({
+      group: ['MedicalPlanId','MedicalPlanId'],
       where: {
         userId: req.params.userId
       }

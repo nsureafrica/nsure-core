@@ -19,7 +19,7 @@ module.exports = {
       });
   },
   getMotorPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
+    endpointAuthenticator.authenticateUser(req, res);
     MotorPolicy.findOne({
       where: {
         id: req.params.policyId
