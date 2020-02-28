@@ -16,4 +16,6 @@ module.exports = app => {
     Storage.uploadLogbook.fields([{ name: "logbook", maxCount: 5 }]),
     MotorPolicyController.createMotorPolicy
   ); // requires auth
+
+  app.route("policies/motor/getAllMotorPolicies").get(MotorPolicyController.getAllMotorPolicies)
 };

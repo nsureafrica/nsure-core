@@ -1,9 +1,17 @@
 // @ts-check
 const MotorPolicy = require("../../Models/motor_policy");
 const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
-const CustomFilter = require("./custom_filter_policy_controller")
-const quoteController = require("../quote_controller")
+const CustomFilter = require("./custom_filter_policy_controller");
 module.exports = {
+  getAllMotorPolicies: (req, res) => {
+    MotorPolicy.findAll()
+      .then(policies => {
+        res.status(200).send(policies);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
+  },
   getUserMotorPolicies: (req, res) => {
     // endpointAuthenticator.authenticateUser(req, res);
     MotorPolicy.findAll({
@@ -36,7 +44,7 @@ module.exports = {
     // endpointAuthenticator.authenticateUser(req, res);
     var logbookPathArray = [];
     req.files.logbook.forEach(fileName => {
-        logbookPathArray.push(fileName.filename);
+      logbookPathArray.push(fileName.filename);
     });
     MotorPolicy.create({
       vehicleEstimatedValue: req.body.vehicleEstimatedValue,
@@ -58,8 +66,8 @@ module.exports = {
       paid: req.body.paid,
       paidAmount: req.body.paidAmount,
       yearOfManufacture: req.body.yearOfManufacture,
-      numberOfSeats:req.body.numberOfSeats,
-      engineCapacity:req.body.engineCapacity,
+      numberOfSeats: req.body.numberOfSeats,
+      engineCapacity: req.body.engineCapacity,
       kraPin: req.body.kraPin,
       quoteAmount: req.body.quoteAmount,
       idNumber: req.body.idNumber,
@@ -68,13 +76,14 @@ module.exports = {
     })
       .then(sequelizeResponse => {
         //Generate quote here
-        res.status(200).send(sequelizeResponse)
+        res.status(200).send(sequelizeResponse);
       })
       .catch(err => {
-        console.log(err)
+        console.log(err);
         res.status(500).send(err);
       });
   },
   //custom filter
-  customFilterMotorPolicy:(req,res)=>CustomFilter.customPolicyFilter(MotorPolicy,req,res)
+  customFilterMotorPolicy: (req, res) =>
+    CustomFilter.customPolicyFilter(MotorPolicy, req, res)
 };
