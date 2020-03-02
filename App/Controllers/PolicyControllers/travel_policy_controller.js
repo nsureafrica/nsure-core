@@ -42,7 +42,7 @@ module.exports = {
         console.log(travelQuoteEmailAddress)
         //send a mail
         var mailOptions = {
-          from: "technical@nsureafrica.com",
+          from: process.env.mailFrom,
           to: `${travelQuoteEmailAddress},allanmageto@yopmail.com`,
           subject: "Travel Insurance Quote",
           html: `<b>Dear Spire,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(

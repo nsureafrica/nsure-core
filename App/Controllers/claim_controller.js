@@ -12,12 +12,13 @@ module.exports = {
     // const user = authenticatedEndpoint.authenticateUser()
     var photosNameArray = [];
     var claimFormsArray = [];
+    console.log(req)
     req.files.claimPhotos.forEach(fileName => {
       photosNameArray.push(fileName.filename);
     });
-    req.files.claimDocs.forEach(fileName => {
-      claimFormsArray.push(fileName.filename);
-    });
+    // req.files.claimDocs.forEach(fileName => {
+    //   claimFormsArray.push(fileName.filename);
+    // });
     ClaimModel.create({
       descriptionOfClaim: req.body.descriptionOfClaim,
       UserId: req.body.userId,
@@ -27,21 +28,21 @@ module.exports = {
       policyId: req.body.policyId
     })
       .then(response => {
-        // var mailOptions = {
-        //   from: "technical@nsureafrica.com",
-        //   to: `${user.email}`,
-        //   subject: "Claim Created",
-        //   text: `Hello ${user.firstName} ${user.lastName}, You have created a claim at Spiresure. Your claim id is ${response.id}`
-        // };
-        // transporter.sendMail(mailOptions, (err, info) => {
-        //   if (err) {
-        //     console.log(err);
-        //   } else {
-        //     const notice = `Email sent: ` + info.response;
-        //     console.log(notice);
-        //   }
-        // });
         res.status(200).send(response);
+        var mailOptions = {
+          from: process.env.mailFrom,
+          to: `${user.email}`,
+          subject: "Claim Created",
+          text: `Hello ${user.firstName} ${user.lastName}, You have created a claim at Spiresure. Your claim id is ${response.id}`
+        };
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            console.log(err);
+          } else {
+            const notice = `Email sent: ` + info.response;
+            console.log(notice);
+          }
+        });
       })
       .catch(err => {
         res.status(500).send(err);

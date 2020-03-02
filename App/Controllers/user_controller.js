@@ -56,8 +56,7 @@ module.exports = {
           // hash user password
           var hashedPassword = bCrypt.hashSync(
             req.body.password,
-            bCrypt.genSaltSync(8),
-            
+            bCrypt.genSaltSync(8)
           );
           // create user
           UserModel.create({
@@ -67,11 +66,15 @@ module.exports = {
             email: req.body.email,
             password: hashedPassword,
             tempPassword: false,
-            isVerified:true
+            isVerified: true
           })
             .then(user => {
+              delete user.password;
+              delete user.createdAt;
+              delete user.updatedAt;
+              res.status(200).send({ message: "Success", user: user });
               var mailOptions = {
-                from: "technical@nsureafrica.com",
+                from: process.env.mailFrom,
                 to: `${user.email}, nyaranam@gmail.com`,
                 subject: "Account Created",
                 text: `Hello ${user.firstName} ${user.lastName}, You have been created as a user at Spiresure. Your password is ${req.body.password}`
@@ -84,10 +87,6 @@ module.exports = {
                   console.log(notice);
                 }
               });
-              delete user.password;
-              delete user.createdAt;
-              delete user.updatedAt;
-              res.status(200).send({ message: "Success", user: user });
             })
             .catch(error => {
               res
@@ -102,11 +101,7 @@ module.exports = {
   },
   forgotPassword: (req, res) => {
     const newPassword = passwordGenerator.simplePassword();
-    var hashedPassword = bCrypt.hashSync(
-      newPassword,
-      bCrypt.genSaltSync(8),
-      
-    );
+    var hashedPassword = bCrypt.hashSync(newPassword, bCrypt.genSaltSync(8));
     UserModel.update(
       { password: hashedPassword, tempPassword: true },
       { returning: true, where: { email: req.body.email } }
@@ -120,8 +115,9 @@ module.exports = {
         } else {
           UserModel.findOne({ where: { email: req.body.email } })
             .then(user => {
+              res.status(200).send({ message: "Email sent" });
               var mailOptions = {
-                from: "technical@nsureafrica.com",
+                from: process.env.mailFrom,
                 to: `${user.email}`,
                 subject: "Password Reset",
                 text: `Hello ${user.firstName} ${user.lastName}, Your Spiresure password has been reset. Your new password is ${newPassword}`
@@ -131,7 +127,6 @@ module.exports = {
                   console.log(err);
                 } else {
                   const notice = `Email sent: ` + info.response;
-                  res.status(200).send({ message: "Email sent" });
                 }
               });
             })
@@ -158,8 +153,7 @@ module.exports = {
           //update user with new password
           var hashedPassword = bCrypt.hashSync(
             req.body.newPassword,
-            bCrypt.genSaltSync(8),
-            
+            bCrypt.genSaltSync(8)
           );
           UserModel.update(
             { password: hashedPassword, tempPassword: false },
@@ -177,7 +171,7 @@ module.exports = {
                   .then(user => {
                     console.log(user.email);
                     var mailOptions = {
-                      from: "technical@nsureafrica.com",
+                      from: process.env.mailFrom,
                       to: `${user.email}`,
                       subject: "Password Changed",
                       text: `Hello ${user.firstName} ${user.lastName}, Your Spiresure password has been changed.`

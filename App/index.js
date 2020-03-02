@@ -12,6 +12,9 @@ const helmet = require("helmet");
 
 const app = express();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
+
+//i need to move this later
+require("./Models/CategoryHasPermission")
 // morgan
 const morgan = require("./Utils/logger");
 morgan(app);

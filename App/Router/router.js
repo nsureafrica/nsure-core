@@ -100,4 +100,11 @@ module.exports = app => {
   const medicalPlansRoutes = require("./RateRoutes/medical_plans_routes")
   medicalPlansRoutes(app)
 
+  //send mail routes
+  const sendMailRoutes = require("./MailRoutes/send_mail_routes")
+  sendMailRoutes(app)
+
+  //user category routes
+  const userCategoryRoutes = require('./UserRoutes/user_category_routes')
+  userCategoryRoutes(app)
 };

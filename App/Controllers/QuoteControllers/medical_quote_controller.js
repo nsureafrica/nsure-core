@@ -2,14 +2,14 @@
 
 //@ts-ignore
 const MedicalRates = require("../../Models/medical_rates");
-const transporter = require("../../Utils/mailService");
+const Transporter = require("../../Utils/mailService");
 module.exports = {
   getMedicalQuote: (req, res) => {
     const medicalPlanId = req.body.medicalPlanId;
     const principalAge = req.body.principalAge;
     const numberOfChildren = req.body.numberOfChildren;
     const spouseAge = req.body.spouseAge
-    MedicalRates.findAll({
+    MedicalRates.findOne({
       where: {
         MedicalPlanId: medicalPlanId
       }
@@ -56,7 +56,24 @@ module.exports = {
           };
           quoteObjectsArray.push(quoteObject);
         });
-        res.send(quoteObjectsArray);
+        res.status(200).send(quoteObjectsArray);
+        var mailOptions = {
+          from: process.env.mailFrom,
+          to: "allanmageto@yopmail.com",
+          subject: "Motor Insurance Quote",
+          html: `<b>Dear Customer,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
+            req.body
+          )}<p><b>Quote</b></p>${JSON.stringify(quoteObjectsArray)}`
+        };
+        Transporter.transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
+            console.log(err);
+          } else {
+            const notice = `Email sent: ` + info.response;
+            console.log(notice);
+          }
+        });
       })
       .catch(err => {
         res.status(500).send(err);

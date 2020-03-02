@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
+const Bill = require("./Bill")
 const User = require("./User");
 const VehicleClass = require("./motor_vehicle_class");
 const UnderWriter = require("./underwriters")
@@ -129,4 +130,5 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
 MotorPolicy.belongsTo(User, { foreignKey: "emailAddress", targetKey: "email" });
 MotorPolicy.belongsTo(VehicleClass);
 MotorPolicy.belongsTo(UnderWriter)
+MotorPolicy.belongsTo(Bill)
 module.exports = MotorPolicy;
