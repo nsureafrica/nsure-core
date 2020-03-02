@@ -1,5 +1,6 @@
 // @ts-check
 const MotorPolicy = require("../../Models/motor_policy");
+const Bill = require("./../../Models/Bill")
 const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
 const CustomFilter = require("./custom_filter_policy_controller");
 module.exports = {
@@ -41,11 +42,18 @@ module.exports = {
       });
   },
   createMotorPolicy: (req, res) => {
+    console.log(req)
     // endpointAuthenticator.authenticateUser(req, res);
     var logbookPathArray = [];
     req.files.logbook.forEach(fileName => {
       logbookPathArray.push(fileName.filename);
     });
+    //create a bill
+    Bill.create({
+      quoteAmount: req.body.quoteAmount,
+    }).then(billResponse => {
+      console.log(billResponse)
+    })
     MotorPolicy.create({
       vehicleEstimatedValue: req.body.vehicleEstimatedValue,
       vehicleModelAndMake: req.body.vehicleModelAndMake,

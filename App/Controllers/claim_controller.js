@@ -9,15 +9,16 @@ const Sequelize = require("sequelize");
 module.exports = {
   uploadClaim: (req, res) => {
     //authenticated endpoint
-    const user = authenticatedEndpoint.authenticateUser()
+    // const user = authenticatedEndpoint.authenticateUser()
     var photosNameArray = [];
     var claimFormsArray = [];
+    console.log(req)
     req.files.claimPhotos.forEach(fileName => {
       photosNameArray.push(fileName.filename);
     });
-    req.files.claimDocs.forEach(fileName => {
-      claimFormsArray.push(fileName.filename);
-    });
+    // req.files.claimDocs.forEach(fileName => {
+    //   claimFormsArray.push(fileName.filename);
+    // });
     ClaimModel.create({
       descriptionOfClaim: req.body.descriptionOfClaim,
       UserId: req.body.userId,
