@@ -17,5 +17,7 @@ module.exports = app => {
     MotorPolicyController.createMotorPolicy
   ); // requires auth
 
-  app.route("policies/motor/getAllMotorPolicies").get(MotorPolicyController.getAllMotorPolicies)
+  app
+    .route("/policies/motor/getAllMotorPolicies")
+    .get(MotorPolicyController.getAllMotorPolicies);
 };

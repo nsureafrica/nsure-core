@@ -35,6 +35,16 @@ module.exports = {
         res.status(500).send(err);
       });
   },
+
+  getAllEducationPolicies: (req,res) => {
+    EducationPolicy.findAll()
+    .then(educationPolicies => {
+      res.status(200).send(educationPolicies)
+    })
+    .catch(err => {
+      res.status(200).send(err)
+    })
+  },
   createEducationPolicy: (req, res) => {
     const user = authenticatedEndpoint.authenticateUser(req, res);
     EducationPolicy.create(req.body)

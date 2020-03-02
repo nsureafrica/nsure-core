@@ -44,6 +44,17 @@ module.exports = {
         res.status(500).send(err)
       });
   },
+
+  getAllSalamahPolices:(req,res)=> {
+    SalamahTransitionPolicy.findAll()
+    .then(response => {
+      response.send(response)
+    })
+    .catch(error => {
+      res.status(500).send(error)
+    });
+    
+  },
   //custom filter
   customFilterSalamahTransitionPolicy:(req,res)=>CustomFilter.customPolicyFilter(SalamahTransitionPolicy,req,res)
 };

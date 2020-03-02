@@ -40,10 +40,20 @@ module.exports = {
     MedicalPolicy.create(req.body)
       .then(response => {
         console.log(response);
-        res.status(200).send(response)
+        res.status(200).send(response);
       })
       .catch(err => {
         res.status(500).send(err);
+      });
+  },
+  //get all medical policies
+  getAllMedicalPolicies: (req, res) => {
+    MedicalPolicy.findAll()
+      .then(medicalPolicies => {
+        res.status(200).send(medicalPolicies);
+      })
+      .catch(error => {
+        res.status(200).send(error);
       });
   },
 

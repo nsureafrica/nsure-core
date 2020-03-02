@@ -34,6 +34,13 @@ module.exports = {
         res.status(500).send(err)
       });
   },
+
+  getAllTravelPolicies: (req,res) => {
+    TravelPolicy.findAll()
+    .then(travelPolicies => {
+      res.status(200).send(travelPolicies)
+    })
+  },
   createTravelPolicy: (req, res) => {
     // endpointAuthenticator.authenticateUser(req, res);
     TravelPolicy.create(req.body)
