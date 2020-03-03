@@ -10,11 +10,13 @@ const Transaction = sequelizeConnection.define("Transaction", {
   },
   amount: {
     type: Sequelize.DOUBLE,
-    allowNull: true
+    allowNull: false
   },
   transactionType: {
     type: Sequelize.ENUM("MPESA", "BANK", "AIRTEL", "OTHER"),
-    allowNull: false
+    allowNull: false,
+    defaultValue: "OTHER"
+
   }
 });
 

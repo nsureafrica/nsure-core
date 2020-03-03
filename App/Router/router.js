@@ -107,4 +107,8 @@ module.exports = app => {
   //user category routes
   const userCategoryRoutes = require('./UserRoutes/user_category_routes')
   userCategoryRoutes(app)
+
+  //Transactions Routes
+  const transactionRoutes = require("./TransactionRoutes/Transaction_routes")
+  transactionRoutes(app)
 };
