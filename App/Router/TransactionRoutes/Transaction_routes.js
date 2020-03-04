@@ -5,5 +5,7 @@ const TransactionsController = require("./../../Controllers/TransactionControlle
 module.exports = app => {
    app.route("/transactions/createTransactions").post(TransactionsController.createNewTransaction)
 
-   app.route("/transactions/getalltransactions").get(TransactionsController)
+   app.route("/transactions/getalltransactions").get(TransactionsController.getAllTransactions)
+
+   app.route("/transactions/getusertransactions/:userid").get(TransactionsController.getUserTransactions)
 }

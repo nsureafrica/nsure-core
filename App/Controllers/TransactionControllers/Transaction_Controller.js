@@ -16,5 +16,12 @@ module.exports = {
     }).catch(error => {
       res.status(500).send(error)
     })
+  },
+  getUserTransactions: (req,res)=>{
+    TransactionModel.findAll().then(response =>{
+      res.status(200).send(response)
+    }).catch(error => {
+      res.status(500).send(error)
+    })
   }
 };
