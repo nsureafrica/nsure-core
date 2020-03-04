@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const User = require("./User");
+const Bill = require("./Bill")
 
 const SalamahPolicy = sequelizeConnection.define("SalamahPolicy", {
   // SPOUSE INFORMATION
@@ -33,5 +34,5 @@ const SalamahPolicy = sequelizeConnection.define("SalamahPolicy", {
 });
 
 SalamahPolicy.belongsTo(User);
-
+SalamahPolicy.belongsTo(Bill);
 module.exports = SalamahPolicy;

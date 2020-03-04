@@ -119,6 +119,16 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
     type: Sequelize.FLOAT,
     allowNull: true
   },
+  levies:{
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    defaultValue: 3
+  },
+  stampDuty:{
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    defaultValue: 40
+  },
   active: {
     type: Sequelize.BOOLEAN, 
     allowNull: false,

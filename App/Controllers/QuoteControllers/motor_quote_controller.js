@@ -24,7 +24,6 @@ module.exports = {
       natureOfGoods = req.body.natureOfGoods;
     }
 
-    console.log(natureOfGoods)
     MotorRates.findAll({
       order: [["UnderwriterId", "ASC"]],
       include: [UnderwriterModel],
@@ -40,6 +39,8 @@ module.exports = {
         rates.map(rate => {
           if (coverType == "thirdParty") {
             var quoteAmount = rate.minimumPremium;
+            var levies = rate.minimumPremium * (levies/100)
+            var quoteAmount = rate.minimumPremium + levies + rate.stampDuty;
             var quoteObject = {
               quoteAmount: quoteAmount,
               basic: 0,
@@ -47,6 +48,8 @@ module.exports = {
               politicalViolenceTerrorism: 0,
               passengerLegalLiability: 0,
               roadsideAssistance: 0,
+              levies:levies,
+              stampDuty:rate.stampDuty,
               courtesyCar: 0,
               underwriter: rate.Underwriter,
 

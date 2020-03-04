@@ -4,6 +4,7 @@ const MedicalPolicy = require("../../Models/medical_policy");
 const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
 const CustomFilter = require("./custom_filter_policy_controller");
 const QuoteController = require("../quote_controller");
+const Bill = require("./../../Models/Bill");
 
 module.exports = {
   //medical policy
@@ -37,14 +38,19 @@ module.exports = {
   },
   createMedicalPolicy: (req, res) => {
     // endpointAuthenticator.authenticateUser(req, res);
-    MedicalPolicy.create(req.body)
-      .then(response => {
-        console.log(response);
-        res.status(200).send(response);
-      })
-      .catch(err => {
-        res.status(500).send(err);
-      });
+    Bill.create({
+      amount: req.body.quoteAmount
+    }).then(billResponse => {
+      //Add bill response to req.body as BillId
+      MedicalPolicy.create(req.body)
+        .then(response => {
+          console.log(response);
+          res.status(200).send(response);
+        })
+        .catch(err => {
+          res.status(500).send(err);
+        });
+    });
   },
   //get all medical policies
   getAllMedicalPolicies: (req, res) => {

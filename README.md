@@ -2,4 +2,4 @@
 
 Nsure Insurance Application
 
-Run cluster.js on production and server.js on development
+use npm start for development and npm start_prod for production
