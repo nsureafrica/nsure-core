@@ -13,4 +13,5 @@ module.exports = app => {
   app
     .route("/policies/salamahTransition/policy")
     .post(SalamahTransitionController.createSalamahTransitionPolicy);
+  app.route("/policies/getallsalamahpolicies").get(SalamahTransitionController.getAllSalamahPolices)
 }

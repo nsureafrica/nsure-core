@@ -6,7 +6,6 @@ const CustomFilter = require("./custom_filter_policy_controller");
 module.exports = {
   getAllMotorPolicies: (req, res) => {
     MotorPolicy.findAll({
-
     })
       .then(policies => {
         res.status(200).send(policies);

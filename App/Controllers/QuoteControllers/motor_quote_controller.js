@@ -101,6 +101,8 @@ module.exports = {
             }
 
             quoteAmount = courtesyCarAmount + roadsideAssistanceAmount + politicalViolenceTerrorismAmount + excessProtectorAmount + basicAmount
+            var levies = quoteAmount * (rate.levies/100)
+            quoteAmount = quoteAmount + levies + rate.stampDuty
             var quoteObject = {
               quoteAmount: quoteAmount,
               basic: basicAmount,
@@ -108,6 +110,8 @@ module.exports = {
               politicalViolenceTerrorism: politicalViolenceTerrorismAmount,
               passengerLegalLiability: passengerLegalLiability,
               roadsideAssistance: roadsideAssistanceAmount,
+              levies:levies,
+              stampDuty:rate.stampDuty,
               courtesyCar: courtesyCarAmount,
               underwriter: rate.Underwriter,
             };

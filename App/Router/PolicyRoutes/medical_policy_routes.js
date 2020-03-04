@@ -13,6 +13,6 @@ module.exports = app => {
     .post(MedicalPolicyController.createMedicalPolicy);
   
   app
-  .route("/policies/medical/getAllMedicalPolicies")
+  .route("/policies/allmedicalpolicies")
   .get(MedicalPolicyController.getAllMedicalPolicies)
 }

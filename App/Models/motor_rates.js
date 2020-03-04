@@ -61,7 +61,17 @@ const MotorRates = sequelizeConnection.define("MotorRates", {
   natureOfGoods:{
     type: Sequelize.ENUM("generalCartage", "ownGoods"),
     allowNull: true
-  }
+  },
+  levies:{
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    defaultValue: 3
+  },
+  stampDuty:{
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    defaultValue: 40
+  },
 });
 MotorRates.belongsTo(underWriters);
 MotorRates.belongsTo(vehicleClass);
