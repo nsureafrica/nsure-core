@@ -9,6 +9,7 @@ module.exports = {
   //medical policy
   getUserMedicalPolicies: (req, res) => {
     MedicalPolicy.findAll({
+      order: [['updatedAt', 'DESC']],
       where: {
         userId: req.user.id
       }
@@ -37,6 +38,8 @@ module.exports = {
     Bill.create({
       amount: req.body.quoteAmount
     }).then(billResponse => {
+      const billId = { BillId: billResponse.dataValues.id};
+      Object.assign(req.body, billId)
       MedicalPolicy.create(req.body)
         .then(response => {
           console.log(response);
@@ -49,7 +52,9 @@ module.exports = {
   },
   //get all medical policies
   getAllMedicalPolicies: (req, res) => {
-    MedicalPolicy.findAll()
+    MedicalPolicy.findAll({
+      order: [['updatedAt', 'DESC']],
+    })
       .then(medicalPolicies => {
         res.status(200).send(medicalPolicies);
       })

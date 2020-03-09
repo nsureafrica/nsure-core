@@ -1,9 +1,10 @@
 // @ts-check
 
 const TravelPolicy = require("../../Models/travel_policy");
-const CustomFilter = require("./custom_filter_policy_controller")
+const CustomFilter = require("./custom_filter_policy_controller");
 const transporter = require("../../Utils/mailService");
-const travelQuoteEmailAddress = process.env.travelQuoteEmailAddress
+const Bill = require("../../Models/Bill");
+const travelQuoteEmailAddress = process.env.travelQuoteEmailAddress;
 module.exports = {
   getUserTravelPolicy: (req, res) => {
     TravelPolicy.findAll({
@@ -15,7 +16,7 @@ module.exports = {
         res.send(policies);
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(500).send(err);
       });
   },
   getTravelPolicy: (req, res) => {
@@ -28,44 +29,49 @@ module.exports = {
         res.send(policy);
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(500).send(err);
       });
   },
 
-  getAllTravelPolicies: (req,res) => {
-    TravelPolicy.findAll()
-    .then(travelPolicies => {
-      res.status(200).send(travelPolicies)
-    })
+  getAllTravelPolicies: (req, res) => {
+    TravelPolicy.findAll().then(travelPolicies => {
+      res.status(200).send(travelPolicies);
+    });
   },
   createTravelPolicy: (req, res) => {
-    TravelPolicy.create(req.body)
-      .then(response => {
-        res.send(response);
-        console.log(travelQuoteEmailAddress)
-        //send a mail
-        var mailOptions = {
-          from: process.env.mailFrom,
-          to: `${travelQuoteEmailAddress},${req.user.email}`,
-          subject: "Travel Insurance Quote",
-          html: `<b>Dear Spire,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
-            req.body
-          )}<p><b>Quote</b></p>${JSON.stringify(response)}`
-        };
-        transporter.transporter.sendMail(mailOptions, (err, info) => {
-          if (err) {
-            //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
-            console.log(err);
-          } else {
-            const notice = `Email sent: ` + info.response;
-            console.log(notice);
-          }
+    Bill.create({
+      amount: req.body.quoteAmount
+    }).then(billResponse => {
+      const billId = { BillId: billResponse.dataValues.id };
+      Object.assign(req.body, billId);
+      TravelPolicy.create(req.body)
+        .then(response => {
+          res.send(response);
+          //send a mail
+          var mailOptions = {
+            from: process.env.mailFrom,
+            to: `${travelQuoteEmailAddress},${req.user.email}`,
+            subject: "Travel Insurance Quote",
+            html: `<b>Dear Spire,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
+              req.body
+            )}<p><b>Quote</b></p>${JSON.stringify(response)}`
+          };
+          transporter.transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+              //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
+              console.log(err);
+            } else {
+              const notice = `Email sent: ` + info.response;
+              console.log(notice);
+            }
+          });
+        })
+        .catch(err => {
+          res.status(500).send(err);
         });
-      })
-      .catch(err => {
-        res.status(500).send(err)
-      });
+    });
   },
   //custom filter
-  customFilterTravelPolicy:(req,res)=>CustomFilter.customPolicyFilter(TravelPolicy,req,res)
+  customFilterTravelPolicy: (req, res) =>
+    CustomFilter.customPolicyFilter(TravelPolicy, req, res)
 };

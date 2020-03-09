@@ -3,7 +3,6 @@ const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const User = require("./User");
 const Bill = require("./Bill")
 
-const uuidv1 = require("uuid/v1");
 
 const MedicalPolicy = sequelizeConnection.define("MedicalPolicy", {
   // CLIENT INFORMATION

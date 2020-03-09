@@ -111,4 +111,8 @@ module.exports = app => {
   //Transactions Routes
   const transactionRoutes = require("./TransactionRoutes/Transaction_routes")
   transactionRoutes(app)
+
+  //Bill routes
+  const billRoutes = require("./TransactionRoutes/Bill_Routes")
+  billRoutes(app)
 };

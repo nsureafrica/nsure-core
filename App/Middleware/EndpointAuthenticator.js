@@ -12,8 +12,9 @@ const endpointAuthenitcator = function(req, res, next) {
   ];
   if (whitelistedUrl.find(element => element === req.url) == undefined) {
     var token = req.headers["x-access-token"];
-    if (!token)
+    if (!token){
       res.status(401).send({ auth: false, message: "No token provided." });
+    }
     var user = jwt.verify(token);
     if (!user) {
       res.status(401).send({ auth: false, message: "Invalid token provided" });
@@ -21,11 +22,10 @@ const endpointAuthenitcator = function(req, res, next) {
       //add user object to the request
       const userObject = { user: user};
       Object.assign(req, userObject)
-      console.log(req.user)
       next();
     }
   }else{
-    next()
+    next();
   }
 };
 

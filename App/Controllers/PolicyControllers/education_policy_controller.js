@@ -45,11 +45,11 @@ module.exports = {
   createEducationPolicy: (req, res) => {
     EducationPolicy.create(req.body)
       .then(response => {
-        res.send(response);
+        res.status(200).send(response);
         //SEND AN EMAIL
         var mailOptions = {
           from: process.env.mailFrom,
-          to: `${req.user.email}`,
+          to: `${req.user.email},${process.env.travelQuoteEmailAddress}`,
           subject: "Education Quote Created",
           text: `Hello ${req.user.firstName} ${req.user.lastName}, You have requested for an education policy quote at Spiresure. Your education policy id is ${response.id}`
         };
