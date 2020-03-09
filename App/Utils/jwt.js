@@ -12,7 +12,7 @@ const options = {
   // issuer: options.issuer,
   // subject: options.subject,
   // audience: options.audience,
-  expiresIn: "1h",
+  expiresIn: "12h",
   algorithm: "RS256"
 };
 

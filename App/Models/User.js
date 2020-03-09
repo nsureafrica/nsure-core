@@ -41,6 +41,11 @@ const User = sequelizeConnection.define("User", {
   }
 });
 
-User.belongsTo(UserCategory); 
+User.belongsTo(UserCategory, {
+  foreignKey: {
+    defaultValue: 1,
+    allowNull: false
+  }
+}); 
 
 module.exports = User;
