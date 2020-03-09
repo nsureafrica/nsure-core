@@ -1,16 +1,14 @@
 // @ts-check
 
 const SalamahTransitionPolicy = require("../../Models/salamah_policy");
-const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
 const CustomFilter = require("./custom_filter_policy_controller")
 
 module.exports = {
 
   getUserSalamahTransitionPolicies: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
-    SalamahTransitionPolicy.findAll({
+   SalamahTransitionPolicy.findAll({
       where: {
-        userId: req.params.userId
+        userId: req.user.id
       }
     })
       .then(policies => {
@@ -21,7 +19,6 @@ module.exports = {
       });
   },
   getSalamahTransitionPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     SalamahTransitionPolicy.findOne({
       where: {
         id: req.params.policyId
@@ -35,7 +32,6 @@ module.exports = {
       });
   },
   createSalamahTransitionPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     SalamahTransitionPolicy.create(req.body)
       .then(response => {
         res.send(response);

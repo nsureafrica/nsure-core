@@ -5,7 +5,6 @@ const UnderwriterModel = require("../../Models/underwriters");
 
 module.exports = {
     createMedicalPlan: (req, res) => {
-        // endpointAuthenticator.authenticateUser(req, res);
         MedicalPlans.create(req.body)
           .then(response => {
             res.send(response);
@@ -16,7 +15,6 @@ module.exports = {
       },
 
       getOneMedicalPlan: (req, res) => {
-        // endpointAuthenticator.authenticateUser(req, res);
         MedicalPlans.findAll({
           where: {
             userId: req.params.userId
@@ -30,10 +28,9 @@ module.exports = {
           });
       },
       getMedicalPlans: (req, res) => {
-        // endpointAuthenticator.authenticateUser(req, res);
         MedicalPlans.findAll({
           where: {
-            userId: req.params.userId
+            userId: req.user.id
           }
         })
           .then(rates => {
@@ -44,7 +41,6 @@ module.exports = {
           });
       },
       getAllMedicalPlans: (req, res) => {
-        // endpointAuthenticator.authenticateUser(req, res);
         MedicalPlans.findAll({
           include: [UnderwriterModel],
         })

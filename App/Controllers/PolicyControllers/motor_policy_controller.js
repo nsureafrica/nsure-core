@@ -1,7 +1,6 @@
 // @ts-check
 const MotorPolicy = require("../../Models/motor_policy");
 const Bill = require("./../../Models/Bill");
-const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
 const CustomFilter = require("./custom_filter_policy_controller");
 module.exports = {
   getAllMotorPolicies: (req, res) => {
@@ -15,10 +14,9 @@ module.exports = {
       });
   },
   getUserMotorPolicies: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MotorPolicy.findAll({
       where: {
-        emailAddress: req.params.email
+        emailAddress: req.user.email
       }
     })
       .then(policies => {
@@ -29,7 +27,6 @@ module.exports = {
       });
   },
   getMotorPolicy: (req, res) => {
-    endpointAuthenticator.authenticateUser(req, res);
     MotorPolicy.findOne({
       where: {
         id: req.params.policyId
@@ -43,8 +40,6 @@ module.exports = {
       });
   },
   createMotorPolicy: (req, res) => {
-    console.log(req);
-    // endpointAuthenticator.authenticateUser(req, res);
     var logbookPathArray = [];
     req.files.logbook.forEach(fileName => {
       logbookPathArray.push(fileName.filename);
@@ -67,7 +62,7 @@ module.exports = {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           address: req.body.address,
-          emailAddress: req.body.emailAddress,
+          emailAddress: req.user.email,
           city: req.body.city,
           country: req.body.country,
           postalCode: req.body.postalCode,

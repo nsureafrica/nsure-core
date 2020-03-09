@@ -1,7 +1,6 @@
 //@ts-check
 
 const MedicalPolicy = require("../../Models/medical_policy");
-const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
 const CustomFilter = require("./custom_filter_policy_controller");
 const QuoteController = require("../quote_controller");
 const Bill = require("./../../Models/Bill");
@@ -9,10 +8,9 @@ const Bill = require("./../../Models/Bill");
 module.exports = {
   //medical policy
   getUserMedicalPolicies: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MedicalPolicy.findAll({
       where: {
-        userId: req.params.userId
+        userId: req.user.id
       }
     })
       .then(policies => {
@@ -23,7 +21,6 @@ module.exports = {
       });
   },
   getMedicalPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MedicalPolicy.findOne({
       where: {
         id: req.params.policyId
@@ -37,11 +34,9 @@ module.exports = {
       });
   },
   createMedicalPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     Bill.create({
       amount: req.body.quoteAmount
     }).then(billResponse => {
-      //Add bill response to req.body as BillId
       MedicalPolicy.create(req.body)
         .then(response => {
           console.log(response);
@@ -65,7 +60,6 @@ module.exports = {
 
   //custom filter
   customfilterMedicalPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MedicalPolicy.findAll({
       where: req.body.customFilter
     })

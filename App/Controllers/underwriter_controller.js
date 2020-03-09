@@ -4,7 +4,6 @@ const Underwriter = require("../Models/underwriters");
 
 module.exports = {
   getUnderwriter: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     Underwriter.findAll({
       where: {
         id: req.params.id
@@ -19,7 +18,6 @@ module.exports = {
       });
   },
   getAllUnderwriter: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     Underwriter.findAll({
       where: {
         id: req.params.id
@@ -33,7 +31,6 @@ module.exports = {
       });
   },
   createUnderwriter: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     Underwriter.create(req.body)
       .then(response => {
         res.send(response);

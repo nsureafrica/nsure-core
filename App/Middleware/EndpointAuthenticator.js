@@ -21,6 +21,7 @@ const endpointAuthenitcator = function(req, res, next) {
       //add user object to the request
       const userObject = { user: user};
       Object.assign(req, userObject)
+      console.log(req.user)
       next();
     }
   }else{

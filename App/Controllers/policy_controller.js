@@ -1,13 +1,11 @@
 // @ts-check
 
 const PolicyType = require("../Models/policy_type");
-const endpointAuthenticator = require("../Utils/endpointAuthenticator");
 
 module.exports = {
   getAllUserPolicies: (req, res) => {},
   //this is for internal use to create policies and their description and store them in the db
   createPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     PolicyType.create({
       policyTypeName: req.body.policyTypeName,
       policyTypeDesc: req.body.policyTypeDesc,

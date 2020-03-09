@@ -4,10 +4,9 @@ const MotorRates = require("../../Models/motor_rates");
 
 module.exports = {
   getOneMotorRate: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MotorRates.findAll({
       where: {
-        userId: req.params.userId
+        userId: req.user.id
       }
     })
       .then(rates => {
@@ -19,10 +18,9 @@ module.exports = {
       });
   },
   getMotorRates: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MotorRates.findAll({
       where: {
-        userId: req.params.userId
+        userId: req.user.id
       }
     })
       .then(rates => {
@@ -34,10 +32,8 @@ module.exports = {
       });
   },
   getAllMotorRates: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MotorRates.findAll()
       .then(rates => {
-        console.log(chalk.blue(rates));
         res.send(rates);
       })
       .catch(err => {
@@ -46,7 +42,6 @@ module.exports = {
   },
   //Create a motor rate
   createMotorRate: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MotorRates.create(req.body)
       .then(response => {
         res.send(response);

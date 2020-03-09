@@ -2,16 +2,14 @@
 
 const EducationPolicy = require("../../Models/education_policy");
 const CustomFilter = require("./custom_filter_policy_controller")
-const authenticatedEndpoint = require("../../Utils/endpointAuthenticator");
 const transporter = require("../../Utils/mailService");
 
 module.exports = {
   //education policies
   getUserEducationPolicies: (req, res) => {
-    authenticatedEndpoint.authenticateUser(req, res);
     EducationPolicy.findAll({
       where: {
-        userId: req.params.userId
+        userId: req.user.id
       }
     })
       .then(policies => {
@@ -22,7 +20,6 @@ module.exports = {
       });
   },
   getEducationPolicy: (req, res) => {
-    authenticatedEndpoint.authenticateUser(req, res);
     EducationPolicy.findOne({
       where: {
         id: req.params.policyId
@@ -46,16 +43,15 @@ module.exports = {
     })
   },
   createEducationPolicy: (req, res) => {
-    const user = authenticatedEndpoint.authenticateUser(req, res);
     EducationPolicy.create(req.body)
       .then(response => {
         res.send(response);
         //SEND AN EMAIL
         var mailOptions = {
           from: process.env.mailFrom,
-          to: `${user.email}`,
+          to: `${req.user.email}`,
           subject: "Education Quote Created",
-          text: `Hello ${user.firstName} ${user.lastName}, You have requested for an education policy quote at Spiresure. Your education policy id is ${response.id}`
+          text: `Hello ${req.user.firstName} ${req.user.lastName}, You have requested for an education policy quote at Spiresure. Your education policy id is ${response.id}`
         };
         transporter.sendMail(mailOptions, (err, info) => {
           if (err) {

@@ -7,7 +7,6 @@ const MedicalRates = require("../../Models/medical_rates");
 module.exports = {
   //Create a motor rate
   createMedicalRate: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MedicalRates.create(req.body)
       .then(response => {
         res.send(response);
@@ -18,10 +17,9 @@ module.exports = {
   },
 
   getOneMedicalRate: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MedicalRates.findAll({
       where: {
-        userId: req.params.userId
+        userId: req.user.id
       }
     })
       .then(rates => {
@@ -32,10 +30,9 @@ module.exports = {
       });
   },
   getMedicalRates: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MedicalRates.findAll({
       where: {
-        userId: req.params.userId
+        userId: req.user.id
       }
     })
       .then(rates => {
@@ -46,7 +43,6 @@ module.exports = {
       });
   },
   getAllMedicalRates: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MedicalRates.findAll()
       .then(rates => {
         res.send(rates);

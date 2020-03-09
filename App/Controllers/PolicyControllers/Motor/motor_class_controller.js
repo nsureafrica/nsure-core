@@ -4,7 +4,6 @@ const MotorClass = require("../../../Models/motor_vehicle_class");
 
 module.exports = {
   getMotorClass: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MotorClass.findAll()
       .then(classes => {
         res.send(classes);
@@ -14,7 +13,6 @@ module.exports = {
       });
   },
   getOneMotorClass: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MotorClass.findAll()
       .then(classes => {
         res.send(classes);
@@ -25,7 +23,6 @@ module.exports = {
   },
   //Create a motor class
   createMotorClass: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     MotorClass.create(req.body)
       .then(response => {
         res.send(response);

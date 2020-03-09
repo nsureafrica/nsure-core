@@ -1,16 +1,14 @@
 // @ts-check
 
 const TravelPolicy = require("../../Models/travel_policy");
-const endpointAuthenticator = require("../../Utils/endpointAuthenticator");
 const CustomFilter = require("./custom_filter_policy_controller")
 const transporter = require("../../Utils/mailService");
 const travelQuoteEmailAddress = process.env.travelQuoteEmailAddress
 module.exports = {
   getUserTravelPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     TravelPolicy.findAll({
       where: {
-        userId: req.params.userId
+        userId: req.user.id
       }
     })
       .then(policies => {
@@ -21,7 +19,6 @@ module.exports = {
       });
   },
   getTravelPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     TravelPolicy.findOne({
       where: {
         id: req.params.policyId
@@ -42,7 +39,6 @@ module.exports = {
     })
   },
   createTravelPolicy: (req, res) => {
-    // endpointAuthenticator.authenticateUser(req, res);
     TravelPolicy.create(req.body)
       .then(response => {
         res.send(response);
@@ -50,7 +46,7 @@ module.exports = {
         //send a mail
         var mailOptions = {
           from: process.env.mailFrom,
-          to: `${travelQuoteEmailAddress},allanmageto@yopmail.com`,
+          to: `${travelQuoteEmailAddress},${req.user.email}`,
           subject: "Travel Insurance Quote",
           html: `<b>Dear Spire,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
             req.body
