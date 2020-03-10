@@ -40,10 +40,10 @@ var logbookStorage = multer.diskStorage({
 module.exports = {
    uploadClaimDocs:multer({
     storage: claimDocsStorage,
-    limits: { fileSize: 2097152 }
+    // limits: { fileSize: 2097152 }
   }),
   uploadLogbook:multer({
     storage: logbookStorage,
-    limits: {fileSize:2097152}
+    // limits: {fileSize:2097152}
   })
 };

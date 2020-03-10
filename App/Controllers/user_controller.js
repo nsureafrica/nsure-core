@@ -75,9 +75,9 @@ module.exports = {
               res.status(200).send({ message: "Success", user: user });
               var mailOptions = {
                 from: process.env.mailFrom,
-                to: `${user.email}, nyaranam@gmail.com`,
+                to: `${user.email}`,
                 subject: "Account Created",
-                text: `Hello ${user.firstName} ${user.lastName}, You have been created as a user at Spiresure. Your password is ${req.body.password}`
+                text: `Hello ${user.firstName} ${user.lastName}, Welcome to spiresure, we are glad you joined us!`
               };
               transporter.sendMail(mailOptions, (err, info) => {
                 if (err) {

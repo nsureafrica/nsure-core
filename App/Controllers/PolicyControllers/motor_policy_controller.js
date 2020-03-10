@@ -42,9 +42,17 @@ module.exports = {
   },
   createMotorPolicy: (req, res) => {
     var logbookPathArray = [];
+    var kraFilesArray = [];
+    var idNumberArray = [];
+    req.files.kraPin.forEach(fileName => {
+      kraFilesArray.push(fileName.filenwa)
+    })
     req.files.logbook.forEach(fileName => {
       logbookPathArray.push(fileName.filename);
     });
+    req.files.idNumber.forEach(fileName => {
+      idNumberArray.push(fileName.filename)
+    })
     //create a bill
     Bill.create({
       amount: req.body.quoteAmount
@@ -72,9 +80,9 @@ module.exports = {
           yearOfManufacture: req.body.yearOfManufacture,
           numberOfSeats: req.body.numberOfSeats,
           engineCapacity: req.body.engineCapacity,
-          kraPin: req.body.kraPin,
+          kraPin: kraFilesArray.toString(),
           quoteAmount: req.body.quoteAmount,
-          idNumber: req.body.idNumber,
+          idNumber: idNumberArray.toString(),
           UnderwriterId: req.body.underWriter,
           VehicleClassId: req.body.vehicleClass,
           BillId: billResponse.dataValues.id

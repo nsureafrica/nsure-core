@@ -65,7 +65,7 @@ const MotorRates = sequelizeConnection.define("MotorRates", {
   levies:{
     type: Sequelize.FLOAT,
     allowNull: false,
-    defaultValue: 3
+    defaultValue: 0.45
   },
   stampDuty:{
     type: Sequelize.FLOAT,

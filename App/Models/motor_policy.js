@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
-const Bill = require("./Bill")
+const Bill = require("./Bill");
 const User = require("./User");
 const VehicleClass = require("./motor_vehicle_class");
-const UnderWriter = require("./underwriters")
+const UnderWriter = require("./underwriters");
 const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
   // AUTOMOBILE INFORMATION
   vehicleEstimatedValue: {
@@ -104,7 +104,7 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
   },
   postalCode: { type: Sequelize.STRING, allowNull: false },
   kraPin: { type: Sequelize.STRING, allowNull: false },
-  idNumber:{type: Sequelize.STRING, allowNull:false},
+  idNumber: { type: Sequelize.STRING, allowNull: false },
   //quote or paid policy
   paid: {
     type: Sequelize.BOOLEAN,
@@ -120,15 +120,14 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
     allowNull: true
   },
   active: {
-    type: Sequelize.BOOLEAN, 
+    type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false
   }
 });
 
-
 MotorPolicy.belongsTo(User, { foreignKey: "emailAddress", targetKey: "email" });
 MotorPolicy.belongsTo(VehicleClass);
-MotorPolicy.belongsTo(UnderWriter)
-MotorPolicy.belongsTo(Bill)
+MotorPolicy.belongsTo(UnderWriter);
+MotorPolicy.belongsTo(Bill);
 module.exports = MotorPolicy;
