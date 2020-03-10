@@ -13,11 +13,17 @@ module.exports = app => {
     .get(MotorPolicyController.getMotorPolicy); // requires auth
   app.post(
     "/policies/motor/policy",
-    Storage.uploadLogbook.fields([{ name: "logbook", maxCount: 5 },{name: "kraPin",maxCount: 5},{name: "idNumber",maxCount: 5}]),
+    Storage.uploadLogbook.fields([
+      { name: "logbook", maxCount: 5 },
+      { name: "kraPin", maxCount: 5 },
+      { name: "nationalID", maxCount: 5 }
+    ]),
     MotorPolicyController.createMotorPolicy
   ); // requires auth
 
-  app.route("/policies/getallmotorpolicies").get(MotorPolicyController.getAllMotorPolicies)
+  app
+    .route("/policies/getallmotorpolicies")
+    .get(MotorPolicyController.getAllMotorPolicies);
   // app
   //   .route("/policies/motor/policies")
   //   .get(MotorPolicyController.getAllMotorPolicies);
