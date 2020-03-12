@@ -1,6 +1,5 @@
 //@ts-check
 
-//@ts-ignore
 const MedicalRates = require("../../Models/medical_rates");
 const Transporter = require("../../Utils/mailService");
 module.exports = {

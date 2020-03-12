@@ -19,6 +19,8 @@ require("./Models/CategoryHasPermission")
 const morgan = require("./Utils/logger");
 morgan(app);
 
+
+require("./Utils/cron_job")
 //add middleware here
 app.use(helmet());
 app.use(compression());

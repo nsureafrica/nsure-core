@@ -2,14 +2,13 @@
 
 const MedicalPolicy = require("../../Models/medical_policy");
 const CustomFilter = require("./custom_filter_policy_controller");
-const QuoteController = require("../quote_controller");
 const Bill = require("./../../Models/Bill");
 
 module.exports = {
   //medical policy
   getUserMedicalPolicies: (req, res) => {
     MedicalPolicy.findAll({
-      order: [['updatedAt', 'DESC']],
+      order: [["updatedAt", "DESC"]],
       where: {
         userId: req.user.id
       }
@@ -38,8 +37,8 @@ module.exports = {
     Bill.create({
       amount: req.body.quoteAmount
     }).then(billResponse => {
-      const billId = { BillId: billResponse.dataValues.id};
-      Object.assign(req.body, billId)
+      const billId = { BillId: billResponse.dataValues.id };
+      Object.assign(req.body, billId);
       MedicalPolicy.create(req.body)
         .then(response => {
           console.log(response);
@@ -53,26 +52,13 @@ module.exports = {
   //get all medical policies
   getAllMedicalPolicies: (req, res) => {
     MedicalPolicy.findAll({
-      order: [['updatedAt', 'DESC']],
+      order: [["updatedAt", "DESC"]]
     })
       .then(medicalPolicies => {
         res.status(200).send(medicalPolicies);
       })
       .catch(error => {
         res.status(200).send(error);
-      });
-  },
-
-  //custom filter
-  customfilterMedicalPolicy: (req, res) => {
-    MedicalPolicy.findAll({
-      where: req.body.customFilter
-    })
-      .then(policy => {
-        res.send(policy);
-      })
-      .catch(err => {
-        res.status(500).send(err);
       });
   },
   //custom filter

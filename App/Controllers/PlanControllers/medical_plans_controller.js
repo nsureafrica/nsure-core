@@ -17,7 +17,7 @@ module.exports = {
       getOneMedicalPlan: (req, res) => {
         MedicalPlans.findAll({
           where: {
-            userId: req.params.userId
+            id: req.params.id
           }
         })
           .then(rates => {
