@@ -58,8 +58,8 @@ module.exports = {
         res.status(200).send(quoteObjectsArray);
         var mailOptions = {
           from: process.env.mailFrom,
-          to: "allanmageto@yopmail.com",
-          subject: "Motor Insurance Quote",
+          to: req.user.email,
+          subject: "Medical Insurance Quote",
           html: `<b>Dear Customer,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
             req.body
           )}<p><b>Quote</b></p>${JSON.stringify(quoteObjectsArray)}`
