@@ -46,11 +46,12 @@ module.exports = {
           }
           //calculate children rate
           childrenRate = rate.childrenInpatientAnnual * numberOfChildren
-          
+          var quoteTotal = principalRate + spouseRate + childrenRate
           var quoteObject = {
             principalRate: principalRate,
             spouseRate: spouseRate,
             childrenRate: childrenRate,
+            quoteTotal: quoteTotal,
             medicalPlan: rate.MedicalPlanId,
             underwriter: rate.UnderwriterId
           };
