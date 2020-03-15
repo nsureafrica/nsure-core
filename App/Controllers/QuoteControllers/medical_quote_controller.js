@@ -8,12 +8,13 @@ module.exports = {
     const principalAge = req.body.principalAge;
     const numberOfChildren = req.body.numberOfChildren;
     const spouseAge = req.body.spouseAge
-    MedicalRates.findOne({
+    MedicalRates.findAll({
       where: {
         MedicalPlanId: medicalPlanId
       }
     })
       .then(rates => {
+        console.log(rates)
         var quoteObjectsArray = [];
         rates.map(rate => {
           var principalRate = 0;
@@ -75,6 +76,7 @@ module.exports = {
         });
       })
       .catch(err => {
+        console.log(err)
         res.status(500).send(err);
       });
   }
