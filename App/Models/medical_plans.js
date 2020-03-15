@@ -27,6 +27,10 @@ const MedicalPlans = sequelizeConnection.define("MedicalPlan", {
   limitPerFamilyPerAnnum: {
     type: Sequelize.DOUBLE,
     allowNull: false
+  },
+  generalConditions: {
+    type:Sequelize.TEXT,
+    allowNull:true
   }
 });
 

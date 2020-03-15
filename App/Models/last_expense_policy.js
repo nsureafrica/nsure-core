@@ -47,3 +47,4 @@ const LastExpensePolicy = sequelizeConnection.define("LastExpensePolicy", {
 LastExpensePolicy.belongsTo(User);
 LastExpensePolicy.belongsTo(Bill);
 LastExpensePolicy.hasOne(LastExpensePlan);
+module.exports = LastExpensePolicy

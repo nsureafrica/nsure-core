@@ -10,7 +10,7 @@ module.exports = app => {
     .route("/policies/lastexpense/policy/:policyId")
     .get(LastExpensePolicyController.getOneLastExpensePolicy);
   app
-    .route("/policies/lastexpense/policy")
+    .route("/policies/lastexpense/createpolicy")
     .post(LastExpensePolicyController.createLastExpensePolicy);
   
   app
