@@ -9,6 +9,10 @@ const PolicyType = sequelizeConnection.define("PolicyType", {
   policyTypeDesc: {
     type: Sequelize.TEXT,
     allowNull: false
+  },
+  policyTypeSummary:{
+    type: Sequelize.TEXT,
+    allowNull: true
   }
 });
 

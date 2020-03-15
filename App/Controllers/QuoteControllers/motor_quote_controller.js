@@ -6,6 +6,8 @@ const UnderwriterModel = require("../../Models/underwriters");
 
 const senderEmailAdress = process.env.senderEmailAdress
 //get motor rates model
+
+//Should create a different function for calculating add ons as the code is getting too long
 module.exports = {
   getMotorQuote: (req, res) => {
     var classId = req.body.classId;
@@ -38,19 +40,41 @@ module.exports = {
         var quoteObjectsArray = [];
         rates.map(rate => {
           if (coverType == "thirdParty") {
-            var quoteAmount = rate.minimumPremium;
-            var levies = rate.minimumPremium * (levies/100)
-            var quoteAmount = rate.minimumPremium + levies + rate.stampDuty;
+            var politicalViolenceTerrorismAmount = 0;
+            if (politicalViolenceTerrorism) {
+              tempAmount =
+                (estimatedCarValue * rate.politicalViolenceTerrorism) / 100;
+              if (tempAmount < rate.minimumPremium) {
+                politicalViolenceTerrorismAmount =
+                  rate.minimumPoliticalViolenceTerrorism;
+              } else {
+                politicalViolenceTerrorismAmount = tempAmount;
+              }
+            }
+            //Roadside Assistance
+            var roadsideAssistanceAmount = 0;
+            if (roadsideAssistance) {
+              roadsideAssistanceAmount = rate.roadsideAssistance;
+            }
+            //Courtesy Car
+            var courtesyCarAmount = 0;
+            if (courtesyCar) {
+              courtesyCarAmount = rate.courtesyCar;
+            }
+
+            var quoteAmount =  rate.minimumPremium + courtesyCarAmount + roadsideAssistanceAmount + politicalViolenceTerrorismAmount + excessProtectorAmount + basicAmount
+            var levies = quoteAmount * (levies/100)
+            quoteAmount = quoteAmount + levies + rate.stampDuty;
             var quoteObject = {
               quoteAmount: quoteAmount,
-              basic: 0,
-              excessProtector: 0,
-              politicalViolenceTerrorism: 0,
+              basic: basicAmount,
+              excessProtector: excessProtectorAmount,
+              politicalViolenceTerrorism: politicalViolenceTerrorismAmount,
               passengerLegalLiability: 0,
-              roadsideAssistance: 0,
+              roadsideAssistance: roadsideAssistanceAmount,
               levies:levies,
               stampDuty:rate.stampDuty,
-              courtesyCar: 0,
+              courtesyCar: courtesyCarAmount,
               underwriter: rate.Underwriter,
 
             };

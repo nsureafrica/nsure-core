@@ -27,7 +27,7 @@ module.exports = {
         res.status(500).send(err);
       });
   },
-  getAllMedicalPlans: (req, res) => {
+  getAllLastExpensePlans: (req, res) => {
     LastExpensePlanModel.findAll({
       include: [UnderwriterModel]
     })

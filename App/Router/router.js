@@ -97,7 +97,7 @@ module.exports = app => {
   medicalRatesRoutes(app)
 
   //medical plans routes
-  const medicalPlansRoutes = require("./RateRoutes/medical_plans_routes")
+  const medicalPlansRoutes = require("./PlanRoutes/medical_plans_routes")
   medicalPlansRoutes(app)
 
   //send mail routes
@@ -115,4 +115,16 @@ module.exports = app => {
   //Bill routes
   const billRoutes = require("./TransactionRoutes/Bill_Routes")
   billRoutes(app)
+
+  //last expense rate routes
+  const lastExpenseRateRoutes = require("./PlanRoutes/last_expense_plan_routes")
+  lastExpenseRateRoutes(app)
+
+  //last expense plan routes
+  const lastexpenseplanroutes = require("./PlanRoutes/last_expense_plan_routes")
+  lastexpenseplanroutes(app)
+
+  //last expense policy routes
+  const lastexpensepolicyroutes = require("./PolicyRoutes/last_expense_policy_routes")
+  lastexpensepolicyroutes(app)
 };
