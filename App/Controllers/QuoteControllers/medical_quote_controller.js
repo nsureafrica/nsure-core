@@ -2,6 +2,8 @@
 
 const MedicalRates = require("../../Models/medical_rates");
 const Transporter = require("../../Utils/mailService");
+const UnderwriterModel = require("../../Models/underwriters");
+
 module.exports = {
   getMedicalQuote: (req, res) => {
     const medicalPlanId = req.body.medicalPlanId;
@@ -9,6 +11,7 @@ module.exports = {
     const numberOfChildren = req.body.numberOfChildren;
     const spouseAge = req.body.spouseAge
     MedicalRates.findAll({
+      include: [UnderwriterModel],
       where: {
         MedicalPlanId: medicalPlanId
       }
@@ -53,7 +56,7 @@ module.exports = {
             childrenRate: childrenRate,
             quoteTotal: quoteTotal,
             medicalPlan: rate.MedicalPlanId,
-            underwriter: rate.UnderwriterId
+            underwriter: rate.Underwriter,            
           };
           quoteObjectsArray.push(quoteObject);
         });
