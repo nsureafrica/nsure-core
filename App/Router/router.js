@@ -117,7 +117,7 @@ module.exports = app => {
   billRoutes(app)
 
   //last expense rate routes
-  const lastExpenseRateRoutes = require("./PlanRoutes/last_expense_plan_routes")
+  const lastExpenseRateRoutes = require("./RateRoutes/last_expense_rate_routes")
   lastExpenseRateRoutes(app)
 
   //last expense plan routes

@@ -4,6 +4,8 @@ const lastexpenseratecontroller = require("./../../Controllers/RateControllers/l
 
 module.exports = app => {
     app
-    .route("/medicalRates/createMedicalRate")
+    .route("/lastexpenserate/createlastexpenserate")
     .post(lastexpenseratecontroller.createLastExpenseRate);
+
+    app.route("/lastexpenserate/getalllastexpenserates").get(lastexpenseratecontroller.getAllLastExpenseRates)
 }

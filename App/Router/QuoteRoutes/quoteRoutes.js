@@ -8,4 +8,7 @@ module.exports = app => {
 
     //Medical Quote
     app.route("/quotes/medical").post(QuoteController.getMedicalQuote);
+
+    //last expense quote
+    app.route("/quotes/lastexpense").post(QuoteController.getLastExpenseQuote);
 }

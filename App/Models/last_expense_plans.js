@@ -16,7 +16,11 @@ const LastExpensePlans = sequelizeConnection.define("LastExpensePlan", {
   annualCover: {
     type: Sequelize.DOUBLE,
     allowNull: false
-  }
+  },
+  typeOfClaim: {
+    type: Sequelize.ENUM("single", "multiple"),
+    allowNull: false
+  },
 });
 
 LastExpensePlans.belongsTo(Underwriter);

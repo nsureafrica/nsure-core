@@ -11,9 +11,6 @@ module.exports = app => {
     .route("/lastExpensePlans/getlastExpensePlan/:id")
     .get(LastExpensePlanController.getOneLastExpensePlan);
   app
-    .route("/lastExpensePlans/getAllLastExpensePlans")
-    .get(LastExpensePlanController.getOneLastExpensePlan);
-  app
     .route("/lastExpensePlans/getLastExpensePlans")
     .get(LastExpensePlanController.getAllLastExpensePlans);
 };
