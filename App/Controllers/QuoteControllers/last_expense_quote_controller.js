@@ -14,6 +14,8 @@ module.exports = {
         const principalAge = req.body.principalAge;
         const numberOfChildren = req.body.numberOfChildren;
         const spouseAge = req.body.spouseAge
+
+        LastExpenseRates.findOne({ where: { id: 'My Title' } })
         res.status(200)
     }
 

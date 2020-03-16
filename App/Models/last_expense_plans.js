@@ -1,6 +1,7 @@
 //@ts-check
 
 const Sequelize = require("sequelize");
+const LastExpenseRates = require("./last_expense_rates")
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const Underwriter = require("./underwriters");
 const LastExpensePlans = sequelizeConnection.define("LastExpensePlan", {
@@ -19,4 +20,5 @@ const LastExpensePlans = sequelizeConnection.define("LastExpensePlan", {
 });
 
 LastExpensePlans.belongsTo(Underwriter);
+LastExpensePlans.hasOne(LastExpenseRates)
 module.exports = LastExpensePlans;

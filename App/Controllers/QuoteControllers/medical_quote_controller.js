@@ -10,6 +10,7 @@ module.exports = {
     const principalAge = req.body.principalAge;
     const numberOfChildren = req.body.numberOfChildren;
     const spouseAge = req.body.spouseAge;
+    const outpatientPerPerson = req.body.outpatientPerPerson;
     MedicalRates.findAll({
       include: [UnderwriterModel],
       where: {
@@ -21,17 +22,29 @@ module.exports = {
         var quoteObjectsArray = [];
         rates.map(rate => {
           var principalRate = 0;
+          var principalRateOutpatient = 0;
           var spouseRate = 0;
+          var spouseRateOutpatient = 0;
           var childrenRate = 0;
+          var childrenRateOutpatient = 0;
 
           //calculate principal rate
           if (principalAge <= 40) {
             principalRate = principalRate + rate.principalInpatientAnnualYouth;
+            if (outpatientPerPerson) {
+              principalRateOutpatient = principalRate + rate.principalOutpatientAnnualYouth;
+            }
           } else if (principalAge <= 60) {
             principalRate =
               principalRate + rate.principalInpatientAnnualMiddleAge;
+              if (outpatientPerPerson) {
+                principalRateOutpatient = principalRate + rate.principalOutpatientAnnualMiddleAge;
+              }
           } else if (principalAge <= 65) {
             principalRate = principalRate + rate.principalInpatientAnnualSenior;
+            if (outpatientPerPerson) {
+              principalRateOutpatient = principalRate + rate.principalOutpatientAnnualSenior;
+            }
           } else {
             console.log("too old mate");
           }
@@ -40,10 +53,19 @@ module.exports = {
           if (!(req.body.spouseAge === "")) {
             if (spouseAge <= 40) {
               spouseRate = spouseRate + rate.spouseInpatientAnnualYouth;
+              if (outpatientPerPerson) {
+                spouseRateOutpatient = principalRate + rate.spouseOutpatientAnnualYouth;
+              }
             } else if (spouseAge <= 60) {
               spouseRate = spouseRate + rate.spouseInpatientAnnualMiddleAge;
+              if (outpatientPerPerson) {
+                spouseRateOutpatient = principalRate + rate.spouseOutpatientAnnualMiddleAge;
+              }
             } else if (spouseAge <= 65) {
               spouseRate = spouseRate + rate.principalInpatientAnnualSenior;
+              if (outpatientPerPerson) {
+                spouseRateOutpatient = principalRate + rate.spouseOutpatientAnnualSenior;
+              }
             } else {
               console.log("too old mate");
             }
@@ -51,11 +73,17 @@ module.exports = {
 
           //calculate children rate
           childrenRate = rate.childrenInpatientAnnual * numberOfChildren;
-          var quoteTotal = principalRate + spouseRate + childrenRate;
+          if (outpatientPerPerson) {
+            childrenRateOutpatient = rate.childrenOutpatientAnnual * numberOfChildren;
+          }
+          var quoteTotal = principalRate + principalRateOutpatient + spouseRate + spouseRateOutpatient + childrenRate + childrenRateOutpatient;
           var quoteObject = {
             principalRate: principalRate,
+            principalRateOutpatient: principalRateOutpatient,
             spouseRate: spouseRate,
+            spouseRateOutpatient:spouseRateOutpatient,
             childrenRate: childrenRate,
+            childrenRateOutpatient:childrenRateOutpatient,
             quoteTotal: quoteTotal,
             medicalPlan: rate.MedicalPlanId,
             underwriter: rate.Underwriter

@@ -19,6 +19,5 @@ const LastExpenseRates = sequelizeConnection.define("LastExpenseRate", {
   }
 });
 
-LastExpenseRates.belongsTo(LastExpensePlanModel)
 LastExpenseRates.belongsTo(Underwriter)
 module.exports = LastExpenseRates
