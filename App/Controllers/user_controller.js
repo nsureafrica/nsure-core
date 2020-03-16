@@ -66,7 +66,8 @@ module.exports = {
             email: req.body.email,
             password: hashedPassword,
             tempPassword: false,
-            isVerified: true
+            isVerified: true,
+            UserCategoryId:1
           })
             .then(user => {
               delete user.password;
