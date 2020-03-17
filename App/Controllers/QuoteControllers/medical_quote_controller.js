@@ -32,18 +32,18 @@ module.exports = {
           if (principalAge <= 40) {
             principalRate = principalRate + rate.principalInpatientAnnualYouth;
             if (outpatientPerPerson) {
-              principalRateOutpatient = principalRate + rate.principalOutpatientAnnualYouth;
+              principalRateOutpatient =  rate.principalOutpatientAnnualYouth;
             }
           } else if (principalAge <= 60) {
             principalRate =
               principalRate + rate.principalInpatientAnnualMiddleAge;
               if (outpatientPerPerson) {
-                principalRateOutpatient = principalRate + rate.principalOutpatientAnnualMiddleAge;
+                principalRateOutpatient =  rate.principalOutpatientAnnualMiddleAge;
               }
           } else if (principalAge <= 65) {
             principalRate = principalRate + rate.principalInpatientAnnualSenior;
             if (outpatientPerPerson) {
-              principalRateOutpatient = principalRate + rate.principalOutpatientAnnualSenior;
+              principalRateOutpatient =  rate.principalOutpatientAnnualSenior;
             }
           } else {
             console.log("too old mate");
@@ -54,17 +54,17 @@ module.exports = {
             if (spouseAge <= 40) {
               spouseRate = spouseRate + rate.spouseInpatientAnnualYouth;
               if (outpatientPerPerson) {
-                spouseRateOutpatient = principalRate + rate.spouseOutpatientAnnualYouth;
+                spouseRateOutpatient =   rate.spouseOutpatientAnnualYouth;
               }
             } else if (spouseAge <= 60) {
               spouseRate = spouseRate + rate.spouseInpatientAnnualMiddleAge;
               if (outpatientPerPerson) {
-                spouseRateOutpatient = principalRate + rate.spouseOutpatientAnnualMiddleAge;
+                spouseRateOutpatient =   rate.spouseOutpatientAnnualMiddleAge;
               }
             } else if (spouseAge <= 65) {
               spouseRate = spouseRate + rate.principalInpatientAnnualSenior;
               if (outpatientPerPerson) {
-                spouseRateOutpatient = principalRate + rate.spouseOutpatientAnnualSenior;
+                spouseRateOutpatient =  rate.spouseOutpatientAnnualSenior;
               }
             } else {
               console.log("too old mate");
@@ -77,6 +77,9 @@ module.exports = {
             childrenRateOutpatient = rate.childrenOutpatientAnnual * numberOfChildren;
           }
           var quoteTotal = principalRate + principalRateOutpatient + spouseRate + spouseRateOutpatient + childrenRate + childrenRateOutpatient;
+          var levies = quoteTotal * (0.45/100)
+          var stampDuty = 40
+          quoteTotal = quoteTotal + levies + stampDuty
           var quoteObject = {
             principalRate: principalRate,
             principalRateOutpatient: principalRateOutpatient,
@@ -85,6 +88,8 @@ module.exports = {
             childrenRate: childrenRate,
             childrenRateOutpatient:childrenRateOutpatient,
             quoteTotal: quoteTotal,
+            levies:levies,
+            stampDuty: stampDuty,
             medicalPlan: rate.MedicalPlanId,
             underwriter: rate.Underwriter
           };

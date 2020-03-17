@@ -127,4 +127,8 @@ module.exports = app => {
   //last expense policy routes
   const lastexpensepolicyroutes = require("./PolicyRoutes/last_expense_policy_routes")
   lastexpensepolicyroutes(app)
+
+  //dashboard routes
+  const dashboardRoutes = require("./DashboardRoutes/dashboard_routes")
+  dashboardRoutes(app)
 };

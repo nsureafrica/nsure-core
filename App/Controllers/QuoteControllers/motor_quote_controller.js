@@ -63,7 +63,7 @@ module.exports = {
             }
 
             var quoteAmount =  rate.minimumPremium + courtesyCarAmount + roadsideAssistanceAmount + politicalViolenceTerrorismAmount + excessProtectorAmount + basicAmount
-            var levies = quoteAmount * (levies/100)
+            var levies = quoteAmount * (rate.levies/100)
             quoteAmount = quoteAmount + levies + rate.stampDuty;
             var quoteObject = {
               quoteAmount: quoteAmount,
