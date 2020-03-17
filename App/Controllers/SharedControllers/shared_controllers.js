@@ -54,6 +54,8 @@ module.exports = {
       amount: req.body.quoteAmount
     }).then(billResponse => {
       const billId = { BillId: billResponse.dataValues.id };
+      const UserId  = {UserId: req.user.id}
+      Object.assign(req.body,UserId)
       Object.assign(req.body, billId);
       model
         .create(req.body)

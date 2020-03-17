@@ -40,6 +40,23 @@ module.exports = {
           underwriter: rate.Underwriter
         };
         res.status(200).send(quoteObject);
+        var mailOptions = {
+          from: process.env.senderEmailAdress,
+          to: req.user.email,
+          subject: "Last Expense Insurance Quote",
+          html: `<b>Dear Customer,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
+            req.body
+          )}<p><b>Quote</b></p>${JSON.stringify(quoteObject)}`
+        };
+        Transporter.transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
+            console.log(err);
+          } else {
+            const notice = `Email sent: ` + info.response;
+            console.log(notice);
+          }
+        });
       })
       .catch(err => {
         res.status(500).send(err);
