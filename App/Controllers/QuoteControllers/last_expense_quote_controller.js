@@ -26,7 +26,7 @@ module.exports = {
 
         annualPremiumNuclearFamily = rate.annualPremiumNuclearFamily
         if (noOfChildren>4) {
-          annualPremiumExtraChild = rate.annualPremiumPerExtraChild * noOfChildren - 4
+          annualPremiumExtraChild = rate.annualPremiumPerExtraChild * (noOfChildren - 4)
         }
         if (!(noOfNuclearFamily == 0)) {
           annualPremiumParents = rate.annualPremiumPerParent * noOfParents
