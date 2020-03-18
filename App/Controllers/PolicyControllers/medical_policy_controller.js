@@ -10,7 +10,7 @@ module.exports = {
     MedicalPolicy.findAll({
       order: [["updatedAt", "DESC"]],
       where: {
-        userId: req.user.id
+        UserId: req.user.id
       }
     })
       .then(policies => {

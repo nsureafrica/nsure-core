@@ -8,7 +8,7 @@ module.exports = {
   getUserSalamahTransitionPolicies: (req, res) => {
    SalamahTransitionPolicy.findAll({
       where: {
-        userId: req.user.id
+        UserId: req.user.id
       }
     })
       .then(policies => {

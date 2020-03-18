@@ -17,7 +17,7 @@ module.exports = {
   getUserMotorPolicies: (req, res) => {
     MotorPolicy.findAll({
       where: {
-        emailAddress: req.user.id
+        UserId: req.user.id
       }
     })
       .then(policies => {

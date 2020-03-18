@@ -9,7 +9,7 @@ module.exports = {
   getUserTravelPolicy: (req, res) => {
     TravelPolicy.findAll({
       where: {
-        userId: req.user.id
+        UserId: req.user.id
       }
     })
       .then(policies => {

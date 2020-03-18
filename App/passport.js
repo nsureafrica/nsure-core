@@ -12,7 +12,6 @@ passport.use(
       include: [UserCategory],
       where: { email: username }
     }).then(user => {
-      console.log(user)
       if (!user) {
         return done(null, null, { message: "User does not exist" });
       } else {

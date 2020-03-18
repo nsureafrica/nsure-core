@@ -40,7 +40,10 @@ module.exports = {
   getAllPoliciesByUserId: (req, res, model) => {
     model
       .findAll({
-        order: [["updatedAt", "DESC"]]
+        order: [["updatedAt", "DESC"]],
+        where: {
+          UserId: req.user.id
+        }
       })
       .then(polciies => {
         res.status(200).send(polciies);
