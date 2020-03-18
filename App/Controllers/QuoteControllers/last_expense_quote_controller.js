@@ -25,7 +25,9 @@ module.exports = {
         var annualPremiumParents = 0;
 
         annualPremiumNuclearFamily = rate.annualPremiumNuclearFamily
-        annualPremiumExtraChild = rate.annualPremiumPerExtraChild * noOfChildren>4?noOfChildren-4:0
+        if (noOfChildren>4) {
+          rate.annualPremiumPerExtraChild * noOfChildren - 4
+        }
         annualPremiumParents = rate.annualPremiumPerParent * noOfParents
         var quoteTotal =
           annualPremiumNuclearFamily +
