@@ -16,6 +16,10 @@ const MedicalPlans = sequelizeConnection.define("MedicalPlan", {
     type: Sequelize.DOUBLE,
     allowNull: false
   },
+  outpatientCoverLimit: {
+    type: Sequelize.DOUBLE,
+    allowNull: false,
+  },
   chronicCases: {
     type: Sequelize.DOUBLE,
     allowNull: false
@@ -24,7 +28,7 @@ const MedicalPlans = sequelizeConnection.define("MedicalPlan", {
     type: Sequelize.DOUBLE,
     allowNull: false
   },
-  limitPerFamilyPerAnnum: {
+  personalAccident: {
     type: Sequelize.DOUBLE,
     allowNull: false
   },
