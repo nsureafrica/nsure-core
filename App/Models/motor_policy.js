@@ -126,7 +126,7 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
   }
 });
 
-MotorPolicy.belongsTo(User, { foreignKey: "emailAddress", targetKey: "email" });
+MotorPolicy.belongsTo(User);
 MotorPolicy.belongsTo(VehicleClass);
 MotorPolicy.belongsTo(UnderWriter);
 MotorPolicy.belongsTo(Bill);

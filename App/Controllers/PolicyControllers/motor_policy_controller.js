@@ -17,7 +17,7 @@ module.exports = {
   getUserMotorPolicies: (req, res) => {
     MotorPolicy.findAll({
       where: {
-        emailAddress: req.user.email
+        emailAddress: req.user.id
       }
     })
       .then(policies => {
@@ -71,7 +71,7 @@ module.exports = {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           address: req.body.address,
-          emailAddress: req.user.email,
+          UserId: req.user.id,
           city: req.body.city,
           country: req.body.country,
           postalCode: req.body.postalCode,
