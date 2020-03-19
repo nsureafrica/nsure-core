@@ -19,9 +19,6 @@ module.exports = {
   },
   getAllUnderwriter: (req, res) => {
     Underwriter.findAll({
-      where: {
-        id: req.params.id
-      }
     })
       .then(classes => {
         res.send(classes);
