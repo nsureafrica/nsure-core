@@ -1,5 +1,4 @@
 //@ts-check
-const chalk = require("chalk");
 const Underwriter = require("../Models/underwriters");
 
 module.exports = {
@@ -10,7 +9,6 @@ module.exports = {
       }
     })
       .then(classes => {
-        console.log(chalk.blue(classes));
         res.send(classes);
       })
       .catch(err => {
@@ -18,8 +16,7 @@ module.exports = {
       });
   },
   getAllUnderwriter: (req, res) => {
-    Underwriter.findAll({
-    })
+    Underwriter.findAll({})
       .then(classes => {
         res.send(classes);
       })

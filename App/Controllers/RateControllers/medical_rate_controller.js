@@ -1,6 +1,7 @@
 //@ts-check
 
 const MedicalRates = require("../../Models/medical_rates");
+const SharedRateControllers = require("./shared_rate_controllers")
 //create rate
 //get all rates
 //get one rate
@@ -41,6 +42,10 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err);
       });
+  },
+
+  getAllMedicalRatesGroupedByUnderwriters: (req, res) => {
+    SharedRateControllers.getGroupedByFieldRates(req, res, "UnderwriterId",MedicalRates);
   },
   getAllMedicalRates: (req, res) => {
     MedicalRates.findAll()

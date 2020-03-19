@@ -1,6 +1,7 @@
 //@ts-check
 
 const LastExpenseRateModel = require("./../../Models/last_expense_rates");
+const SharedRateControllers = require("./shared_rate_controllers")
 
 module.exports = {
   createLastExpenseRate: (req, res) => {
@@ -37,6 +38,9 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err);
       });
+  },
+  getAllLastExpenseRatesGroupedByUnderwriters: (req, res) => {
+    SharedRateControllers.getGroupedByFieldRates(req, res, "UnderwriterId",LastExpenseRateModel);
   },
   getAllLastExpenseRates: (req, res) => {
     LastExpenseRateModel.findAll()

@@ -1,6 +1,6 @@
 //@ts-check
 
-const motorRatesController = require("../../../Controllers/RateControllers/motor_rates_controller");
+const motorRatesController = require("../../Controllers/RateControllers/motor_rates_controller");
 
 module.exports = app => {
   app

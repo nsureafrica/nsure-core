@@ -15,4 +15,7 @@ module.exports = app => {
   app
     .route("/medicalRates/getMedicalRates")
     .get(medicalRatesController.getMedicalRates);
+  app
+    .route("/medicalRates/getallmedicalratesgroupedbyunderwriter")
+    .get(medicalRatesController.getAllMedicalRatesGroupedByUnderwriters);
 };

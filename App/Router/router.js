@@ -89,7 +89,7 @@ module.exports = app => {
   motorClassRoutes(app)
 
   // motor rates routes
-  const motorRatesRoutes = require("./PolicyRoutes/Motor/motor_rates_routes")
+  const motorRatesRoutes = require("./RateRoutes/motor_rates_routes")
   motorRatesRoutes(app)
 
   // medical rates routes

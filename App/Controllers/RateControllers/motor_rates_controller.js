@@ -1,13 +1,14 @@
 //@ts-check
 const chalk = require("chalk");
 const MotorRates = require("../../Models/motor_rates");
-
+const SharedRateControllers = require("./shared_rate_controllers")
 module.exports = {
   getOneMotorRate: (req, res) => {
     MotorRates.findAll({
       where: {
         userId: req.user.id
-      }
+      },
+
     })
       .then(rates => {
         console.log(chalk.blue(rates));
@@ -17,6 +18,7 @@ module.exports = {
         res.status(500).send(err);
       });
   },
+  //this is get user motor rates
   getMotorRates: (req, res) => {
     MotorRates.findAll({
       where: {
@@ -32,14 +34,21 @@ module.exports = {
       });
   },
   getAllMotorRates: (req, res) => {
-    MotorRates.findAll()
+    MotorRates.findAll({})
       .then(rates => {
+
         res.send(rates);
       })
       .catch(err => {
         res.status(500).send(err);
       });
   },
+  //
+
+  getAllMotorRatesGroupedByUnderwriters: (req, res) => {
+    SharedRateControllers.getGroupedByFieldRates(req, res, "UnderwriterId",MotorRates);
+  },
+
   //Create a motor rate
   createMotorRate: (req, res) => {
     MotorRates.create(req.body)
