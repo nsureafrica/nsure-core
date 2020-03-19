@@ -2,7 +2,7 @@
 
 const LastExpenseRateModel = require("./../../Models/last_expense_rates");
 const SharedRateControllers = require("./shared_rate_controllers")
-
+const SharedControllers = require("./../SharedControllers/shared_controllers")
 module.exports = {
   createLastExpenseRate: (req, res) => {
     LastExpenseRateModel.create(req.body)
@@ -50,5 +50,8 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err);
       });
+  },
+  updateLastExpenseRatesById: (req,res) => {
+    SharedControllers.updateEntryById(req,res,LastExpenseRateModel)
   }
 };

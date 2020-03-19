@@ -1,5 +1,6 @@
 //@ts-check
 const Underwriter = require("../Models/underwriters");
+const SharedControllers = require("./SharedControllers/shared_controllers")
 
 module.exports = {
   getUnderwriter: (req, res) => {
@@ -32,5 +33,8 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err);
       });
+  },
+  updateMotorRatesById: (req,res) => {
+    SharedControllers.updateEntryById(req,res,Underwriter)
   }
 };

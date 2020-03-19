@@ -57,8 +57,8 @@ module.exports = {
       amount: req.body.quoteAmount
     }).then(billResponse => {
       const billId = { BillId: billResponse.dataValues.id };
-      const UserId  = {UserId: req.user.id}
-      Object.assign(req.body,UserId)
+      const UserId = { UserId: req.user.id };
+      Object.assign(req.body, UserId);
       Object.assign(req.body, billId);
       model
         .create(req.body)
@@ -70,5 +70,14 @@ module.exports = {
           res.status(500).send(err);
         });
     });
+  },
+  updateEntryById: (req, res, model) => {
+    model
+      .update(req.body, {where: { id: req.params.id } })
+      .then(response => {
+        console.log(response)
+        res.status(200).send(response);
+      })
+      .catch(err => res.status(500).send(err));
   }
 };

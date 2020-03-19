@@ -20,13 +20,13 @@ module.exports = {
     // const dashboardData
 
    //sums
-   const sumOfMotorQuoteAmount = await MotorPoliciesModel.sum('quoteAmount');
+  //  const sumOfMotorQuoteAmount = await MotorPoliciesModel.sum('quoteAmount');
 //    const sumOfMedicalQuoteAmount = await MedicalPolicyModel.sum('quoteAmount');
 //    const sumOfEducationQuoteAmount = await EducationPolicyModel.sum('quoteAmount');
 //    const sumOfTravelQuoteAmount =  await TravelPolicyModel.sum('quoteAmount');
 //    const sumOfLastExpenseQuoteAmounts = await LastExpensePolicyModel.sum('quoteAmount');
     var dashboardDataObject = {
-        numberofUsers,numberOfMotorPolicies,numberOfMedicalPolicies,numberOfEducationPolicies,numberOfTravelPolicies,numberOfLastExpensePolicies,sumOfMotorQuoteAmount
+        numberofUsers,numberOfMotorPolicies,numberOfMedicalPolicies,numberOfEducationPolicies,numberOfTravelPolicies,numberOfLastExpensePolicies
       };
     console.log(dashboardDataObject)
     res.send(dashboardDataObject)

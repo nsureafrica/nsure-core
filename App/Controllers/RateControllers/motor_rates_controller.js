@@ -2,6 +2,8 @@
 const chalk = require("chalk");
 const MotorRates = require("../../Models/motor_rates");
 const SharedRateControllers = require("./shared_rate_controllers")
+const SharedControllers = require("./../SharedControllers/shared_controllers")
+
 module.exports = {
   getOneMotorRate: (req, res) => {
     MotorRates.findAll({
@@ -58,5 +60,8 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err);
       });
+  },
+  updateMotorRatesById: (req,res) => {
+    SharedControllers.updateEntryById(req,res,MotorRates)
   }
 };

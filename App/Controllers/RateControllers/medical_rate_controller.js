@@ -2,6 +2,7 @@
 
 const MedicalRates = require("../../Models/medical_rates");
 const SharedRateControllers = require("./shared_rate_controllers")
+const SharedControllers = require("./../SharedControllers/shared_controllers")
 //create rate
 //get all rates
 //get one rate
@@ -55,5 +56,8 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err);
       });
+  },
+  updateMedicalRatesById: (req,res) => {
+    SharedControllers.updateEntryById(req,res,MedicalRates)
   }
 };
