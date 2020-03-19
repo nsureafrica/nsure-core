@@ -50,6 +50,24 @@ const LastExpensePolicy = sequelizeConnection.define("LastExpensePolicy", {
   numberOfChildren: {
     type: Sequelize.INTEGER,
     allowNull: true
+  },
+  active: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  activatedBy:{
+    type: Sequelize.INTEGER,
+    allowNull: true,
+  },
+  paid:{
+    type:Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  paidVerifiedBy:{
+    type:Sequelize.INTEGER,
+    allowNull: true
   }
 });
 

@@ -87,16 +87,24 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
     type: Sequelize.STRING,
     allowNull: true
   },
-  paid:{
+  active: {
     type: Sequelize.BOOLEAN,
-    allowNull: true,
+    allowNull: false,
     defaultValue: false
   },
-  active:{
+  activatedBy: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  paid: {
     type: Sequelize.BOOLEAN,
-    allowNull: true,
+    allowNull: false,
     defaultValue: false
   },
+  paidVerifiedBy: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  }
 });
 
 TravelPolicy.belongsTo(User);

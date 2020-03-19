@@ -1,8 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const User = require("./User");
-const Bill = require("./Bill")
-
+const Bill = require("./Bill");
 
 const MedicalPolicy = sequelizeConnection.define("MedicalPolicy", {
   // CLIENT INFORMATION
@@ -62,7 +61,24 @@ const MedicalPolicy = sequelizeConnection.define("MedicalPolicy", {
     allowNull: false,
     defaultValue: false
   },
-
+  active: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  activatedBy: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  paid: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  paidVerifiedBy: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  }
 });
 
 MedicalPolicy.belongsTo(User);

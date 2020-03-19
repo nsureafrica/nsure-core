@@ -106,23 +106,23 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
   kraPin: { type: Sequelize.STRING, allowNull: false },
   idNumber: { type: Sequelize.STRING, allowNull: false },
   //quote or paid policy
+  active: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  activatedBy: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
   paid: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false
   },
-  paidAmount: {
-    type: Sequelize.FLOAT,
+  paidVerifiedBy: {
+    type: Sequelize.INTEGER,
     allowNull: true
-  },
-  quoteAmount: {
-    type: Sequelize.FLOAT,
-    allowNull: true
-  },
-  active: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false
   }
 });
 
