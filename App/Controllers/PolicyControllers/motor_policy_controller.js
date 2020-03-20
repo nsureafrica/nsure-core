@@ -5,7 +5,7 @@ const CustomFilter = require("./custom_filter_policy_controller");
 module.exports = {
   getAllMotorPolicies: (req, res) => {
     MotorPolicy.findAll({
-      order: [['updatedAt', 'DESC']],
+      order: [["updatedAt", "DESC"]]
     })
       .then(policies => {
         res.status(200).send(policies);
@@ -45,14 +45,14 @@ module.exports = {
     var kraFilesArray = [];
     var nationalIDArray = [];
     req.files.kraPin.forEach(fileName => {
-      kraFilesArray.push(fileName.filenwa)
-    })
+      kraFilesArray.push(fileName.filename);
+    });
     req.files.logbook.forEach(fileName => {
       logbookPathArray.push(fileName.filename);
     });
     req.files.nationalID.forEach(fileName => {
-      nationalIDArray.push(fileName.filename)
-    })
+      nationalIDArray.push(fileName.filename);
+    });
     //create a bill
     Bill.create({
       amount: req.body.quoteAmount
@@ -71,6 +71,7 @@ module.exports = {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           address: req.body.address,
+          emailAddress: req.body.emailAddress,
           UserId: req.user.id,
           city: req.body.city,
           country: req.body.country,
@@ -81,15 +82,15 @@ module.exports = {
           numberOfSeats: req.body.numberOfSeats,
           engineCapacity: req.body.engineCapacity,
           kraPin: kraFilesArray.toString(),
-          quoteAmount: req.body.quoteAmount,
           idNumber: nationalIDArray.toString(),
           UnderwriterId: req.body.underWriter,
           VehicleClassId: req.body.vehicleClass,
-          BillId: billResponse.dataValues.id
+          BillId: billResponse.dataValues.id,
+          
         }).then(sequelizeResponse => {
           //Generate quote here
           res.status(200).send(sequelizeResponse);
-        });
+        }).catch(error => res.status(500).send(error));
       })
       .catch(err => {
         console.log(err);

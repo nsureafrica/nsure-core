@@ -4,7 +4,7 @@
   "description": "Server side application + API",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -r dotenv/config ./server.js",
+    "start": "nodemon --ignore './documentsStorage/' -r dotenv/config ./server.js",
     "start_prod": "nodemon -r dotenv/config ./cluster.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "gcloud app deploy",
