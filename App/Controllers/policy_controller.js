@@ -3,7 +3,7 @@
 const PolicyType = require("../Models/policy_type");
 
 module.exports = {
-  getAllUserPolicies: (req, res) => {},
+  getAllUserPolicies: async (req, res) => {},
   //this is for internal use to create policies and their description and store them in the db
   createPolicy: (req, res) => {
     PolicyType.create({

@@ -12,6 +12,10 @@ module.exports = app => {
     .get(lastexpenseratecontroller.getAllLastExpenseRates);
 
   app
-    .route("rates/lastexpenserate/getalllastexpenseratesgroupedbyunderwriter")
+    .route("/rates/lastexpenserate/getalllastexpenseratesgroupedbyunderwriter")
     .get(lastexpenseratecontroller.getAllLastExpenseRatesGroupedByUnderwriters);
+
+  app
+    .route("/rates/lastexpenserate/updatelastexpenseratebyid/:id")
+    .put(lastexpenseratecontroller.updateLastExpenseRatesById);
 };

@@ -15,4 +15,6 @@ module.exports = app => {
   app
     .route("/motorRates/getMotorRates")
     .get(motorRatesController.getMotorRates);
+  
+  app.route("/motorRates/updatemotorratebyid/:id").put(motorRatesController.updateMotorRatesById)
 };
