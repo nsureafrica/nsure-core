@@ -1,9 +1,9 @@
 //@ts-check
 
-const medicalPlansController = require("../../Controllers/PlanControllers/medical_plans_controller")
+const medicalPlansController = require("../../Controllers/PlanControllers/medical_plans_controller");
 
 module.exports = app => {
-    app
+  app
     .route("/medicalPlans/createMedicalPlan")
     .post(medicalPlansController.createMedicalPlan);
   app
@@ -15,4 +15,7 @@ module.exports = app => {
   app
     .route("/medicalPlans/getMedicalPlans")
     .get(medicalPlansController.getMedicalPlans);
-}
+  app
+    .route("/plans/medicalPlans/updatemedicalplansbyid/:id")
+    .put(medicalPlansController.updateMedicalPlanById);
+};

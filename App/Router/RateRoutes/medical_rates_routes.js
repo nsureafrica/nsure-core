@@ -20,6 +20,9 @@ module.exports = app => {
     .get(medicalRatesController.getAllMedicalRatesGroupedByUnderwriters);
 
   app
+    .route("/rates/medicalRates/getmedicalratesbyplanid/:id")
+    .get(medicalRatesController.getMedicalRateByPlanId);
+  app
     .route("/medicalRates/updatemedicalratebyid/:id")
     .put(medicalRatesController.updateMedicalRatesById);
 };

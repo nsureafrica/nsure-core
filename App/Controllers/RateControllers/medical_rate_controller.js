@@ -59,5 +59,8 @@ module.exports = {
   },
   updateMedicalRatesById: (req,res) => {
     SharedControllers.updateEntryById(req,res,MedicalRates)
-  }
+  },
+  getMedicalRateByPlanId: (req,res) => {
+    SharedRateControllers.getRateByPlanId(req,res,MedicalRates)
+  },
 };

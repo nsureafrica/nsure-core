@@ -13,4 +13,7 @@ module.exports = app => {
   app
     .route("/lastExpensePlans/getLastExpensePlans")
     .get(LastExpensePlanController.getAllLastExpensePlans);
+  app
+    .route("/plans/lastExpensePlans/updatelastexpenseplanbyid/:id")
+    .put(LastExpensePlanController.updateLastExpensePlanById);
 };

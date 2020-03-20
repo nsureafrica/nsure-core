@@ -7,7 +7,9 @@ const host = process.env.db_host;
 
 const sequelizeConnection = new Sequelize(database, username, password, {
   host: host,
-  dialect: "mysql"
+  dialect: "mysql",
+  paranoid: true,
+
 });
 
 global.sequelizeConnection = sequelizeConnection;

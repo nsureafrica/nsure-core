@@ -2,7 +2,7 @@
 
 const MedicalPlans = require('../../Models/medical_plans')
 const UnderwriterModel = require("../../Models/underwriters");
-
+const SharedControllers = require("./../SharedControllers/shared_controllers")
 module.exports = {
     createMedicalPlan: (req, res) => {
         MedicalPlans.create(req.body)
@@ -50,5 +50,8 @@ module.exports = {
           .catch(err => {
             res.status(500).send(err);
           });
+      },
+      updateMedicalPlanById: (req,res) => {
+        SharedControllers.updateEntryById(req,res,MedicalPlans)
       }
 }

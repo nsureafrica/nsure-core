@@ -61,7 +61,17 @@ const MedicalRates = sequelizeConnection.define("MedicalRate", {
   childrenOutpatientAnnual:{
     type: Sequelize.DOUBLE,
     allowNull: false
-  }
+  },
+  levies:{
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    defaultValue: 0.45
+  },
+  stampDuty:{
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    defaultValue: 40
+  },
 });
 
 MedicalRates.belongsTo(MedicalPlan)

@@ -2,7 +2,7 @@
 
 const LastExpensePlanModel = require("./../../Models/last_expense_plans");
 const UnderwriterModel = require("../../Models/underwriters");
-
+const SharedControllers = require("./../SharedControllers/shared_controllers")
 module.exports = {
   createLastExpensePlan: (req, res) => {
     LastExpensePlanModel.create(req.body)
@@ -37,5 +37,8 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err);
       });
+  },
+  updateLastExpensePlanById: (req,res) => {
+    SharedControllers.updateEntryById(req,res,LastExpensePlanModel)
   }
 };

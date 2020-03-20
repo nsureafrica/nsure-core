@@ -53,5 +53,8 @@ module.exports = {
   },
   updateLastExpenseRatesById: (req,res) => {
     SharedControllers.updateEntryById(req,res,LastExpenseRateModel)
-  }
+  },
+  getLastExpenseRateByPlanId: (req,res) => {
+    SharedRateControllers.getRateByPlanId(req,res,LastExpenseRateModel)
+  },
 };

@@ -16,6 +16,9 @@ module.exports = app => {
     .get(lastexpenseratecontroller.getAllLastExpenseRatesGroupedByUnderwriters);
 
   app
+    .route("/rates/lastexpenserate/getlastexpenseratebyplanid/:planId")
+    .get(lastexpenseratecontroller.getLastExpenseRateByPlanId);
+  app
     .route("/rates/lastexpenserate/updatelastexpenseratebyid/:id")
     .put(lastexpenseratecontroller.updateLastExpenseRatesById);
 };

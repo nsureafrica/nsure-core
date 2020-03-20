@@ -13,10 +13,19 @@ module.exports = {
             (a[estKey] ? a[estKey] : (a[estKey] = null || [])).push(e);
             return a;
           }, {});
-          res.send(outObject);
+          res.status(200).send(outObject);
         })
         .catch(err => {
           res.status(500).send(err);
         });
+    },
+    getRateByPlanId: (req,res,model) => {
+      model.findOne({
+        where: {
+          id: req.params.id
+        }
+      }).then(rate => {
+        res.status(200).send(rate)
+      })
     }
 }
