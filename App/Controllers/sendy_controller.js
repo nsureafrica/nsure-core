@@ -1,7 +1,6 @@
 // @ts-check
 
 const axios = require("axios");
-const chalk = require("chalk");
 const sendyBaseUrl = process.env.sendyBaseUrl;
 const sendyApiKey = process.env.sendyApiKey;
 const sendyApiUsername = process.env.sendyUsername;
@@ -19,7 +18,6 @@ module.exports = {
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${req.body.to_lat},${req.body.to_long}&key=${process.env.googleMapsApiKey}`
       )
       .then(googleMapsResponse => {
-        console.log(chalk.blueBright(googleMapsResponse.data.results[0].formatted_address));
         axios.default
           .post(sendyBaseUrl + "##request", {
             command: "request",

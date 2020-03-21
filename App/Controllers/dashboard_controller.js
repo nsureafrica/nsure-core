@@ -7,6 +7,7 @@ const EducationPolicyModel = require("./../Models/education_policy");
 const TravelPolicyModel = require("./../Models/travel_policy");
 const LastExpensePolicyModel = require("./../Models/last_expense_policy");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
+const { QueryTypes } = require("sequelize");
 
 const Bill = require("./../Models/Bill");
 module.exports = {
@@ -21,26 +22,41 @@ module.exports = {
     // const dashboardData
 
     //sums
-    const sumOfMotorQuoteAmount = await MotorPoliciesModel.findAll({
-      attributes: [
-        'Bill.amount',
-        [sequelizeConnection.fn('sum', sequelizeConnection.col('Bill.amount')), 'total_amount'],
-      ],
-      group: ['Bill.amount'],
-      include: ['Bill']
-    });
-    console.info(sumOfMotorQuoteAmount)
-    //    const sumOfMedicalQuoteAmount = await MedicalPolicyModel.sum('quoteAmount');
-    //    const sumOfEducationQuoteAmount = await EducationPolicyModel.sum('quoteAmount');
-    //    const sumOfTravelQuoteAmount =  await TravelPolicyModel.sum('quoteAmount');
-    //    const sumOfLastExpenseQuoteAmounts = await LastExpensePolicyModel.sum('quoteAmount');
+
+    const sumOfMotorQuoteAmount = await sequelizeConnection.query(
+      "SELECT SUM(two.Bills.amount) as total_amount FROM two.MotorPolicies INNER JOIN two.Bills ON two.Bills.id = BillId;",
+      { type: QueryTypes.SELECT }
+    );
+
+    const sumOfMedicalQuoteAmount = await sequelizeConnection.query(
+      "SELECT SUM(two.Bills.amount) as total_amount FROM two.MedicalPolicies INNER JOIN two.Bills ON two.Bills.id = BillId;",
+      { type: QueryTypes.SELECT }
+    );
+    const sumOfEducationQuoteAmount = await sequelizeConnection.query(
+      "SELECT SUM(two.Bills.amount) as total_amount FROM two.EducationPolicies INNER JOIN two.Bills ON two.Bills.id = BillId;",
+      { type: QueryTypes.SELECT }
+    );
+    const sumOfTravelQuoteAmount = await sequelizeConnection.query(
+      "SELECT SUM(two.Bills.amount) as total_amount FROM two.TravelPolicies INNER JOIN two.Bills ON two.Bills.id = BillId;",
+      { type: QueryTypes.SELECT }
+    );
+    const sumOfLastExpenseQuoteAmounts = await sequelizeConnection.query(
+      "SELECT SUM(two.Bills.amount) as total_amount FROM two.LastExpensePolicies INNER JOIN two.Bills ON two.Bills.id = BillId;",
+      { type: QueryTypes.SELECT }
+    );
+
     var dashboardDataObject = {
       numberofUsers,
       numberOfMotorPolicies,
       numberOfMedicalPolicies,
       numberOfEducationPolicies,
       numberOfTravelPolicies,
-      numberOfLastExpensePolicies
+      numberOfLastExpensePolicies,
+      sumOfMotorQuoteAmount,
+      sumOfMedicalQuoteAmount,
+      sumOfEducationQuoteAmount,
+      sumOfTravelQuoteAmount,
+      sumOfLastExpenseQuoteAmounts
     };
     console.log(dashboardDataObject);
     res.send(dashboardDataObject);
