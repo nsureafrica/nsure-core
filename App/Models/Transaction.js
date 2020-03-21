@@ -26,4 +26,6 @@ const Transaction = sequelizeConnection.define("Transaction", {
 
 
 Transaction.belongsTo(User, { as: 'verifiedBy' });
+Transaction.belongsTo(User);
+
 module.exports = Transaction;

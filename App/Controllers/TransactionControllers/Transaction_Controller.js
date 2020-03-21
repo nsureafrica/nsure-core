@@ -1,9 +1,12 @@
 //@ts-check
 
 const TransactionModel = require("./../../Models/Transaction");
-
+const UserModel = require("./../../Models/User")
 module.exports = {
   createNewTransaction: (req, res) => {
+    const userId = { UserId: req.user.id };
+    Object.assign(req.body, userId);
+
     TransactionModel.create(req.body)
       .then(response => {
         res.status(200).send(response);
