@@ -66,7 +66,7 @@ module.exports = {
         .then(response => {
           console.log(response);
           res.status(200).send(response);
-          transporter.sendMail(mailOptions, (err, info) => {
+          transporter.transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
               console.log(err);
             } else {
