@@ -32,7 +32,7 @@ module.exports = {
           subject: "Claim Created",
           text: `Hello ${req.user.firstName} ${req.user.lastName}, You have created a claim at Spiresure. Your claim id is ${response.id}`
         };
-        transporter.sendMail(mailOptions, (err, info) => {
+        transporter.transporter.sendMail(mailOptions, (err, info) => {
           if (err) {
             console.log(err);
           } else {

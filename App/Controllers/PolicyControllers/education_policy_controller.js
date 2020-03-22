@@ -57,7 +57,7 @@ module.exports = {
           to: `${req.user.email},${process.env.spireReceivingEmailAddress}`,
           subject: "Education Policy Created",
           html: invoiceEmail.invoiceEmail(
-            "Travel Policy Insurance",
+            "Education Policy Insurance",
             selelectedOptionsRow
           )
         };
