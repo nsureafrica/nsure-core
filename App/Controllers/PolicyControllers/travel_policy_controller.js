@@ -4,7 +4,7 @@ const TravelPolicy = require("../../Models/travel_policy");
 const CustomFilter = require("./custom_filter_policy_controller");
 const transporter = require("../../Utils/mailService");
 const Bill = require("../../Models/Bill");
-const invoiceemail = require("./../../email_templates/invoicetemplate");
+const invoiceEmail = require("./../../email_templates/invoicetemplate");
 module.exports = {
   getUserTravelPolicy: (req, res) => {
     TravelPolicy.findAll({
@@ -57,9 +57,9 @@ module.exports = {
           var mailOptions = {
             from: process.env.senderEmailAdress,
             to: `${process.env.spireReceivingEmailAddress},${req.user.email}`,
-            subject: "Travel Insurance Quote",
-            html: invoiceemail.invoiceEmail(
-              "Travel Insurance Quote",
+            subject: "Travel Policy Created",
+            html: invoiceEmail.invoiceEmail(
+              "Travel Policy Insurance",
               selelectedOptionsRow
             )
           };
