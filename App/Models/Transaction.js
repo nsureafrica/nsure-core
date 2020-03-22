@@ -13,9 +13,17 @@ const Transaction = sequelizeConnection.define("Transaction", {
     allowNull: false
   },
   transactionType: {
-    type: Sequelize.ENUM("MPESA", "BANK", "AIRTEL", "OTHER"),
+    type: Sequelize.STRING(),
     allowNull: false,
     defaultValue: "OTHER"
+  },
+  msisdn_idnum: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: true
   },
   verified: {
     type: Sequelize.BOOLEAN,
@@ -24,8 +32,7 @@ const Transaction = sequelizeConnection.define("Transaction", {
   }
 });
 
-
-Transaction.belongsTo(User, { as: 'verifiedBy' });
+Transaction.belongsTo(User, { as: "verifiedBy" });
 Transaction.belongsTo(User);
 
 module.exports = Transaction;

@@ -2,6 +2,7 @@
 
 const SalamahTransitionPolicy = require("../../Models/salamah_policy");
 const CustomFilter = require("./custom_filter_policy_controller")
+const transporter = require("../../Utils/mailService");
 
 module.exports = {
 

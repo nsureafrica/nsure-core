@@ -16,6 +16,12 @@ module.exports = {
     SharedControllers.getAllPoliciesByUserId(req,res,LastExpensePolicyModel);
   },
   createLastExpensePolicy: (req,res) => {
-      SharedControllers.createPolicy(req,res,LastExpensePolicyModel);
+    var mailOptions = {
+      from: process.env.senderEmailAdress,
+      to: `${req.user.email},${process.env.spireReceivingEmailAddress}`,
+      subject: "Last Expense Policy Created",
+      text: `Hello ${req.user.firstName} ${req.user.lastName}, You have requested for an Last Expense policy quote at Spiresure.`
+    };
+      SharedControllers.createPolicy(req,res,LastExpensePolicyModel,mailOptions);
   }
 };

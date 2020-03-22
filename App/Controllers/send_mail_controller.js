@@ -8,7 +8,7 @@ module.exports = {
       .then(users => {
         users.map(user => {
           var mailOptions = {
-            from: process.env.mailFrom,
+            from: process.env.senderEmailAdress,
             to: user.dataValues.email,
             subject: req.body.subject,
             text: req.body.message
@@ -34,7 +34,7 @@ module.exports = {
   sendMailToUsers: (req, res) => {
     req.body.users.map(user => {
       var mailOptions = {
-        from: process.env.mailFrom,
+        from: process.env.senderEmailAdress,
         to: user.dataValues.email,
         subject: req.body.subject,
         text: req.body.message

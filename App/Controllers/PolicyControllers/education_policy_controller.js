@@ -48,10 +48,10 @@ module.exports = {
         res.status(200).send(response);
         //SEND AN EMAIL
         var mailOptions = {
-          from: process.env.mailFrom,
-          to: `${req.user.email},${process.env.travelQuoteEmailAddress}`,
-          subject: "Education Quote Created",
-          text: `Hello ${req.user.firstName} ${req.user.lastName}, You have requested for an education policy quote at Spiresure. Your education policy id is ${response.id}`
+          from: process.env.senderEmailAdress,
+          to: `${req.user.email},${process.env.spireReceivingEmailAddress}`,
+          subject: "Education Policy Created",
+          text: `Hello ${req.user.firstName} ${req.user.lastName}, You have requested for an education policy at Spiresure. Your education policy id is ${response.id}`
         };
         transporter.sendMail(mailOptions, (err, info) => {
           if (err) {

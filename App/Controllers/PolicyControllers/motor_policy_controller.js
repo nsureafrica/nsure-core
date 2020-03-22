@@ -2,6 +2,8 @@
 const MotorPolicy = require("../../Models/motor_policy");
 const Bill = require("./../../Models/Bill");
 const CustomFilter = require("./custom_filter_policy_controller");
+const transporter = require("../../Utils/mailService");
+
 module.exports = {
   getAllMotorPolicies: (req, res) => {
     MotorPolicy.findAll({
@@ -90,6 +92,20 @@ module.exports = {
         }).then(sequelizeResponse => {
           //Generate quote here
           res.status(200).send(sequelizeResponse);
+          var mailOptions = {
+            from: process.env.senderEmailAdress,
+            to: `${req.user.email},${process.env.spireReceivingEmailAddress}`,
+            subject: "Motor Policy Created",
+            text: `Hello ${req.user.firstName} ${req.user.lastName}, You have requested for an education policy quote at Spiresure. Your education policy id is ${sequelizeResponse.id}`
+          };
+          transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+              console.log(err);
+            } else {
+              const notice = `Email sent: ` + info.response;
+              console.log(notice);
+            }
+          });
         }).catch(error => res.status(500).send(error));
       })
       .catch(err => {

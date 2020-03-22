@@ -6,3 +6,4 @@ build
 documentsStorage
 log
 ecosystem.config.js
+App/trasns.json

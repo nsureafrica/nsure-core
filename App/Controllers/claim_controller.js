@@ -27,7 +27,7 @@ module.exports = {
       .then(response => {
         res.status(200).send(response);
         var mailOptions = {
-          from: process.env.mailFrom,
+          from: process.env.senderEmailAddress,
           to: `${req.user.email}`,
           subject: "Claim Created",
           text: `Hello ${req.user.firstName} ${req.user.lastName}, You have created a claim at Spiresure. Your claim id is ${response.id}`

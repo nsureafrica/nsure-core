@@ -34,6 +34,10 @@ module.exports = {
       });
   },
   confirmTransaction: (req, res) => {
+
+    //confirm the transaction
+    //send the mail
+    //update the bill
     if (!(req.user.UserCategoryId === 2)) {
       res.status(401).send();
     } else {

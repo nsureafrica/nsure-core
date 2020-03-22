@@ -1,6 +1,7 @@
 //@ts-check
 
 const Bill = require("./../../Models/Bill");
+const transporter = require("../../Utils/mailService");
 
 module.exports = {
   //get all policies
@@ -52,7 +53,7 @@ module.exports = {
         res.status(500).send(error);
       });
   },
-  createPolicy: (req, res, model) => {
+  createPolicy: (req, res, model,mailOptions) => {
     Bill.create({
       amount: req.body.quoteAmount
     }).then(billResponse => {
@@ -65,6 +66,14 @@ module.exports = {
         .then(response => {
           console.log(response);
           res.status(200).send(response);
+          transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+              console.log(err);
+            } else {
+              const notice = `Email sent: ` + info.response;
+              console.log(notice);
+            }
+          });
         })
         .catch(err => {
           res.status(500).send(err);

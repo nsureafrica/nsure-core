@@ -75,7 +75,7 @@ module.exports = {
               delete user.updatedAt;
               res.status(200).send({ message: "Success", user: user });
               var mailOptions = {
-                from: process.env.mailFrom,
+                from: process.env.senderEmailAdress,
                 to: `${user.email}`,
                 subject: "Account Created",
                 text: `Hello ${user.firstName} ${user.lastName}, Welcome to spiresure, we are glad you joined us!`
@@ -118,7 +118,7 @@ module.exports = {
             .then(user => {
               res.status(200).send({ message: "Email sent" });
               var mailOptions = {
-                from: process.env.mailFrom,
+                from: process.env.senderEmailAdress,
                 to: `${user.email}`,
                 subject: "Password Reset",
                 text: `Hello ${user.firstName} ${user.lastName}, Your Spiresure password has been reset. Your new password is ${newPassword}`
@@ -170,7 +170,7 @@ module.exports = {
                   .then(user => {
                     console.log(user.email);
                     var mailOptions = {
-                      from: process.env.mailFrom,
+                      from: process.env.senderEmailAdress,
                       to: `${user.email}`,
                       subject: "Password Changed",
                       text: `Hello ${user.firstName} ${user.lastName}, Your Spiresure password has been changed.`
