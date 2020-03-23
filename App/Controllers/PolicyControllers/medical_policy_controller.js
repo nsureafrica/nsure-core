@@ -56,14 +56,14 @@ module.exports = {
             subject: "Medical Policy Created",
             html: invoiceEmail.invoicePolicyEmail(req)
           };
-          transporter.transporter.sendMail(mailOptions, (err, info) => {
-            if (err) {
-              console.log(err);
-            } else {
-              const notice = `Email sent: ` + info.response;
-              console.log(notice);
-            }
-          });
+          // transporter.transporter.sendMail(mailOptions, (err, info) => {
+          //   if (err) {
+          //     console.log(err);
+          //   } else {
+          //     const notice = `Email sent: ` + info.response;
+          //     console.log(notice);
+          //   }
+          // });
         })
         .catch(err => {
           res.status(500).send(err);

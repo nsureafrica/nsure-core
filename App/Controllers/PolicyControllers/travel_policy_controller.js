@@ -60,15 +60,15 @@ module.exports = {
             subject: "Travel Policy Created",
             html: invoiceEmail.invoicePolicyEmail(req)
           };
-          transporter.transporter.sendMail(mailOptions, (err, info) => {
-            if (err) {
-              //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
-              console.log(err);
-            } else {
-              const notice = `Email sent: ` + info.response;
-              console.log(notice);
-            }
-          });
+          // transporter.transporter.sendMail(mailOptions, (err, info) => {
+          //   if (err) {
+          //     //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
+          //     console.log(err);
+          //   } else {
+          //     const notice = `Email sent: ` + info.response;
+          //     console.log(notice);
+          //   }
+          // });
         })
         .catch(err => {
           console.log(err);

@@ -4,6 +4,7 @@
 // get all , get one , get for user and query for user
 const LastExpensePolicyModel = require("./../../Models/last_expense_policy");
 const SharedControllers = require("./../SharedControllers/shared_controllers");
+const invoiceEmail = require("./../../email_templates/invoicetemplate");
 
 module.exports = {
   getAllLastExpensePolicies: (req, res) => {
@@ -20,7 +21,7 @@ module.exports = {
       from: process.env.senderEmailAdress,
       to: `${req.user.email},${process.env.spireReceivingEmailAddress}`,
       subject: "Last Expense Policy Created",
-      text: `Hello ${req.user.firstName} ${req.user.lastName}, You have requested for an Last Expense policy quote at Spiresure.`
+      html:  invoiceEmail.invoicePolicyEmail(req)
     };
       SharedControllers.createPolicy(req,res,LastExpensePolicyModel,mailOptions);
   }

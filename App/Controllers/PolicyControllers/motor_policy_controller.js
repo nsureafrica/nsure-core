@@ -103,14 +103,14 @@ module.exports = {
             subject: "Motor Policy Created",
             html: invoiceEmail.invoicePolicyEmail(req)
           };
-          transporter.transporter.sendMail(mailOptions, (err, info) => {
-            if (err) {
-              console.log(err);
-            } else {
-              const notice = `Email sent: ` + info.response;
-              console.log(notice);
-            }
-          });
+          // transporter.transporter.sendMail(mailOptions, (err, info) => {
+          //   if (err) {
+          //     console.log(err);
+          //   } else {
+          //     const notice = `Email sent: ` + info.response;
+          //     console.log(notice);
+          //   }
+          // });
         });
       })
       .catch(err => {

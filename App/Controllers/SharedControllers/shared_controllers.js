@@ -66,14 +66,14 @@ module.exports = {
         .then(response => {
           console.log(response);
           res.status(200).send(response);
-          transporter.transporter.sendMail(mailOptions, (err, info) => {
-            if (err) {
-              console.log(err);
-            } else {
-              const notice = `Email sent: ` + info.response;
-              console.log(notice);
-            }
-          });
+          // transporter.transporter.sendMail(mailOptions, (err, info) => {
+          //   if (err) {
+          //     console.log(err);
+          //   } else {
+          //     const notice = `Email sent: ` + info.response;
+          //     console.log(notice);
+          //   }
+          // });
         })
         .catch(err => {
           res.status(500).send(err);
