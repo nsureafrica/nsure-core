@@ -7,7 +7,9 @@
 const LastExpenseRates = require("../../Models/last_expense_rates");
 const Transporter = require("../../Utils/mailService");
 const UnderwriterModel = require("../../Models/underwriters");
-const invoiceTemplates = require("./../../email_templates/invoicetemplate")
+const invoiceTemplates = require("./../../email_templates/invoicetemplate");
+const lastExpensePlanModel = require("./../../Models/last_expense_plans");
+const lastexpensepdf = require("./../../email_templates/last_expense_pdf");
 
 module.exports = {
   getLastExpenseQuote: (req, res) => {
@@ -20,17 +22,18 @@ module.exports = {
       include: [UnderwriterModel],
       where: { lastExpensePlanId: lastExpensePlanId }
     })
-      .then(rate => {
+      .then(async rate => {
         var annualPremiumNuclearFamily = 0;
         var annualPremiumExtraChild = 0;
         var annualPremiumParents = 0;
 
-        annualPremiumNuclearFamily = rate.annualPremiumNuclearFamily
-        if (noOfChildren>4) {
-          annualPremiumExtraChild = rate.annualPremiumPerExtraChild * (noOfChildren - 4)
+        annualPremiumNuclearFamily = rate.annualPremiumNuclearFamily;
+        if (noOfChildren > 4) {
+          annualPremiumExtraChild =
+            rate.annualPremiumPerExtraChild * (noOfChildren - 4);
         }
         if (!(noOfNuclearFamily == 0)) {
-          annualPremiumParents = rate.annualPremiumPerParent * noOfParents
+          annualPremiumParents = rate.annualPremiumPerParent * noOfParents;
         }
         var quoteTotal =
           annualPremiumNuclearFamily +
@@ -45,12 +48,26 @@ module.exports = {
           underwriter: rate.Underwriter
         };
         res.status(200).send(quoteObject);
+        var lastExpensePlan = await lastExpensePlanModel.findOne({
+          where: { id: lastExpensePlanId }
+        });
+        const planDetails = { planDetails: lastExpensePlan.dataValues };
+        const userDetails = { user: req.user };
+
+        Object.assign(quoteObject, planDetails);
+        Object.assign(quoteObject,userDetails)
+        const policyPdfDirectory = "./documentsStorage/PolicyPdf/"+ Date.now()+".pdf";
+        await lastexpensepdf.createInvoice(quoteObject, policyPdfDirectory);
         var mailOptions = {
           from: process.env.senderEmailAdress,
           to: req.user.email,
           subject: "Last Expense Insurance Quote",
-          html: invoiceTemplates.invoiceQuoteEmail(req)
-        }
+          html: invoiceTemplates.invoiceQuoteEmail(req),
+          attachments: [{   // file on disk as an attachment
+            filename: 'lastexpensequote.pdf',
+            path: policyPdfDirectory // stream this file
+        },]
+        };
         Transporter.transporter.sendMail(mailOptions, (err, info) => {
           if (err) {
             //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
@@ -62,6 +79,7 @@ module.exports = {
         });
       })
       .catch(err => {
+        console.log(err)
         res.status(500).send(err);
       });
   }
