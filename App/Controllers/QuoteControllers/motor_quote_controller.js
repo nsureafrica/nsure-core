@@ -3,7 +3,7 @@
 const Transporter = require("../../Utils/mailService");
 const MotorRates = require("./../../Models/motor_rates");
 const UnderwriterModel = require("../../Models/underwriters");
-
+const invoiceTemplates = require("../../email_templates/invoicetemplate")
 const senderEmailAdress = process.env.senderEmailAdress
 //get motor rates model
 
@@ -148,9 +148,7 @@ module.exports = {
           from: senderEmailAdress,
           to: req.user.email,
           subject: "Motor Insurance Quote",
-          html: `<b>Dear Customer,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
-            req.body
-          )}<p><b>Quote</b></p>${JSON.stringify(quoteObjectsArray)}`
+          html: invoiceTemplates.invoiceQuoteEmail(req)
         };
         Transporter.transporter.sendMail(mailOptions, (err, info) => {
           if (err) {

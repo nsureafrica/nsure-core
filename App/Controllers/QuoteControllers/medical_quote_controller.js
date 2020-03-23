@@ -3,7 +3,7 @@
 const MedicalRates = require("../../Models/medical_rates");
 const Transporter = require("../../Utils/mailService");
 const UnderwriterModel = require("../../Models/underwriters");
-
+const invoiceTemplates = require("./../../email_templates/invoicetemplate")
 module.exports = {
   getMedicalQuote: (req, res) => {
     const medicalPlanId = req.body.medicalPlanId;
@@ -100,10 +100,8 @@ module.exports = {
           from: process.env.senderEmailAdress,
           to: req.user.email,
           subject: "Medical Insurance Quote",
-          html: `<b>Dear Customer,</b><br/><p>Your quote breakdown is as follows</p><p><b>Selected Options:</b></p>${JSON.stringify(
-            req.body
-          )}<p><b>Quote</b></p>${JSON.stringify(quoteObjectsArray)}`
-        };
+          html: invoiceTemplates.invoiceQuoteEmail(req)
+        }
         Transporter.transporter.sendMail(mailOptions, (err, info) => {
           if (err) {
             //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails

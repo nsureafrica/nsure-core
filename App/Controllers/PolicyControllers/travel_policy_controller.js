@@ -58,10 +58,7 @@ module.exports = {
             from: process.env.senderEmailAdress,
             to: `${process.env.spireReceivingEmailAddress},${req.user.email}`,
             subject: "Travel Policy Created",
-            html: invoiceEmail.invoiceEmail(
-              "Travel Policy Insurance",
-              selelectedOptionsRow
-            )
+            html: invoiceEmail.invoicePolicyEmail(req)
           };
           transporter.transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
