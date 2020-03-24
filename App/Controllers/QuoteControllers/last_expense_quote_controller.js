@@ -48,7 +48,7 @@ module.exports = {
           underwriter: rate.Underwriter
         };
         res.status(200).send(quoteObject);
-        var lastExpensePlan = await lastExpensePlanModel.findOne({
+        const lastExpensePlan = await lastExpensePlanModel.findOne({
           where: { id: lastExpensePlanId }
         });
         const planDetails = { planDetails: lastExpensePlan.dataValues };

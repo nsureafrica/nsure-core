@@ -150,6 +150,14 @@ module.exports = {
           subject: "Motor Insurance Quote",
           html: invoiceTemplates.invoiceQuoteEmail(req)
         };
+        var motorQuoteEmailJson = {}
+        const planDetails = { motorRates: quoteObjectsArray };
+        const userDetails = { user: req.user };
+        const userInput = {userInput: req.body}
+        Object.assign(motorQuoteEmailJson, planDetails);
+        Object.assign(motorQuoteEmailJson, userDetails);
+        Object.assign(motorQuoteEmailJson, userInput);
+        console.log(motorQuoteEmailJson)
         Transporter.transporter.sendMail(mailOptions, (err, info) => {
           if (err) {
             //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails

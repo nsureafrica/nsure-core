@@ -1,4 +1,4 @@
-const pdfcreation = require("../../email_templates/last_expense_pdf");
+const pdfcreation = require("../../email_templates/motor_quote_pdf");
 
 const invoice = {
   shipping: {
@@ -51,27 +51,9 @@ const lastexpensequote = {
     typeOfClaim: "single",
     UnderwriterId: 3
   },
-  userDetails: {
-    id: 2,
-    firstName: "Allan",
-    lastName: "Bikundo",
-    phoneNumber: "0713805241",
-    email: "allanbmageto@gmail.com",
-    tempPassword: true,
-    isVerified: true,
-    UserCategoryId: 2,
-    UserCategory: {
-      id: 2,
-      name: "Administrator",
-      description: null,
-      createdAt: "2020-02-27T05:32:22.000Z",
-      updatedAt: "2020-02-27T05:32:22.000Z"
-    },
-    iat: 1584967067,
-    exp: 1585010267
-  }
+
 };
 
 const policyPdfDirectory = "./documentsStorage/PolicyPdf/output.pdf";
 
-pdfcreation.createInvoice(lastexpensequote, policyPdfDirectory);
+pdfcreation.createInvoice(invoice, policyPdfDirectory);
