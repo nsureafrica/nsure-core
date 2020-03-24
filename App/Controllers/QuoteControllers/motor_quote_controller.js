@@ -4,6 +4,8 @@ const Transporter = require("../../Utils/mailService");
 const MotorRates = require("./../../Models/motor_rates");
 const UnderwriterModel = require("../../Models/underwriters");
 const invoiceTemplates = require("../../email_templates/invoicetemplate")
+const motorQuotePdf = require("../../email_templates/motor_quote_pdf")
+
 const senderEmailAdress = process.env.senderEmailAdress
 //get motor rates model
 
@@ -36,7 +38,7 @@ module.exports = {
         natureOfGoods: natureOfGoods
       }
     })
-      .then(rates => {
+      .then(async rates => {
         var quoteObjectsArray = [];
         rates.map(rate => {
           if (coverType == "thirdParty") {
@@ -144,12 +146,7 @@ module.exports = {
           }
         });
         res.send(quoteObjectsArray);
-        var mailOptions = {
-          from: senderEmailAdress,
-          to: req.user.email,
-          subject: "Motor Insurance Quote",
-          html: invoiceTemplates.invoiceQuoteEmail(req)
-        };
+       
         var motorQuoteEmailJson = {}
         const planDetails = { motorRates: quoteObjectsArray };
         const userDetails = { user: req.user };
@@ -157,6 +154,20 @@ module.exports = {
         Object.assign(motorQuoteEmailJson, planDetails);
         Object.assign(motorQuoteEmailJson, userDetails);
         Object.assign(motorQuoteEmailJson, userInput);
+        const policyPdfDirectory = "./documentsStorage/PolicyPdf/"+ Date.now()+".pdf";
+        await motorQuotePdf.createInvoice(motorQuoteEmailJson,policyPdfDirectory)
+
+        var mailOptions = {
+          from: senderEmailAdress,
+          to: req.user.email,
+          cc: process.env.spireReceivingEmailAddress,
+          subject: "Motor Insurance Quote",
+          html: invoiceTemplates.invoiceQuoteEmail(req),
+          attachments: [{   // file on disk as an attachment
+            filename: 'motorquote.pdf',
+            path: policyPdfDirectory // stream this file
+        },]
+        };
         console.log(motorQuoteEmailJson)
         Transporter.transporter.sendMail(mailOptions, (err, info) => {
           if (err) {
