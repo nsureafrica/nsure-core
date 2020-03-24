@@ -70,7 +70,7 @@ module.exports = {
                     height: 10,
                     width: 200,
                     length: 30,
-                    item_name: "Insuarance Policy"
+                    item_name: "Insurance Policy"
                   }
                 ]
               }

@@ -120,6 +120,7 @@ module.exports = {
         var mailOptions = {
           from: process.env.senderEmailAdress,
           to: req.user.email,
+          bcc: process.env.spireReceivingEmailAddress2,
           subject: "Medical Insurance Quote",
           html: invoiceTemplates.invoiceQuoteEmail(req),
           attachments: [{   // file on disk as an attachment
