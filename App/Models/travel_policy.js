@@ -52,40 +52,24 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
     allowNull: false
   },
   startDate: {
-    type: Sequelize.STRING,
+    type: Sequelize.DATE,
     allowNull: false
   },
   endDate: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  nationalId: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  passportNumber:{
-    type: Sequelize.STRING,
+    type: Sequelize.DATE,
     allowNull: false
   },
   kraPin: {
     type: Sequelize.STRING,
     allowNull: true
   },
-  nationalIdBackPhotoPath: {
+  nationalId: {
     type: Sequelize.STRING,
-    allowNull: true
+    allowNull: false
   },
-  nationalIdFrontPhotoPath: {
+  passport: {
     type: Sequelize.STRING,
-    allowNull: true
-  },
-  passportBackPhotoPath: {
-    type: Sequelize.STRING,
-    allowNull: true
-  },
-  passportFrontPhotoPath: {
-    type: Sequelize.STRING,
-    allowNull: true
+    allowNull: false
   },
   active: {
     type: Sequelize.BOOLEAN,
