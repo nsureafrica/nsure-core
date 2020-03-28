@@ -1,14 +1,14 @@
 //@ts-check
 
 module.exports = {
-  archiveFunction(req,res,folderName) {
+  archiveFunction(req,res,folderName,fileArray) {
     // require modules
     var fs = require("fs");
     var archiver = require("archiver");
     const path = require("path");
 
     // create a file to stream archive data to.
-    const fileNameArray = req.body.fileNameArray;
+    const fileNameArray = fileArray
     const zipfolderName = Date.now()
     var output = fs.createWriteStream("documentsStorage/zipfolders/" + `${zipfolderName}.zip`);
     // var output = fs.createWriteStream("../documentsStorage/zipfolders/${zipfolderName}.zip");

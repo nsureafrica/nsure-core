@@ -2,9 +2,12 @@
 
 
 const archiveController = require("./../../Controllers/DownloadControllers/download")
-module.exports = app => {
-    app.route("/download/motor/downloadLogbooks").get(archiveController.downloadLogbooks);
-    
-    app.route("/download/motor/downloadClaimDocuments").get(archiveController.downloadClaimDocuments);
+module.exports = app => {    
+    app.route("/download/claims/downloadClaimDocuments").get(archiveController.downloadClaimDocuments);
+
+    app.route("/download/travel/downloadtraveldocuments").get(archiveController.downloadTravelDocuments);
+
+    app.route("/download/motor/downloadmotordocuments").get(archiveController.downloadMotorDocuments);
+
     
 }
