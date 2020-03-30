@@ -53,7 +53,7 @@ module.exports = {
         nationalIDArray.push(fileName.filename);
       });
       req.files.kraPin.forEach(fileName => {
-        kraPinArray.push(fileName)
+        kraPinArray.push(fileName.filename)
       });
 
       const billId = { BillId: billResponse.dataValues.id };
