@@ -48,7 +48,7 @@ function generateCustomerInformation(doc, invoice) {
     .text("Quote Date:", 50, customerInformationTop + 15)
     .text(formatDate(new Date()), 150, customerInformationTop + 15)
     .text("Balance Due:", 50, customerInformationTop + 30)
-    .text("KES " + invoice.quoteTotal, 150, customerInformationTop + 30)
+    .text(formatCurrency(invoice.quoteTotal), 150, customerInformationTop + 30)
 
     .font("Helvetica-Bold")
     .text(
@@ -77,34 +77,30 @@ function generatePlanDetails(doc, invoice) {
     .font("Helvetica")
     .text("Inpatient Cover Limit:", 50, planDetailsTop + 15)
     .text(
-      "KES " + invoice.planDetails.inpatientCoverLimit,
+      formatCurrency(invoice.planDetails.inpatientCoverLimit),
       160,
       planDetailsTop + 15
     )
     .text("Outpatient Cover Limit:", 50, planDetailsTop + 30)
     .text(
-      "KES " + invoice.planDetails.outpatientCoverLimit,
+      formatCurrency(invoice.planDetails.outpatientCoverLimit),
       160,
       planDetailsTop + 30
     )
     .text("Chronic Cases:", 300, planDetailsTop)
-    .text(
-        "KES " + invoice.planDetails.chronicCases,
-        400,
-        planDetailsTop
-      )
+    .text("KES " + invoice.planDetails.chronicCases, 400, planDetailsTop)
     .text("Maternity Cover Limit:", 300, planDetailsTop + 15)
     .text(
-        "KES " + invoice.planDetails.maternityCoverLimit,
-        400,
-        planDetailsTop + 15
-      )
+      formatCurrency(invoice.planDetails.maternityCoverLimit),
+      400,
+      planDetailsTop + 15
+    )
     .text("Personal Accident:", 300, planDetailsTop + 30)
     .text(
-        "KES " + invoice.planDetails.personalAccident,
-        400,
-        planDetailsTop + 30
-      )
+      formatCurrency(invoice.planDetails.personalAccident),
+      400,
+      planDetailsTop + 30
+    )
 
     .moveDown();
 }
@@ -145,19 +141,35 @@ function generateInvoiceTable(doc, invoice) {
     doc,
     invoiceTableTop + 150,
     "Children Rate Inpatient",
+
     invoice.childrenRate
   );
   generateTableRow(
     doc,
     invoiceTableTop + 180,
-    "Children Rate Outpatiebt",
-    invoice.childrenRateOutpatient
+    "Children Rate Outpatient",
+    formatCurrency(invoice.childrenRateOutpatient)
   );
-  generateTableRow(doc, invoiceTableTop + 210, "Levies", invoice.levies);
-  generateTableRow(doc, invoiceTableTop + 240, "Stamp Duty", invoice.stampDuty);
+  generateTableRow(
+    doc,
+    invoiceTableTop + 210,
+    "Levies",
+    formatCurrency(invoice.levies)
+  );
+  generateTableRow(
+    doc,
+    invoiceTableTop + 240,
+    "Stamp Duty",
+    formatCurrency(invoice.stampDuty)
+  );
 
   doc.font("Helvetica-Bold");
-  generateTableRow(doc, invoiceTableTop + 270, "Total", invoice.quoteTotal);
+  generateTableRow(
+    doc,
+    invoiceTableTop + 270,
+    "Total",
+    formatCurrency(invoice.quoteTotal)
+  );
 }
 
 function generateFooter(doc) {
@@ -189,6 +201,16 @@ function formatDate(date) {
   const year = date.getFullYear();
 
   return year + "/" + month + "/" + day;
+}
+
+function formatCurrency(amount) {
+  return (
+    "KES " +
+    parseFloat(amount).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  );
 }
 
 module.exports = {

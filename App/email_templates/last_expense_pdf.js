@@ -2,7 +2,6 @@ const fs = require("fs");
 const PDFDocument = require("pdfkit");
 
 function createInvoice(invoice, path) {
-  console.log(invoice.planDetails)
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
   generateHeader(doc);
@@ -47,11 +46,11 @@ function generateCustomerInformation(doc, invoice) {
     .text("Quote Date:", 50, customerInformationTop + 15)
     .text(formatDate(new Date()), 150, customerInformationTop + 15)
     .text("Balance Due:", 50, customerInformationTop + 30)
-    .text("KES " +  invoice.quoteTotal, 150, customerInformationTop + 30)
+    .text(formatCurrency(invoice.quoteTotal), 150, customerInformationTop + 30)
 
     .font("Helvetica-Bold")
     .text(
-      invoice.user.firstName + " "+ invoice.user.lastName,
+      invoice.user.firstName + " " + invoice.user.lastName,
       300,
       customerInformationTop
     )
@@ -63,14 +62,10 @@ function generateCustomerInformation(doc, invoice) {
   // generateHr(doc, 252);
 }
 
-
-
 function generatePlanDetails(doc, invoice) {
-
   generateHr(doc, 285);
 
-
-  const planDetailsTop = 300
+  const planDetailsTop = 300;
 
   doc
     .fontSize(10)
@@ -79,7 +74,11 @@ function generatePlanDetails(doc, invoice) {
     .text(invoice.planDetails.name, 150, planDetailsTop)
     .font("Helvetica")
     .text("Sum Assured:", 50, planDetailsTop + 15)
-    .text("KES " +  invoice.planDetails.annualCover, 150, planDetailsTop + 15)
+    .text(
+      formatCurrency(invoice.planDetails.annualCover),
+      150,
+      planDetailsTop + 15
+    )
     .text("Type of Claim:", 50, planDetailsTop + 30)
     .text(invoice.planDetails.typeOfClaim, 150, planDetailsTop + 30)
 
@@ -91,12 +90,7 @@ function generateInvoiceTable(doc, invoice) {
   const invoiceTableTop = 380;
 
   doc.font("Helvetica-Bold");
-  generateTableRow(
-    doc,
-    invoiceTableTop,
-    "Item",
-    "Value"
-  );
+  generateTableRow(doc, invoiceTableTop, "Item", "Value");
   generateHr(doc, invoiceTableTop + 20);
   doc.font("Helvetica");
   generateTableRow(
@@ -109,38 +103,31 @@ function generateInvoiceTable(doc, invoice) {
     doc,
     invoiceTableTop + 60,
     "Annual Premium Extra Child",
-    invoice.annualPremiumExtraChild
+    formatCurrency(invoice.annualPremiumExtraChild)
   );
   generateTableRow(
     doc,
     invoiceTableTop + 90,
     "Annual Premium Parents",
-    invoice.annualPremiumParents
+    formatCurrency(invoice.annualPremiumParents)
   );
   doc.font("Helvetica-Bold");
   generateTableRow(
     doc,
     invoiceTableTop + 120,
     "Total",
-    invoice.quoteTotal
+    formatCurrency(invoice.quoteTotal)
   );
 }
 
 function generateFooter(doc) {
-  doc
-    .fontSize(10)
-    .text("Thank You for choosing to partner with us", 50, 700, {
-      align: "center",
-      width: 500
-    });
+  doc.fontSize(10).text("Thank You for choosing to partner with us", 50, 700, {
+    align: "center",
+    width: 500
+  });
 }
 
-function generateTableRow(
-  doc,
-  y,
-  item,
-  value
-) {
+function generateTableRow(doc, y, item, value) {
   doc
     .fontSize(10)
     .text(item, 50, y)
@@ -162,6 +149,16 @@ function formatDate(date) {
   const year = date.getFullYear();
 
   return year + "/" + month + "/" + day;
+}
+
+function formatCurrency(amount) {
+  return (
+    "KES " +
+    parseFloat(amount).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  );
 }
 
 module.exports = {

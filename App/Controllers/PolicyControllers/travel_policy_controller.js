@@ -45,20 +45,26 @@ module.exports = {
       // handle the addition of files
       var passportArray = [];
       var nationalIDArray = [];
+      var kraPinArray = [];
       req.files.passport.forEach(fileName => {
         passportArray.push(fileName.filename);
       });
       req.files.nationalId.forEach(fileName => {
         nationalIDArray.push(fileName.filename);
       });
+      req.files.kraPin.forEach(fileName => {
+        kraPinArray.push(fileName)
+      });
 
       const billId = { BillId: billResponse.dataValues.id };
       const passport =  {passport: passportArray.toString()}
       const nationalId = {nationalId: nationalIDArray.toString()}
+      const kraPin = {kraPin: kraPinArray.toString()}
       const UserId = {UserId: req.user.id}
       Object.assign(req.body, billId);
       Object.assign(req.body, passport)
       Object.assign(req.body, nationalId)
+      Object.assign(req.body, kraPin)
       Object.assign(req.body, UserId)
       console.log(req)
       TravelPolicy.create(req.body)

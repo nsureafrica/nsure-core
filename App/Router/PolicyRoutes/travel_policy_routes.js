@@ -12,7 +12,8 @@ module.exports = app => {
   app.route("/policies/travel/policy").post(
     Storage.uploadLogbook.fields([
       { name: "passport", maxCount: 5 },
-      { name: "nationalId", maxCount: 5 }
+      { name: "nationalId", maxCount: 5 },
+      {name: "kraPin",maxCount: 5}
     ]),
     TravelPolicyController.createTravelPolicy
   );

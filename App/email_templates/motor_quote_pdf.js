@@ -2,8 +2,7 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit");
 
-function createInvoice(invoice,path) {
-
+function createInvoice(invoice, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
   generateHeader(doc);
@@ -79,7 +78,11 @@ function generatePlanDetails(doc, invoice) {
     .text("Nature Of Goods:", 50, planDetailsTop + 30)
     .text(invoice.userInput.natureOfGoods, 150, planDetailsTop + 30)
     .text("Estimated Car Value:", 300, planDetailsTop)
-    .text("KES: " + invoice.userInput.estimatedCarValue, 400, planDetailsTop)
+    .text(
+      formatCurrency(invoice.userInput.estimatedCarValue),
+      400,
+      planDetailsTop
+    )
     .text("Number of seats:", 300, planDetailsTop + 15)
     .text(invoice.userInput.noOfSeats, 400, planDetailsTop + 15)
 
@@ -101,50 +104,55 @@ function generateInvoiceTable(doc, invoice) {
     doc.font("Helvetica");
 
     const position = invoiceTableTop + (counter - 1) * 30;
-    generateTableRow(doc, invoiceTableTop + 1 * 30, "Underwriter", element.underwriter.name);
+    generateTableRow(
+      doc,
+      invoiceTableTop + 1 * 30,
+      "Underwriter",
+      element.underwriter.name
+    );
     generateTableRow(doc, invoiceTableTop + 2 * 30, "Basic", element.basic);
     generateTableRow(
       doc,
       invoiceTableTop + 3 * 30,
       "Excess Protector",
-      element.excessProtector
+      formatCurrency(element.excessProtector)
     );
     generateTableRow(
       doc,
       invoiceTableTop + 4 * 30,
       "Political Violence Terrorism",
-      element.politicalViolenceTerrorism
+      formatCurrency(element.politicalViolenceTerrorism)
     );
     generateTableRow(
       doc,
       invoiceTableTop + 5 * 30,
       "Passenger Legal Liability",
-      element.passengerLegalLiability
+      formatCurrency(element.passengerLegalLiability)
     );
     generateTableRow(
       doc,
       invoiceTableTop + 6 * 30,
       "Roadside Assistance",
-      element.roadsideAssistance
+      formatCurrency(element.roadsideAssistance)
     );
     generateTableRow(
       doc,
       invoiceTableTop + 7 * 30,
       "Courtesy Car",
-      element.courtesyCar
+      formatCurrency(element.courtesyCar)
     );
     generateTableRow(doc, invoiceTableTop + 8 * 30, "Levies", element.levies);
     generateTableRow(
       doc,
       invoiceTableTop + 9 * 30,
       "Stamp Duty",
-      element.stampDuty
+      formatCurrency(element.stampDuty)
     );
     generateTableRow(
       doc,
       invoiceTableTop + 10 * 30,
       "Quote Amount",
-      element.quoteAmount
+      formatCurrency(element.quoteAmount)
     );
 
     // generateHr(doc, position + 20);
@@ -174,9 +182,16 @@ function generateHr(doc, y) {
     .stroke();
 }
 
-function formatCurrency(cents) {
-  return "$" + (cents / 100).toFixed(2);
+function formatCurrency(amount) {
+  return (
+    "KES " +
+    parseFloat(amount).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  );
 }
+
 
 function formatDate(date) {
   const day = date.getDate();
