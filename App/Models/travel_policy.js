@@ -9,15 +9,17 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
   //MEDICAL EXPENSES
   medicalExpenses: {
     type: Sequelize.FLOAT,
-    allowNull: false
+    allowNull: false,
+    defaultValue: 0
   },
   followUpTreatmentInCountryOfResidence: {
     type: Sequelize.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   medicalEvaluationExpenses: {
     type: Sequelize.FLOAT,
-    allowNull: false
+    allowNull: false,
+    defaultValue:0
   },
   repartriationOfMortalRemains: {
     type: Sequelize.BOOLEAN
@@ -77,15 +79,6 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
     defaultValue: false
   },
   activatedBy: {
-    type: Sequelize.INTEGER,
-    allowNull: true
-  },
-  paid: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false
-  },
-  paidVerifiedBy: {
     type: Sequelize.INTEGER,
     allowNull: true
   }

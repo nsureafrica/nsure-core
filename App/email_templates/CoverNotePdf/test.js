@@ -1,4 +1,4 @@
-const pdfcreation = require("./last_expense_cover_note");
+const pdfcreation = require("./medical_cover_note");
 
 const invoice = {
   shipping: {

@@ -114,15 +114,6 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
   activatedBy: {
     type: Sequelize.INTEGER,
     allowNull: true
-  },
-  paid: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false
-  },
-  paidVerifiedBy: {
-    type: Sequelize.INTEGER,
-    allowNull: true
   }
 });
 
