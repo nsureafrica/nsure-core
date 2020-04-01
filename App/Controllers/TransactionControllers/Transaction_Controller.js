@@ -72,12 +72,14 @@ module.exports = {
               .then(() => {
                 if (totalAmountPaid === Bill.amount) {
                   res.send({
+                    statusCode: 0,
                     message: "bill is fully paid",
                     amount: Bill.amount
                   });
                 }
                 if (totalAmountPaid > Bill.amount) {
                   res.send({
+                    statusCode: 1,
                     message: "The Bill has been overpaid",
                     amount: Bill.amount,
                     refund: (totalAmountPaid - Bill.amount)
@@ -91,6 +93,7 @@ module.exports = {
           } else {
             //if not give the front end the remainder
             res.send({
+              statusCode: 2,
               message: "The Bill has not been fully paid",
               amount: Bill.amount,
               remainder: (Bill.amount - totalAmountPaid)

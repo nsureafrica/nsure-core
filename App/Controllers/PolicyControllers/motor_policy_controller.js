@@ -8,7 +8,8 @@ const invoiceEmail = require("./../../email_templates/invoicetemplate");
 module.exports = {
   getAllMotorPolicies: (req, res) => {
     MotorPolicy.findAll({
-      order: [["updatedAt", "DESC"]]
+      order: [["updatedAt", "DESC"]],
+      include: [Bill]
     })
       .then(policies => {
         res.status(200).send(policies);
@@ -21,7 +22,8 @@ module.exports = {
     MotorPolicy.findAll({
       where: {
         UserId: req.user.id
-      }
+      },
+      include: [Bill]
     })
       .then(policies => {
         res.status(200).send(policies);
@@ -34,7 +36,8 @@ module.exports = {
     MotorPolicy.findOne({
       where: {
         id: req.params.policyId
-      }
+      },
+      include: [Bill]
     })
       .then(policy => {
         res.send(policy);

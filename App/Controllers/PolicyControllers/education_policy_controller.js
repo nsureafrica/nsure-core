@@ -4,14 +4,15 @@ const EducationPolicy = require("../../Models/education_policy");
 const CustomFilter = require("./custom_filter_policy_controller");
 const transporter = require("../../Utils/mailService");
 const invoiceEmail = require("./../../email_templates/invoicetemplate");
-
+const Bill = require("../../Models/Bill")
 module.exports = {
   //education policies
   getUserEducationPolicies: (req, res) => {
     EducationPolicy.findAll({
       where: {
         UserId: req.user.id
-      }
+      },
+      include: [Bill]
     })
       .then(policies => {
         res.send(policies);
@@ -24,7 +25,9 @@ module.exports = {
     EducationPolicy.findOne({
       where: {
         id: req.params.policyId
-      }
+      },
+      include: [Bill]
+
     })
       .then(policy => {
         res.status(200).send(policy);
@@ -35,7 +38,8 @@ module.exports = {
   },
 
   getAllEducationPolicies: (req, res) => {
-    EducationPolicy.findAll()
+    EducationPolicy.findAll({      include: [Bill]
+    })
       .then(educationPolicies => {
         res.status(200).send(educationPolicies);
       })

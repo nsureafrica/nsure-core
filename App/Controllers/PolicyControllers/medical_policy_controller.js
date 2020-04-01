@@ -13,7 +13,9 @@ module.exports = {
       order: [["updatedAt", "DESC"]],
       where: {
         UserId: req.user.id
-      }
+      },
+      include: [Bill]
+
     })
       .then(policies => {
         res.status(200).send(policies);
@@ -26,7 +28,9 @@ module.exports = {
     MedicalPolicy.findOne({
       where: {
         id: req.params.policyId
-      }
+      },
+      include: [Bill]
+
     })
       .then(policy => {
         res.send(policy);
@@ -73,7 +77,8 @@ module.exports = {
   //get all medical policies
   getAllMedicalPolicies: (req, res) => {
     MedicalPolicy.findAll({
-      order: [["updatedAt", "DESC"]]
+      order: [["updatedAt", "DESC"]],
+      include: [Bill]
     })
       .then(medicalPolicies => {
         res.status(200).send(medicalPolicies);

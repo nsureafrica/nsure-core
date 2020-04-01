@@ -2,7 +2,6 @@
 
 const Bill = require("./../../Models/Bill");
 const transporter = require("../../Utils/mailService");
-
 module.exports = {
   //get all policies
   //get all by user id
@@ -10,7 +9,8 @@ module.exports = {
   getAllPolicies: (req, res, model) => {
     model
       .findAll({
-        order: [["updatedAt", "DESC"]]
+        order: [["updatedAt", "DESC"]],
+        include: [Bill]
       })
       .then(policies => {
         res.status(200).send(policies);
@@ -28,7 +28,8 @@ module.exports = {
         order: [["updatedAt", "DESC"]],
         where: {
           id: req.params.policyId
-        }
+        },
+        include: [Bill]
       })
       .then(policies => {
         res.status(200).send(policies);
@@ -42,6 +43,7 @@ module.exports = {
     model
       .findAll({
         order: [["updatedAt", "DESC"]],
+        include: [Bill],
         where: {
           UserId: req.user.id
         }

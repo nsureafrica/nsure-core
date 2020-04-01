@@ -10,7 +10,8 @@ module.exports = {
     TravelPolicy.findAll({
       where: {
         UserId: req.user.id
-      }
+      },
+      include: [Bill]
     })
       .then(policies => {
         res.send(policies);
@@ -23,7 +24,8 @@ module.exports = {
     TravelPolicy.findOne({
       where: {
         id: req.params.policyId
-      }
+      },
+      include: [Bill]
     })
       .then(policy => {
         res.send(policy);
@@ -34,7 +36,7 @@ module.exports = {
   },
 
   getAllTravelPolicies: (req, res) => {
-    TravelPolicy.findAll().then(travelPolicies => {
+    TravelPolicy.findAll({ include: [Bill] }).then(travelPolicies => {
       res.status(200).send(travelPolicies);
     });
   },
@@ -53,20 +55,20 @@ module.exports = {
         nationalIDArray.push(fileName.filename);
       });
       req.files.kraPin.forEach(fileName => {
-        kraPinArray.push(fileName.filename)
+        kraPinArray.push(fileName.filename);
       });
 
       const billId = { BillId: billResponse.dataValues.id };
-      const passport =  {passport: passportArray.toString()}
-      const nationalId = {nationalId: nationalIDArray.toString()}
-      const kraPin = {kraPin: kraPinArray.toString()}
-      const UserId = {UserId: req.user.id}
+      const passport = { passport: passportArray.toString() };
+      const nationalId = { nationalId: nationalIDArray.toString() };
+      const kraPin = { kraPin: kraPinArray.toString() };
+      const UserId = { UserId: req.user.id };
       Object.assign(req.body, billId);
-      Object.assign(req.body, passport)
-      Object.assign(req.body, nationalId)
-      Object.assign(req.body, kraPin)
-      Object.assign(req.body, UserId)
-      console.log(req)
+      Object.assign(req.body, passport);
+      Object.assign(req.body, nationalId);
+      Object.assign(req.body, kraPin);
+      Object.assign(req.body, UserId);
+      console.log(req);
       TravelPolicy.create(req.body)
         .then(response => {
           res.send(response);
