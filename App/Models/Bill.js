@@ -6,7 +6,8 @@ const TransactionModel = require("./Transaction");
 
 const Bill = sequelizeConnection.define("Bill", {
   amount: { type: Sequelize.DOUBLE, allowNull: false, defaultValue: 0 },
-  paid: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false }
+  paid: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false },
+  amountPaid: {type: Sequelize.DOUBLE, allowNull: false, defaultValue: 0}
 });
 
 Bill.hasMany(TransactionModel);

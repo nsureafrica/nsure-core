@@ -68,7 +68,7 @@ module.exports = {
           //check if the total amount paid is greater than the amount on the bill
           if (totalAmountPaid >= Bill.amount) {
             //if it is update the bill to paid and send that the bill is fully paid
-            await BillModel.update({ paid: true }, { where: { id: Bill.id } })
+            await BillModel.update({ paid: true, amountPaid: totalAmountPaid }, { where: { id: Bill.id } })
               .then(() => {
                 if (totalAmountPaid === Bill.amount) {
                   res.send({
