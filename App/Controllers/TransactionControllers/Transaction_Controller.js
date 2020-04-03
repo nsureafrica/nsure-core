@@ -36,10 +36,23 @@ module.exports = {
         res.send(error);
       });
   },
+  getTransactionByTransactionRef: (req, res) => {
+    TransactionModel.findAll({
+      where: { transactionRef: req.body.transactionRef }
+    })
+      .then(response => {
+        res.send(response);
+      })
+      .catch(err => res.send(err));
+  },
   confirmTransaction: (req, res) => {
     //only admins are able to conf
     if (!(req.user.UserCategoryId === 2)) {
-      res.status(401).send({message: "You need to be an administrator to confirm transactions"});
+      res
+        .status(401)
+        .send({
+          message: "You need to be an administrator to confirm transactions"
+        });
     } else {
       const verifiedById = { verifiedById: req.user.id };
       Object.assign(req.body, verifiedById);
@@ -68,7 +81,10 @@ module.exports = {
           //check if the total amount paid is greater than the amount on the bill
           if (totalAmountPaid >= Bill.amount) {
             //if it is update the bill to paid and send that the bill is fully paid
-            await BillModel.update({ paid: true, amountPaid: totalAmountPaid }, { where: { id: Bill.id } })
+            await BillModel.update(
+              { paid: true, amountPaid: totalAmountPaid },
+              { where: { id: Bill.id } }
+            )
               .then(() => {
                 if (totalAmountPaid === Bill.amount) {
                   res.send({
@@ -82,10 +98,9 @@ module.exports = {
                     statusCode: 1,
                     message: "The Bill has been overpaid",
                     amount: Bill.amount,
-                    refund: (totalAmountPaid - Bill.amount)
+                    refund: totalAmountPaid - Bill.amount
                   });
                 }
-                
               })
               .catch(err => {
                 throw err;
@@ -96,8 +111,8 @@ module.exports = {
               statusCode: 2,
               message: "The Bill has not been fully paid",
               amount: Bill.amount,
-              remainder: (Bill.amount - totalAmountPaid)
-            })
+              remainder: Bill.amount - totalAmountPaid
+            });
           }
         })
         .catch(err => res.status(500).send(err));
