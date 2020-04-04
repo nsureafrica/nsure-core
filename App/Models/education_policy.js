@@ -49,6 +49,15 @@ const EducationPolicy = sequelizeConnection.define("EducationPolicy", {
     type: Sequelize.DOUBLE,
     allowNull: false
   },
+   //cover details
+   coverStart:{
+    type: Sequelize.DATE,
+    allowNull:true
+  },
+  coverEnd:{
+    type:Sequelize.DATE,
+    allowNull:true
+  },
   active: {
     type: Sequelize.BOOLEAN,
     allowNull: false,

@@ -24,6 +24,10 @@ module.exports = app => {
   app
     .route("/policies/getallmotorpolicies")
     .get(MotorPolicyController.getAllMotorPolicies);
+
+  app
+    .route("/policies/motor/activateMotorPolicy")
+    .put(MotorPolicyController.activateMotorPolicy);
   // app
   //   .route("/policies/motor/policies")
   //   .get(MotorPolicyController.getAllMotorPolicies);

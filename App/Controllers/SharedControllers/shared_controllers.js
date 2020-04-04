@@ -90,5 +90,31 @@ module.exports = {
         res.status(200).send(response);
       })
       .catch(err => res.status(500).send(err));
+  },
+
+  activatePolicy: (req, res ,model) => {
+    const UserId = { activatedBy: req.user.id };
+    const policyId = req.body.id
+    Object.assign(req.body, UserId);
+    delete req.body.id
+    if ((req.user.UserCategoryId === 2)) {
+      model.update(req.body, {where: {id: policyId}})
+      .then(response => {
+        console.log(response)
+        res.status(200).send({message:"Policy Activated Successfully"})
+      })
+      .catch(err => {
+        console.error(err)
+        res.send(err)
+      })
+    }else{
+      res
+      .status(401)
+      .send({
+        message: "You need to be an administrator to activate policies"
+      });
+    }
+
+
   }
 };

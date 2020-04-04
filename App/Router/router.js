@@ -42,6 +42,8 @@ module.exports = app => {
   app.route("/forgotPassword").put(UserController.forgotPassword);
 
   app.route("/changePassword").post(UserController.changePassword);
+
+  app.route("/verifyUser").get(UserController.verifyUser);
   //Motor Policies
   const motorPolicyRoutes = require("./PolicyRoutes/motor_policy_routes");
   motorPolicyRoutes(app);

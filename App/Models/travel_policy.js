@@ -3,7 +3,7 @@
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const User = require("./User");
-const Bill = require("./Bill")
+const Bill = require("./Bill");
 
 const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
   //MEDICAL EXPENSES
@@ -14,12 +14,12 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
   },
   followUpTreatmentInCountryOfResidence: {
     type: Sequelize.BOOLEAN,
-    allowNull: false,
+    allowNull: false
   },
   medicalEvaluationExpenses: {
     type: Sequelize.FLOAT,
     allowNull: false,
-    defaultValue:0
+    defaultValue: 0
   },
   repartriationOfMortalRemains: {
     type: Sequelize.BOOLEAN
@@ -72,6 +72,15 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
   passport: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  //cover details
+  coverStart: {
+    type: Sequelize.DATE,
+    allowNull: true
+  },
+  coverEnd: {
+    type: Sequelize.DATE,
+    allowNull: true
   },
   active: {
     type: Sequelize.BOOLEAN,

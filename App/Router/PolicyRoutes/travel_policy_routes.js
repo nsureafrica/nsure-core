@@ -13,11 +13,15 @@ module.exports = app => {
     Storage.uploadLogbook.fields([
       { name: "passport", maxCount: 5 },
       { name: "nationalId", maxCount: 5 },
-      {name: "kraPin",maxCount: 5}
+      { name: "kraPin", maxCount: 5 }
     ]),
     TravelPolicyController.createTravelPolicy
   );
   app
     .route("/policies/getalltravelpolicies")
     .get(TravelPolicyController.getAllTravelPolicies);
+
+  app
+    .route("/policies/travel/activateTravelPolicy")
+    .put(TravelPolicyController.activateTravelPolicy);
 };

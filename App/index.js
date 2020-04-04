@@ -12,7 +12,7 @@ const helmet = require("helmet");
 const EndpointAuthenticator = require("./Middleware/EndpointAuthenticator")
 const app = express();
 const sequelizeConnection = require("../App/DB/database").sequelizeConnection;
-
+const bodyParser = require("body-parser")
 //i need to move this later
 require("./Models/CategoryHasPermission")
 // morgan
@@ -26,6 +26,7 @@ app.use(helmet());
 app.use(compression());
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json())
 app.use(EndpointAuthenticator)
 app.use(express.static(path.join(__dirname, "../build")));
 

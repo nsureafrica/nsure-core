@@ -5,6 +5,7 @@ const CustomFilter = require("./custom_filter_policy_controller");
 const transporter = require("../../Utils/mailService");
 const invoiceEmail = require("./../../email_templates/invoicetemplate");
 const Bill = require("../../Models/Bill")
+const SharedControllers = require("./../SharedControllers/shared_controllers");
 module.exports = {
   //education policies
   getUserEducationPolicies: (req, res) => {
@@ -74,6 +75,11 @@ module.exports = {
       .catch(err => {
         res.status(500).send(err);
       });
+  },
+  
+  //Activate Last Expense Policy
+  activateEducationPolicy: (req, res) => {
+    SharedControllers.activatePolicy(req, res, EducationPolicy);
   },
   //custom filter
   customFilterEducationPolicy: (req, res) =>

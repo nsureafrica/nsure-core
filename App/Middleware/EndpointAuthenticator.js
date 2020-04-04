@@ -8,7 +8,8 @@ const endpointAuthenitcator = function(req, res, next) {
     "/signin",
     "/forgotPassword",
     "/signup",
-    "/changePassword"
+    "/changePassword",
+    "/verifyUser"
   ];
   if (whitelistedUrl.find(element => element === req.url) == undefined) {
     var token = req.headers["x-access-token"];

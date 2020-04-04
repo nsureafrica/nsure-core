@@ -5,6 +5,7 @@ const CustomFilter = require("./custom_filter_policy_controller");
 const transporter = require("../../Utils/mailService");
 const Bill = require("../../Models/Bill");
 const invoiceEmail = require("./../../email_templates/invoicetemplate");
+const SharedControllers = require("./../SharedControllers/shared_controllers");
 module.exports = {
   getUserTravelPolicy: (req, res) => {
     TravelPolicy.findAll({
@@ -94,6 +95,11 @@ module.exports = {
           res.send(err);
         });
     });
+  },
+
+  //activate travel policy
+  activateTravelPolicy: (req, res) => {
+    SharedControllers.activatePolicy(req,res,TravelPolicy);
   },
   //custom filter
   customFilterTravelPolicy: (req, res) =>

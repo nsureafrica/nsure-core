@@ -15,4 +15,8 @@ module.exports = app => {
   app
     .route("/policies/education/alleducationpolicies")
     .get(EducationPolicyController.getAllEducationPolicies);
+
+  app
+    .route("/policies/education/activateEducationPolicy")
+    .put(EducationPolicyController.activateEducationPolicy);
 };

@@ -67,7 +67,7 @@ module.exports = {
             password: hashedPassword,
             tempPassword: false,
             isVerified: true,
-            UserCategoryId:1
+            UserCategoryId: 1
           })
             .then(user => {
               delete user.password;
@@ -78,7 +78,11 @@ module.exports = {
                 from: process.env.senderEmailAdress,
                 to: `${user.email}`,
                 subject: "Account Created",
-                text: `Hello ${user.firstName} ${user.lastName}, Welcome to spiresure, we are glad you joined us!`
+                text: `Hello ${user.firstName} ${
+                  user.lastName
+                }, Welcome to spiresure, we are glad you joined us! click on this link to verify your email ${Buffer.from(
+                  `{"UserId":${user.id}}`
+                ).toString("base64")}`
               };
               transporter.sendMail(mailOptions, (err, info) => {
                 if (err) {
@@ -114,24 +118,22 @@ module.exports = {
             .status(500)
             .send({ message: "User not found", error: "User doesnt exist" });
         } else {
-          UserModel.findOne({ where: { email: req.body.email } })
-            .then(user => {
-              res.status(200).send({ message: "Email sent" });
-              var mailOptions = {
-                from: process.env.senderEmailAdress,
-                to: `${user.email}`,
-                subject: "Password Reset",
-                text: `Hello ${user.firstName} ${user.lastName}, Your Spiresure password has been reset. Your new password is ${newPassword}`
-              };
-              transporter.sendMail(mailOptions, (err, info) => {
-                if (err) {
-                  console.log(err);
-                } else {
-                  const notice = `Email sent: ` + info.response;
-                }
-              });
-            })
-            
+          UserModel.findOne({ where: { email: req.body.email } }).then(user => {
+            res.status(200).send({ message: "Email sent" });
+            var mailOptions = {
+              from: process.env.senderEmailAdress,
+              to: `${user.email}`,
+              subject: "Password Reset",
+              text: `Hello ${user.firstName} ${user.lastName}, Your Spiresure password has been reset. Your new password is ${newPassword}`
+            };
+            transporter.sendMail(mailOptions, (err, info) => {
+              if (err) {
+                console.log(err);
+              } else {
+                const notice = `Email sent: ` + info.response;
+              }
+            });
+          });
         }
       })
       .catch(err => {
@@ -201,5 +203,26 @@ module.exports = {
         }
       }
     )(req, res);
+  },
+  verifyUser: (req, res) => {
+    try {
+      const decodedString = Buffer.from(
+        req.body.encodedString,
+        "base64"
+      ).toString();
+      const userObject = JSON.parse(decodedString);
+
+      UserModel.update(
+        { isVerified: true },
+        { returning: true, where: { id: userObject.UserId } }
+      )
+        .then(response => res.status(200).send({ message: "User Verified" }))
+        .catch(err => {
+          console.error(err);
+          throw err;
+        });
+    } catch (error) {
+      res.send(error);
+    }
   }
 };

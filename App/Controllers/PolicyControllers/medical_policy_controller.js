@@ -5,7 +5,7 @@ const CustomFilter = require("./custom_filter_policy_controller");
 const Bill = require("./../../Models/Bill");
 const transporter = require("../../Utils/mailService");
 const invoiceEmail = require("./../../email_templates/invoicetemplate");
-
+const SharedControllers = require("./../SharedControllers/shared_controllers")
 module.exports = {
   //medical policy
   getUserMedicalPolicies: (req, res) => {
@@ -87,6 +87,10 @@ module.exports = {
         res.status(200).send(error);
       });
   },
+    //Activate Medical Policy
+    activateMedicalPolicy: (req, res) => {
+      SharedControllers.activatePolicy(req,res,MedicalPolicy);
+    },
   //custom filter
   customFilterMedicalPolicy: (req, res) =>
     CustomFilter.customPolicyFilter(MedicalPolicy, req, res)

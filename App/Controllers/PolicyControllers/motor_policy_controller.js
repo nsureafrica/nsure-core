@@ -4,7 +4,7 @@ const Bill = require("./../../Models/Bill");
 const CustomFilter = require("./custom_filter_policy_controller");
 const transporter = require("../../Utils/mailService");
 const invoiceEmail = require("./../../email_templates/invoicetemplate");
-
+const SharedControllers = require("./../SharedControllers/shared_controllers")
 module.exports = {
   getAllMotorPolicies: (req, res) => {
     MotorPolicy.findAll({
@@ -120,6 +120,10 @@ module.exports = {
         console.log(err);
         res.status(500).send(err);
       });
+  },
+  //Activate Motor Policy
+  activateMotorPolicy: (req, res) => {
+    SharedControllers.activatePolicy(req,res,MotorPolicy);
   },
   //custom filter
   customFilterMotorPolicy: (req, res) =>

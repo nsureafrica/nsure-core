@@ -16,4 +16,6 @@ module.exports = app => {
   app
   .route("/policies/alllastexpensepolicies")
   .get(LastExpensePolicyController.getAllLastExpensePolicies)
+
+  app.route("/policies/lastexpense/activateLastExpensePolicy").put(LastExpensePolicyController.activateLastExpensePolicy)
 }

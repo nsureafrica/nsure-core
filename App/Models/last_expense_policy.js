@@ -7,7 +7,6 @@ const User = require("./User");
 const Bill = require("./Bill");
 const LastExpensePlan = require("./last_expense_plans");
 const LastExpensePolicy = sequelizeConnection.define("LastExpensePolicy", {
-  //what should i save here
   firstName: {
     type: Sequelize.STRING,
     allowNull: false
@@ -50,6 +49,16 @@ const LastExpensePolicy = sequelizeConnection.define("LastExpensePolicy", {
   numberOfChildren: {
     type: Sequelize.INTEGER,
     allowNull: true
+  },
+
+  //cover details
+  coverStart:{
+    type: Sequelize.DATE,
+    allowNull:true
+  },
+  coverEnd:{
+    type:Sequelize.DATE,
+    allowNull:true
   },
   active: {
     type: Sequelize.BOOLEAN,

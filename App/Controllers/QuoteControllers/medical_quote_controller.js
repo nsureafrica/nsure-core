@@ -47,7 +47,8 @@ module.exports = {
               principalRateOutpatient = rate.principalOutpatientAnnualSenior;
             }
           } else {
-            console.log("too old mate");
+            console.error("too old mate");
+            throw "too old mate"
           }
 
           //calculate spouse rate
@@ -68,7 +69,8 @@ module.exports = {
                 spouseRateOutpatient = rate.spouseOutpatientAnnualSenior;
               }
             } else {
-              console.log("too old mate");
+              console.error("too old mate");
+              throw "too old mate"
             }
           }
 

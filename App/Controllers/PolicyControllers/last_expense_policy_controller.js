@@ -13,16 +13,25 @@ module.exports = {
   getOneLastExpensePolicy: (req, res) => {
     SharedControllers.getOnePolicyById(req, res, LastExpensePolicyModel);
   },
-  getUsersLastExpensePolicy: (req,res) => {
-    SharedControllers.getAllPoliciesByUserId(req,res,LastExpensePolicyModel);
+  getUsersLastExpensePolicy: (req, res) => {
+    SharedControllers.getAllPoliciesByUserId(req, res, LastExpensePolicyModel);
   },
-  createLastExpensePolicy: (req,res) => {
+  createLastExpensePolicy: (req, res) => {
     var mailOptions = {
       from: process.env.senderEmailAdress,
       to: `${req.user.email},${process.env.spireReceivingEmailAddress}`,
       subject: "Last Expense Policy Created",
-      html:  invoiceEmail.invoicePolicyEmail(req)
+      html: invoiceEmail.invoicePolicyEmail(req)
     };
-      SharedControllers.createPolicy(req,res,LastExpensePolicyModel,mailOptions);
+    SharedControllers.createPolicy(
+      req,
+      res,
+      LastExpensePolicyModel,
+      mailOptions
+    );
+  },
+  //Activate Last Expense Policy
+  activateLastExpensePolicy: (req, res) => {
+    SharedControllers.activatePolicy(req, res, LastExpensePolicyModel);
   }
 };

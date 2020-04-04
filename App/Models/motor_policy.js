@@ -106,6 +106,15 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
   kraPin: { type: Sequelize.STRING, allowNull: false },
   idNumber: { type: Sequelize.STRING, allowNull: false },
   //quote or paid policy
+   //cover details
+   coverStart:{
+    type: Sequelize.DATE,
+    allowNull:true
+  },
+  coverEnd:{
+    type:Sequelize.DATE,
+    allowNull:true
+  },
   active: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
