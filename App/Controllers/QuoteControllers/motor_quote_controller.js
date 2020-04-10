@@ -3,10 +3,10 @@
 const Transporter = require("../../Utils/mailService");
 const MotorRates = require("./../../Models/motor_rates");
 const UnderwriterModel = require("../../Models/underwriters");
-const invoiceTemplates = require("../../email_templates/invoicetemplate")
-const motorQuotePdf = require("../../email_templates/motor_quote_pdf")
+const invoiceTemplates = require("../../email_templates/invoicetemplate");
+const motorQuotePdf = require("../../email_templates/motor_quote_pdf");
 
-const senderEmailAdress = process.env.senderEmailAdress
+const senderEmailAdress = process.env.senderEmailAdress;
 //get motor rates model
 
 //Should create a different function for calculating add ons as the code is getting too long
@@ -20,7 +20,7 @@ module.exports = {
     var courtesyCar = req.body.courtesyCar;
     var politicalViolenceTerrorism = req.body.politicalViolenceTerrorism;
     var excessProtector = req.body.excessProtector;
-    var noOfSeats = req.body.noOfSeats
+    var noOfSeats = req.body.noOfSeats;
     var natureOfGoods = req.body.natureOfGoods;
     if (req.body.natureOfGoods === "") {
       natureOfGoods = null;
@@ -35,12 +35,13 @@ module.exports = {
         VehicleClassId: classId,
         vehicleType: vehicleType,
         coverType: coverType,
-        natureOfGoods: natureOfGoods
-      }
+        natureOfGoods: natureOfGoods,
+      },
     })
-      .then(async rates => {
+      .then(async (rates) => {
         var quoteObjectsArray = [];
-        rates.map(rate => {
+        rates.map((rate) => {
+          // console.log(rate)
           if (coverType == "thirdParty") {
             var politicalViolenceTerrorismAmount = 0;
             if (politicalViolenceTerrorism) {
@@ -64,8 +65,23 @@ module.exports = {
               courtesyCarAmount = rate.courtesyCar;
             }
 
-            var quoteAmount =  rate.minimumPremium + courtesyCarAmount + roadsideAssistanceAmount + politicalViolenceTerrorismAmount + excessProtectorAmount + basicAmount
-            var levies = quoteAmount * (rate.levies/100)
+            //Excess Protector
+            var excessProtectorAmount = 0;
+            if (excessProtector) {
+              excessProtectorAmount = rate.excessProtector;
+            }
+
+            //basic amounr
+            basicAmount = rate.minimumPremium
+            console.log(rate.minimumPremium,courtesyCarAmount,roadsideAssistanceAmount,politicalViolenceTerrorismAmount,excessProtectorAmount,basicAmount)
+            var quoteAmount =
+              courtesyCarAmount +
+              roadsideAssistanceAmount +
+              politicalViolenceTerrorismAmount +
+              excessProtectorAmount +
+              basicAmount;
+
+            var levies = quoteAmount * (rate.levies / 100);
             quoteAmount = quoteAmount + levies + rate.stampDuty;
             var quoteObject = {
               quoteAmount: quoteAmount,
@@ -74,16 +90,15 @@ module.exports = {
               politicalViolenceTerrorism: politicalViolenceTerrorismAmount,
               passengerLegalLiability: 0,
               roadsideAssistance: roadsideAssistanceAmount,
-              levies:levies,
-              stampDuty:rate.stampDuty,
+              levies: levies,
+              stampDuty: rate.stampDuty,
               courtesyCar: courtesyCarAmount,
               underwriter: rate.Underwriter,
-
             };
             quoteObjectsArray.push(quoteObject);
           } else {
             //calculate basic
-            var basicAmount = 0
+            var basicAmount = 0;
             var tempAmount = (estimatedCarValue * rate.basic) / 100;
             if (tempAmount < rate.minimumPremium) {
               basicAmount = rate.minimumPremium;
@@ -93,7 +108,7 @@ module.exports = {
             //calculate excessProtector
             var excessProtectorAmount = 0;
             if (excessProtector) {
-                tempAmount = (estimatedCarValue * rate.excessProtector) / 100;
+              tempAmount = (estimatedCarValue * rate.excessProtector) / 100;
               if (tempAmount < rate.minimumExcess) {
                 excessProtectorAmount = rate.minimumExcess;
               } else {
@@ -113,9 +128,10 @@ module.exports = {
               }
             }
             //calculate pll
-            var passengerLegalLiability = 0 
+            var passengerLegalLiability = 0;
             if (vehicleType == "commercial") {
-              passengerLegalLiability = rate.passengerLegalLiability * noOfSeats
+              passengerLegalLiability =
+                rate.passengerLegalLiability * noOfSeats;
             }
 
             //Assign Roadside  Asssistance
@@ -129,9 +145,15 @@ module.exports = {
               courtesyCarAmount = rate.courtesyCar;
             }
 
-            quoteAmount = courtesyCarAmount + roadsideAssistanceAmount + politicalViolenceTerrorismAmount + excessProtectorAmount + basicAmount + passengerLegalLiability
-            var levies = quoteAmount * (rate.levies/100)
-            quoteAmount = quoteAmount + levies + rate.stampDuty
+            quoteAmount =
+              courtesyCarAmount +
+              roadsideAssistanceAmount +
+              politicalViolenceTerrorismAmount +
+              excessProtectorAmount +
+              basicAmount +
+              passengerLegalLiability;
+            var levies = quoteAmount * (rate.levies / 100);
+            quoteAmount = quoteAmount + levies + rate.stampDuty;
             var quoteObject = {
               quoteAmount: quoteAmount,
               basic: basicAmount,
@@ -139,26 +161,29 @@ module.exports = {
               politicalViolenceTerrorism: politicalViolenceTerrorismAmount,
               passengerLegalLiability: passengerLegalLiability,
               roadsideAssistance: roadsideAssistanceAmount,
-              levies:levies,
-              stampDuty:rate.stampDuty,
+              levies: levies,
+              stampDuty: rate.stampDuty,
               courtesyCar: courtesyCarAmount,
               underwriter: rate.Underwriter,
             };
             quoteObjectsArray.push(quoteObject);
-
           }
         });
         res.send(quoteObjectsArray);
-       
-        var motorQuoteEmailJson = {}
+
+        var motorQuoteEmailJson = {};
         const planDetails = { motorRates: quoteObjectsArray };
         const userDetails = { user: req.user };
-        const userInput = {userInput: req.body}
+        const userInput = { userInput: req.body };
         Object.assign(motorQuoteEmailJson, planDetails);
         Object.assign(motorQuoteEmailJson, userDetails);
         Object.assign(motorQuoteEmailJson, userInput);
-        const policyPdfDirectory = "./documentsStorage/PolicyPdf/"+ Date.now()+".pdf";
-        await motorQuotePdf.createInvoice(motorQuoteEmailJson,policyPdfDirectory)
+        const policyPdfDirectory =
+          "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
+        await motorQuotePdf.createInvoice(
+          motorQuoteEmailJson,
+          policyPdfDirectory
+        );
 
         var mailOptions = {
           from: senderEmailAdress,
@@ -166,12 +191,15 @@ module.exports = {
           cc: process.env.spireReceivingEmailAddress,
           subject: "Motor Insurance Quote",
           html: invoiceTemplates.invoiceQuoteEmail(req),
-          attachments: [{   // file on disk as an attachment
-            filename: 'motorquote.pdf',
-            path: policyPdfDirectory // stream this file
-        },]
+          attachments: [
+            {
+              // file on disk as an attachment
+              filename: "motorquote.pdf",
+              path: policyPdfDirectory, // stream this file
+            },
+          ],
         };
-        console.log(motorQuoteEmailJson)
+        // console.log(motorQuoteEmailJson);
         Transporter.transporter.sendMail(mailOptions, (err, info) => {
           if (err) {
             //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
@@ -182,8 +210,8 @@ module.exports = {
           }
         });
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
-  }
+  },
 };
