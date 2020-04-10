@@ -114,7 +114,7 @@ module.exports = {
             }
             //calculate pll
             var passengerLegalLiability = 0 
-            if (coverType == "commercial") {
+            if (vehicleType == "commercial") {
               passengerLegalLiability = rate.passengerLegalLiability * noOfSeats
             }
 
