@@ -113,7 +113,10 @@ module.exports = {
               }
             }
             //calculate pll
-            var passengerLegalLiability = rate.passengerLegalLiability * noOfSeats
+            var passengerLegalLiability = 0 
+            if (coverType == "commercial") {
+              passengerLegalLiability = rate.passengerLegalLiability * noOfSeats
+            }
 
             //Assign Roadside  Asssistance
             var roadsideAssistanceAmount = 0;
@@ -126,7 +129,7 @@ module.exports = {
               courtesyCarAmount = rate.courtesyCar;
             }
 
-            quoteAmount = courtesyCarAmount + roadsideAssistanceAmount + politicalViolenceTerrorismAmount + excessProtectorAmount + basicAmount
+            quoteAmount = courtesyCarAmount + roadsideAssistanceAmount + politicalViolenceTerrorismAmount + excessProtectorAmount + basicAmount + passengerLegalLiability
             var levies = quoteAmount * (rate.levies/100)
             quoteAmount = quoteAmount + levies + rate.stampDuty
             var quoteObject = {
