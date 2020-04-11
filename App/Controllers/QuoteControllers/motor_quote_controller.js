@@ -71,7 +71,7 @@ module.exports = {
               excessProtectorAmount = rate.excessProtector;
             }
 
-            //basic amounr
+            //basic amount
             basicAmount = rate.minimumPremium
             console.log(rate.minimumPremium,courtesyCarAmount,roadsideAssistanceAmount,politicalViolenceTerrorismAmount,excessProtectorAmount,basicAmount)
             var quoteAmount =
@@ -91,6 +91,7 @@ module.exports = {
               passengerLegalLiability: 0,
               roadsideAssistance: roadsideAssistanceAmount,
               levies: levies,
+              tonnageAmount:tonnageAmount,
               stampDuty: rate.stampDuty,
               courtesyCar: courtesyCarAmount,
               underwriter: rate.Underwriter,
@@ -145,6 +146,12 @@ module.exports = {
               courtesyCarAmount = rate.courtesyCar;
             }
 
+            //calculate tonnage
+            var tonnageAmount = 0
+            //check if its general cartage
+            if (natureOfGoods == "generalCartage") {
+              
+            }
             quoteAmount =
               courtesyCarAmount +
               roadsideAssistanceAmount +
@@ -162,6 +169,7 @@ module.exports = {
               passengerLegalLiability: passengerLegalLiability,
               roadsideAssistance: roadsideAssistanceAmount,
               levies: levies,
+              tonnageAmount:tonnageAmount,
               stampDuty: rate.stampDuty,
               courtesyCar: courtesyCarAmount,
               underwriter: rate.Underwriter,

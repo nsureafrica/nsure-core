@@ -28,6 +28,11 @@ const VehicleClass = sequelizeConnection.define("VehicleClass", {
     type: Sequelize.BOOLEAN,
     allowNull: false
   },
+  tonnage:{
+    type: Sequelize.BOOLEAN,
+    allowNull:false,
+    defaultValue:false
+  },
   maxAge: {
     type: Sequelize.INTEGER,
     allowNull: false
