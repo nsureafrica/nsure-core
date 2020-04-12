@@ -3,7 +3,7 @@
 const UserController = require("../Controllers/user_controller");
 const PolicyController = require("../Controllers/policy_controller");
 
-module.exports = app => {
+module.exports = (app) => {
   /**
    * @swagger
    * /:
@@ -49,7 +49,7 @@ module.exports = app => {
   motorPolicyRoutes(app);
 
   //Quotes
-  const quotesRoutes = require("./QuoteRoutes/quoteRoutes")
+  const quotesRoutes = require("./QuoteRoutes/quoteRoutes");
   quotesRoutes(app);
 
   // Medical Policies
@@ -83,54 +83,58 @@ module.exports = app => {
   claimRoutes(app);
 
   // underwriter routes
-  const underwriterRoutes = require("./underwritter_routes")
-  underwriterRoutes(app)
-  
+  const underwriterRoutes = require("./underwritter_routes");
+  underwriterRoutes(app);
+
   //motor class routes
-  const motorClassRoutes = require('./PolicyRoutes/Motor/motor_class_routes')
-  motorClassRoutes(app)
+  const motorClassRoutes = require("./PolicyRoutes/Motor/motor_class_routes");
+  motorClassRoutes(app);
 
   // motor rates routes
-  const motorRatesRoutes = require("./RateRoutes/motor_rates_routes")
-  motorRatesRoutes(app)
+  const motorRatesRoutes = require("./RateRoutes/motor_rates_routes");
+  motorRatesRoutes(app);
 
   // medical rates routes
-  const medicalRatesRoutes = require("./RateRoutes/medical_rates_routes")
-  medicalRatesRoutes(app)
+  const medicalRatesRoutes = require("./RateRoutes/medical_rates_routes");
+  medicalRatesRoutes(app);
+
+  //Motor tonnage rates routes
+  const motorTonnageRatesRoutes = require("./RateRoutes/motor_tonnage_rate_routes");
+  motorTonnageRatesRoutes(app);
 
   //medical plans routes
-  const medicalPlansRoutes = require("./PlanRoutes/medical_plans_routes")
-  medicalPlansRoutes(app)
+  const medicalPlansRoutes = require("./PlanRoutes/medical_plans_routes");
+  medicalPlansRoutes(app);
 
   //send mail routes
-  const sendMailRoutes = require("./MailRoutes/send_mail_routes")
-  sendMailRoutes(app)
+  const sendMailRoutes = require("./MailRoutes/send_mail_routes");
+  sendMailRoutes(app);
 
   //user category routes
-  const userCategoryRoutes = require('./UserRoutes/user_category_routes')
-  userCategoryRoutes(app)
+  const userCategoryRoutes = require("./UserRoutes/user_category_routes");
+  userCategoryRoutes(app);
 
   //Transactions Routes
-  const transactionRoutes = require("./TransactionRoutes/Transaction_routes")
-  transactionRoutes(app)
+  const transactionRoutes = require("./TransactionRoutes/Transaction_routes");
+  transactionRoutes(app);
 
   //Bill routes
-  const billRoutes = require("./TransactionRoutes/Bill_Routes")
-  billRoutes(app)
+  const billRoutes = require("./TransactionRoutes/Bill_Routes");
+  billRoutes(app);
 
   //last expense rate routes
-  const lastExpenseRateRoutes = require("./RateRoutes/last_expense_rate_routes")
-  lastExpenseRateRoutes(app)
+  const lastExpenseRateRoutes = require("./RateRoutes/last_expense_rate_routes");
+  lastExpenseRateRoutes(app);
 
   //last expense plan routes
-  const lastexpenseplanroutes = require("./PlanRoutes/last_expense_plan_routes")
-  lastexpenseplanroutes(app)
+  const lastexpenseplanroutes = require("./PlanRoutes/last_expense_plan_routes");
+  lastexpenseplanroutes(app);
 
   //last expense policy routes
-  const lastexpensepolicyroutes = require("./PolicyRoutes/last_expense_policy_routes")
-  lastexpensepolicyroutes(app)
+  const lastexpensepolicyroutes = require("./PolicyRoutes/last_expense_policy_routes");
+  lastexpensepolicyroutes(app);
 
   //dashboard routes
-  const dashboardRoutes = require("./DashboardRoutes/dashboard_routes")
-  dashboardRoutes(app)
+  const dashboardRoutes = require("./DashboardRoutes/dashboard_routes");
+  dashboardRoutes(app);
 };
