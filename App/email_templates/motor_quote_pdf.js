@@ -29,10 +29,7 @@ function generateHeader(doc) {
 }
 
 function generateCustomerInformation(doc, invoice) {
-  doc
-    .fillColor("#444444")
-    .fontSize(20)
-    .text("Motor Cover Quote", 50, 160);
+  doc.fillColor("#444444").fontSize(20).text("Motor Cover Quote", 50, 160);
 
   generateHr(doc, 185);
 
@@ -59,10 +56,7 @@ function generateCustomerInformation(doc, invoice) {
 }
 
 function generatePlanDetails(doc, invoice) {
-  doc
-    .fillColor("#444444")
-    .fontSize(20)
-    .text("Vehicle Details", 50, 280);
+  doc.fillColor("#444444").fontSize(20).text("Vehicle Details", 50, 280);
   generateHr(doc, 305);
 
   const planDetailsTop = 320;
@@ -104,7 +98,7 @@ function generateInvoiceTable(doc, invoice) {
     doc.font("Helvetica");
 
     const position = invoiceTableTop + (counter - 1) * 30;
-    generateTableRow(
+    generateTableHeader(
       doc,
       invoiceTableTop + 1 * 30,
       "Underwriter",
@@ -162,24 +156,23 @@ function generateInvoiceTable(doc, invoice) {
 function generateFooter(doc) {
   doc.fontSize(10).text("Thank You for choosing to partner with us", 50, 780, {
     align: "center",
-    width: 500
+    width: 500,
   });
 }
 
 function generateTableRow(doc, y, item, value) {
   doc
+    .font("Helvetica")
     .fontSize(10)
     .text(item, 50, y)
     .text(value, 300, y);
 }
 
+function generateTableHeader(doc, y, item, value) {
+  doc.font("Helvetica-Bold").fontSize(10).text(item, 50, y).text(value, 300, y);
+}
 function generateHr(doc, y) {
-  doc
-    .strokeColor("#aaaaaa")
-    .lineWidth(1)
-    .moveTo(50, y)
-    .lineTo(550, y)
-    .stroke();
+  doc.strokeColor("#aaaaaa").lineWidth(1).moveTo(50, y).lineTo(550, y).stroke();
 }
 
 function formatCurrency(amount) {
@@ -187,11 +180,10 @@ function formatCurrency(amount) {
     "KES " +
     parseFloat(amount).toLocaleString(undefined, {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     })
   );
 }
-
 
 function formatDate(date) {
   const day = date.getDate();
@@ -202,5 +194,5 @@ function formatDate(date) {
 }
 
 module.exports = {
-  createInvoice
+  createInvoice,
 };

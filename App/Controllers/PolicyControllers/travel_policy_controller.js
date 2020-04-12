@@ -6,56 +6,57 @@ const transporter = require("../../Utils/mailService");
 const Bill = require("../../Models/Bill");
 const invoiceEmail = require("./../../email_templates/invoicetemplate");
 const SharedControllers = require("./../SharedControllers/shared_controllers");
+const TravelPolicyPDF = require("./../../email_templates/travel_policy_pdf")
 module.exports = {
   getUserTravelPolicy: (req, res) => {
     TravelPolicy.findAll({
       where: {
-        UserId: req.user.id
+        UserId: req.user.id,
       },
-      include: [Bill]
+      include: [Bill],
     })
-      .then(policies => {
+      .then((policies) => {
         res.send(policies);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
   getTravelPolicy: (req, res) => {
     TravelPolicy.findOne({
       where: {
-        id: req.params.policyId
+        id: req.params.policyId,
       },
-      include: [Bill]
+      include: [Bill],
     })
-      .then(policy => {
+      .then((policy) => {
         res.send(policy);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
 
   getAllTravelPolicies: (req, res) => {
-    TravelPolicy.findAll({ include: [Bill] }).then(travelPolicies => {
+    TravelPolicy.findAll({ include: [Bill] }).then((travelPolicies) => {
       res.status(200).send(travelPolicies);
     });
   },
   createTravelPolicy: (req, res) => {
     Bill.create({
-      amount: req.body.quoteAmount
-    }).then(billResponse => {
+      amount: req.body.quoteAmount,
+    }).then((billResponse) => {
       // handle the addition of files
       var passportArray = [];
       var nationalIDArray = [];
       var kraPinArray = [];
-      req.files.passport.forEach(fileName => {
+      req.files.passport.forEach((fileName) => {
         passportArray.push(fileName.filename);
       });
-      req.files.nationalId.forEach(fileName => {
+      req.files.nationalId.forEach((fileName) => {
         nationalIDArray.push(fileName.filename);
       });
-      req.files.kraPin.forEach(fileName => {
+      req.files.kraPin.forEach((fileName) => {
         kraPinArray.push(fileName.filename);
       });
 
@@ -71,26 +72,42 @@ module.exports = {
       Object.assign(req.body, UserId);
       console.log(req);
       TravelPolicy.create(req.body)
-        .then(response => {
+        .then(async (response) => {
           res.send(response);
           //send a mail
+          var travelPolicyEmailJson = {};
+          const userDetails = { user: req.user };
+          Object.assign(travelPolicyEmailJson, req.body);
+          Object.assign(travelPolicyEmailJson, userDetails);
+          const policyPdfDirectory =
+            "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
+          await TravelPolicyPDF.createInvoice(travelPolicyEmailJson, policyPdfDirectory);
+
           var mailOptions = {
             from: process.env.senderEmailAdress,
-            to: `${process.env.spireReceivingEmailAddress2}`,
+            to: req.user.email,
+            cc: `${process.env.spireReceivingEmailAddress2}`,
             subject: "Travel Policy Created",
-            html: invoiceEmail.invoicePolicyEmail(req)
+            html: invoiceEmail.invoicePolicyEmail(req),
+            attachments: [
+              {
+                // file on disk as an attachment
+                filename: "travelpolicy.pdf",
+                path: policyPdfDirectory, // stream this file
+              },
+            ],
           };
-          // transporter.transporter.sendMail(mailOptions, (err, info) => {
-          //   if (err) {
-          //     //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
-          //     console.log(err);
-          //   } else {
-          //     const notice = `Email sent: ` + info.response;
-          //     console.log(notice);
-          //   }
-          // });
+          transporter.transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+              //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
+              console.log(err);
+            } else {
+              const notice = `Email sent: ` + info.response;
+              console.log(notice);
+            }
+          });
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
           res.send(err);
         });
@@ -99,9 +116,9 @@ module.exports = {
 
   //activate travel policy
   activateTravelPolicy: (req, res) => {
-    SharedControllers.activatePolicy(req,res,TravelPolicy);
+    SharedControllers.activatePolicy(req, res, TravelPolicy);
   },
   //custom filter
   customFilterTravelPolicy: (req, res) =>
-    CustomFilter.customPolicyFilter(TravelPolicy, req, res)
+    CustomFilter.customPolicyFilter(TravelPolicy, req, res),
 };

@@ -13,7 +13,7 @@ module.exports = app => {
     .post(EducationPolicyController.createEducationPolicy);
 
   app
-    .route("/policies/education/alleducationpolicies")
+    .route("/policies/alleducationpolicies")
     .get(EducationPolicyController.getAllEducationPolicies);
 
   app

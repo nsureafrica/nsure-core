@@ -14,16 +14,16 @@ const EducationPolicy = sequelizeConnection.define("EducationPolicy", {
     type: Sequelize.STRING,
     allowNull: false
   },
-  secondName: {
+  lastName: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  dateOfBirth: {
-    type: Sequelize.STRING,
+  dob: {
+    type: Sequelize.DATE,
     allowNull: false
   },
   expectedCommencementDate: {
-    type: Sequelize.STRING,
+    type: Sequelize.DATE,
     allowNull: false
   },
   ageNextBirthday:{
@@ -42,7 +42,7 @@ const EducationPolicy = sequelizeConnection.define("EducationPolicy", {
     allowNull: false
   },
   frequency:{
-    type: Sequelize.DOUBLE,
+    type: Sequelize.ENUM("quarterly","monthly","halfAnnually","annually"),
     allowNull: false
   },
   targetAmount:{

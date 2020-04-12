@@ -34,7 +34,7 @@ async function calculatePLT(
     var politicalViolenceTerrorismAmount =
       (estimatedCarValue * rate.politicalViolenceTerrorism) / 100;
     if (politicalViolenceTerrorismAmount < rate.minimumPremium) {
-      politicalViolenceTerrorismAmount = rate.minimumPoliticalViolenceTerrorism;
+       return rate.minimumPoliticalViolenceTerrorism;
     } else {
       return politicalViolenceTerrorismAmount;
     }
@@ -142,7 +142,7 @@ module.exports = {
       natureOfGoods = req.body.natureOfGoods;
     }
 
-    await MotorRates.findAll({
+     MotorRates.findAll({
       order: [["UnderwriterId", "ASC"]],
       include: [UnderwriterModel],
       where: {
@@ -208,6 +208,7 @@ module.exports = {
           };
           quoteObjectsArray.push(quoteObject);
         });
+        console.log(quoteObjectsArray)
         res.send(quoteObjectsArray);
         sendMail(req, res, quoteObjectsArray);
       })
