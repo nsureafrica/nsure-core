@@ -16,9 +16,9 @@ async function calculateExcess(excessProtector, estimatedCarValue, rate) {
     var excessProtectorAmount =
       (estimatedCarValue * rate.excessProtector) / 100;
     if (excessProtectorAmount < rate.minimumExcess) {
-      return rate.minimumExcess;
+      return Math.ceil(rate.minimumExcess);
     } else {
-      return excessProtectorAmount;
+      return Math.ceil(excessProtectorAmount);
     }
   } else {
     return 0;
@@ -34,9 +34,9 @@ async function calculatePLT(
     var politicalViolenceTerrorismAmount =
       (estimatedCarValue * rate.politicalViolenceTerrorism) / 100;
     if (politicalViolenceTerrorismAmount < rate.minimumPremium) {
-       return rate.minimumPoliticalViolenceTerrorism;
+       return Math.ceil(rate.minimumPoliticalViolenceTerrorism);
     } else {
-      return politicalViolenceTerrorismAmount;
+      return Math.ceil(politicalViolenceTerrorismAmount);
     }
   } else {
     return 0;
@@ -47,7 +47,7 @@ async function calculatePLT(
 
 async function calculatePLL(vehicleType, rate, noOfSeats) {
   if (vehicleType == "commercial") {
-    return rate.passengerLegalLiability * noOfSeats;
+    return Math.ceil(rate.passengerLegalLiability * noOfSeats);
   } else {
     return 0;
   }
@@ -56,7 +56,7 @@ async function calculatePLL(vehicleType, rate, noOfSeats) {
 //Calculate Roadside Assistance
 async function calculateRoadsideAssistance(roadsideAssistance, rate) {
   if (roadsideAssistance) {
-    return rate.roadsideAssistance;
+    return Math.ceil(rate.roadsideAssistance);
   } else {
     return 0;
   }
@@ -65,7 +65,7 @@ async function calculateRoadsideAssistance(roadsideAssistance, rate) {
 //calculate courtesy car
 async function calculateCourtesyCar(courtesyCar, rate) {
   if (courtesyCar) {
-    return rate.courtesyCar;
+    return Math.ceil(rate.courtesyCar);
   } else {
     return 0;
   }
@@ -82,9 +82,9 @@ async function calculateTonnage() {
 async function calculateBasicAmount(estimatedCarValue, rate) {
   var basicAmount = (estimatedCarValue * rate.basic) / 100;
   if (basicAmount < rate.minimumPremium) {
-    return rate.minimumPremium;
+    return Math.ceil(rate.minimumPremium);
   } else {
-    return basicAmount;
+    return Math.ceil(basicAmount);
   }
 }
 async function sendMail(req, res, quoteObjectsArray) {
@@ -192,7 +192,7 @@ module.exports = {
             excessProtectorAmount +
             basicAmount +
             passengerLegalLiability;
-          var levies = quoteAmount * (rate.levies / 100);
+          var levies = Math.ceil(quoteAmount * (rate.levies / 100));
           quoteAmount = quoteAmount + levies + rate.stampDuty;
           var quoteObject = {
             quoteAmount: quoteAmount,

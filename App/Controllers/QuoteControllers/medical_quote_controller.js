@@ -31,20 +31,20 @@ module.exports = {
 
           //calculate principal rate
           if (principalAge <= 40) {
-            principalRate = principalRate + rate.principalInpatientAnnualYouth;
+            principalRate = Math.ceil(principalRate + rate.principalInpatientAnnualYouth);
             if (outpatientPerPerson) {
-              principalRateOutpatient = rate.principalOutpatientAnnualYouth;
+              principalRateOutpatient = Math.ceil(rate.principalOutpatientAnnualYouth);
             }
           } else if (principalAge <= 60) {
             principalRate =
-              principalRate + rate.principalInpatientAnnualMiddleAge;
+              principalRate + Math.ceil(rate.principalInpatientAnnualMiddleAge);
             if (outpatientPerPerson) {
-              principalRateOutpatient = rate.principalOutpatientAnnualMiddleAge;
+              principalRateOutpatient = Math.ceil(rate.principalOutpatientAnnualMiddleAge);
             }
           } else if (principalAge <= 65) {
-            principalRate = principalRate + rate.principalInpatientAnnualSenior;
+            principalRate = principalRate + Math.ceil(rate.principalInpatientAnnualSenior);
             if (outpatientPerPerson) {
-              principalRateOutpatient = rate.principalOutpatientAnnualSenior;
+              principalRateOutpatient = Math.ceil(rate.principalOutpatientAnnualSenior);
             }
           } else {
             console.error("too old mate");
@@ -54,19 +54,19 @@ module.exports = {
           //calculate spouse rate
           if (!(req.body.spouseAge === "")) {
             if (spouseAge <= 40) {
-              spouseRate = spouseRate + rate.spouseInpatientAnnualYouth;
+              spouseRate = spouseRate + Math.ceil(rate.spouseInpatientAnnualYouth);
               if (outpatientPerPerson) {
-                spouseRateOutpatient = rate.spouseOutpatientAnnualYouth;
+                spouseRateOutpatient = Math.ceil(rate.spouseOutpatientAnnualYouth);
               }
             } else if (spouseAge <= 60) {
-              spouseRate = spouseRate + rate.spouseInpatientAnnualMiddleAge;
+              spouseRate = spouseRate + Math.ceil(rate.spouseInpatientAnnualMiddleAge);
               if (outpatientPerPerson) {
-                spouseRateOutpatient = rate.spouseOutpatientAnnualMiddleAge;
+                spouseRateOutpatient = Math.ceil(rate.spouseOutpatientAnnualMiddleAge);
               }
             } else if (spouseAge <= 65) {
-              spouseRate = spouseRate + rate.principalInpatientAnnualSenior;
+              spouseRate = spouseRate + Math.ceil(rate.principalInpatientAnnualSenior);
               if (outpatientPerPerson) {
-                spouseRateOutpatient = rate.spouseOutpatientAnnualSenior;
+                spouseRateOutpatient = Math.ceil(rate.spouseOutpatientAnnualSenior);
               }
             } else {
               console.error("too old mate");
@@ -75,10 +75,10 @@ module.exports = {
           }
 
           //calculate children rate
-          childrenRate = rate.childrenInpatientAnnual * numberOfChildren;
+          childrenRate = Math.ceil(rate.childrenInpatientAnnual * numberOfChildren);
           if (outpatientPerPerson) {
             childrenRateOutpatient =
-              rate.childrenOutpatientAnnual * numberOfChildren;
+            Math.ceil(rate.childrenOutpatientAnnual * numberOfChildren);
           }
           var quoteTotal =
             principalRate +
@@ -87,7 +87,7 @@ module.exports = {
             spouseRateOutpatient +
             childrenRate +
             childrenRateOutpatient;
-          var levies = quoteTotal * (0.45 / 100);
+          var levies = Math.ceil(quoteTotal * (0.45 / 100));
           var stampDuty = 40;
           quoteTotal = quoteTotal + levies + stampDuty;
           var quoteObject = {

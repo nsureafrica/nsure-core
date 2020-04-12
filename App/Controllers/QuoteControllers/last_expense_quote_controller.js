@@ -27,13 +27,13 @@ module.exports = {
         var annualPremiumExtraChild = 0;
         var annualPremiumParents = 0;
 
-        annualPremiumNuclearFamily = rate.annualPremiumNuclearFamily;
+        annualPremiumNuclearFamily = Math.ceil(rate.annualPremiumNuclearFamily);
         if (noOfChildren > 4) {
           annualPremiumExtraChild =
-            rate.annualPremiumPerExtraChild * (noOfChildren - 4);
+          Math.ceil(rate.annualPremiumPerExtraChild * (noOfChildren - 4));
         }
         if (!(noOfNuclearFamily == 0)) {
-          annualPremiumParents = rate.annualPremiumPerParent * noOfParents;
+          annualPremiumParents = Math.ceil(rate.annualPremiumPerParent * noOfParents);
         }
         var quoteTotal =
           annualPremiumNuclearFamily +
