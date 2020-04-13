@@ -4,7 +4,7 @@ const ClaimModel = require("../Models/Claim");
 const policyTypeModel = require("../Models/policy_type");
 const transporter = require("../Utils/mailService");
 const Sequelize = require("sequelize");
-
+const UserModel = require("./../Models/User");
 module.exports = {
   uploadClaim: (req, res) => {
     var photosNameArray = [];
@@ -46,7 +46,10 @@ module.exports = {
       });
   },
   getClaim: (req, res) => {
-    ClaimModel.findOne({ where: { id: req.params.claimId } })
+    ClaimModel.findOne({
+      where: { id: req.params.claimId },
+      include: [UserModel],
+    })
       .then((claim) => {
         res.status(200).send(claim);
       })
@@ -70,6 +73,7 @@ module.exports = {
   getAllClaims: (req, res) => {
     ClaimModel.findAll({
       order: [["updatedAt", "DESC"]],
+      include: [UserModel],
     })
       .then((userClaims) => {
         res.status(200).send(userClaims);
