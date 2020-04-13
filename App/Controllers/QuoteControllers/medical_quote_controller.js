@@ -12,7 +12,7 @@ module.exports = {
     const principalAge = req.body.principalAge;
     const numberOfChildren = req.body.numberOfChildren;
     const spouseAge = req.body.spouseAge;
-    const outpatientPerPerson = req.body.outpatientPerPerson;
+    const outpatientPerPerson = req.body.outPatientPerPerson;
     MedicalRates.findAll({
       include: [UnderwriterModel],
       where: {
@@ -22,6 +22,7 @@ module.exports = {
       .then(async rates => {
         var quoteObjectsArray = [];
         rates.map(rate => {
+          console.log(rate)
           var principalRate = 0;
           var principalRateOutpatient = 0;
           var spouseRate = 0;
