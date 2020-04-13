@@ -38,7 +38,7 @@ module.exports = {
   },
   getTransactionByTransactionRef: (req, res) => {
     TransactionModel.findAll({
-      where: { transactionRef: req.param.transactionRef }
+      where: { transactionRef: req.query.transactionRef }
     })
       .then(response => {
         res.send(response);
