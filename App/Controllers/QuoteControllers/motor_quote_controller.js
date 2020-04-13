@@ -10,122 +10,8 @@ const senderEmailAdress = process.env.senderEmailAdress;
 //get motor rates model
 
 //Should create a different function for calculating add ons as the code is getting too long
-
-async function calculateExcess(excessProtector, estimatedCarValue, rate) {
-  if (excessProtector) {
-    var excessProtectorAmount =
-      (estimatedCarValue * rate.excessProtector) / 100;
-    if (excessProtectorAmount < rate.minimumExcess) {
-      return Math.ceil(rate.minimumExcess);
-    } else {
-      return Math.ceil(excessProtectorAmount);
-    }
-  } else {
-    return 0;
-  }
-}
-
-async function calculatePLT(
-  politicalViolenceTerrorism,
-  estimatedCarValue,
-  rate
-) {
-  if (politicalViolenceTerrorism) {
-    var politicalViolenceTerrorismAmount =
-      (estimatedCarValue * rate.politicalViolenceTerrorism) / 100;
-    if (politicalViolenceTerrorismAmount < rate.minimumPremium) {
-       return Math.ceil(rate.minimumPoliticalViolenceTerrorism);
-    } else {
-      return Math.ceil(politicalViolenceTerrorismAmount);
-    }
-  } else {
-    return 0;
-  }
-}
-
-//Calculate PLL
-
-async function calculatePLL(vehicleType, rate, noOfSeats) {
-  if (vehicleType == "commercial") {
-    return Math.ceil(rate.passengerLegalLiability * noOfSeats);
-  } else {
-    return 0;
-  }
-}
-
-//Calculate Roadside Assistance
-async function calculateRoadsideAssistance(roadsideAssistance, rate) {
-  if (roadsideAssistance) {
-    return Math.ceil(rate.roadsideAssistance);
-  } else {
-    return 0;
-  }
-}
-
-//calculate courtesy car
-async function calculateCourtesyCar(courtesyCar, rate) {
-  if (courtesyCar) {
-    return Math.ceil(rate.courtesyCar);
-  } else {
-    return 0;
-  }
-}
-async function calculateTonnage() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(2000);
-    }, 2000);
-  });
-}
-
-// calculate basic amount
-async function calculateBasicAmount(estimatedCarValue, rate) {
-  var basicAmount = (estimatedCarValue * rate.basic) / 100;
-  if (basicAmount < rate.minimumPremium) {
-    return Math.ceil(rate.minimumPremium);
-  } else {
-    return Math.ceil(basicAmount);
-  }
-}
-async function sendMail(req, res, quoteObjectsArray) {
-  var motorQuoteEmailJson = {};
-  const planDetails = { motorRates: quoteObjectsArray };
-  const userDetails = { user: req.user };
-  const userInput = { userInput: req.body };
-  Object.assign(motorQuoteEmailJson, planDetails);
-  Object.assign(motorQuoteEmailJson, userDetails);
-  Object.assign(motorQuoteEmailJson, userInput);
-  const policyPdfDirectory =
-    "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
-  await motorQuotePdf.createInvoice(motorQuoteEmailJson, policyPdfDirectory);
-
-  var mailOptions = {
-    from: senderEmailAdress,
-    to: req.user.email,
-    cc: process.env.spireReceivingEmailAddress,
-    subject: "Motor Insurance Quote",
-    html: invoiceTemplates.invoiceQuoteEmail(req),
-    attachments: [
-      {
-        // file on disk as an attachment
-        filename: "motorquote.pdf",
-        path: policyPdfDirectory, // stream this file
-      },
-    ],
-  };
-  // console.log(motorQuoteEmailJson);
-  Transporter.transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
-      console.log(err);
-    } else {
-      const notice = `Email sent: ` + info.response;
-      console.log(notice);
-    }
-  });
-}
 module.exports = {
-  getMotorQuote: async (req, res) => {
+  getMotorQuote: (req, res) => {
     var classId = req.body.classId;
     var vehicleType = req.body.vehicleType;
     var coverType = req.body.coverType;
@@ -142,7 +28,7 @@ module.exports = {
       natureOfGoods = req.body.natureOfGoods;
     }
 
-     MotorRates.findAll({
+    MotorRates.findAll({
       order: [["UnderwriterId", "ASC"]],
       include: [UnderwriterModel],
       where: {
@@ -154,63 +40,180 @@ module.exports = {
     })
       .then(async (rates) => {
         var quoteObjectsArray = [];
-        await rates.map(async (rate) => {
-          //calculate basic
-          var basicAmount = await calculateBasicAmount(estimatedCarValue, rate);
-          //calculate excessProtector
-          var excessProtectorAmount = await calculateExcess(
-            excessProtector,
-            estimatedCarValue,
-            rate
-          );
-          //calculate PLT
-          var politicalViolenceTerrorismAmount = await calculatePLT(
-            politicalViolenceTerrorism,
-            estimatedCarValue,
-            rate
-          );
-          //calculate pll
-          var passengerLegalLiability = await calculatePLL(
-            vehicleType,
-            rate,
-            noOfSeats
-          );
-          //Assign Roadside  Asssistance
-          var roadsideAssistanceAmount = await calculateRoadsideAssistance(
-            roadsideAssistance,
-            rate
-          );
-          //Courtesy Car
-          var courtesyCarAmount = await calculateCourtesyCar(courtesyCar, rate);
-          //calculate tonnage
-          const tonnageAmount = await calculateTonnage();
-          console.log(tonnageAmount);
-          var quoteAmount =
-            courtesyCarAmount +
-            roadsideAssistanceAmount +
-            politicalViolenceTerrorismAmount +
-            excessProtectorAmount +
-            basicAmount +
-            passengerLegalLiability;
-          var levies = Math.ceil(quoteAmount * (rate.levies / 100));
-          quoteAmount = quoteAmount + levies + rate.stampDuty;
-          var quoteObject = {
-            quoteAmount: quoteAmount,
-            basic: basicAmount,
-            excessProtector: excessProtectorAmount,
-            politicalViolenceTerrorism: politicalViolenceTerrorismAmount,
-            passengerLegalLiability: passengerLegalLiability,
-            roadsideAssistance: roadsideAssistanceAmount,
-            levies: levies,
-            stampDuty: rate.stampDuty,
-            courtesyCar: courtesyCarAmount,
-            underwriter: rate.Underwriter,
-          };
-          quoteObjectsArray.push(quoteObject);
+        rates.map((rate) => {
+          // console.log(rate)
+          if (coverType == "thirdParty") {
+            var politicalViolenceTerrorismAmount = 0;
+            if (politicalViolenceTerrorism) {
+              tempAmount =
+                (estimatedCarValue * rate.politicalViolenceTerrorism) / 100;
+              if (tempAmount < rate.minimumPremium) {
+                politicalViolenceTerrorismAmount =
+                Math.ceil(rate.minimumPoliticalViolenceTerrorism);
+              } else {
+                politicalViolenceTerrorismAmount =  Math.ceil(tempAmount);
+              }
+            }
+            //Roadside Assistance
+            var roadsideAssistanceAmount = 0;
+            if (roadsideAssistance) {
+              roadsideAssistanceAmount =  Math.ceil(rate.roadsideAssistance);
+            }
+            //Courtesy Car
+            var courtesyCarAmount = 0;
+            if (courtesyCar) {
+              courtesyCarAmount =  Math.ceil(rate.courtesyCar);
+            }
+
+            //Excess Protector
+            var excessProtectorAmount = 0;
+            if (excessProtector) {
+              excessProtectorAmount =  Math.ceil(rate.excessProtector);
+            }
+
+            //Passanger legal liability
+            var passengerLegalLiability = 0;
+            if ([4, 5].indexOf(classId) > -1) {
+              passengerLegalLiability =
+                Math.ceil( rate.passengerLegalLiability * noOfSeats);
+            }
+
+            //basic amount
+            basicAmount = rate.minimumPremium;
+            var quoteAmount =
+              courtesyCarAmount +
+              roadsideAssistanceAmount +
+              politicalViolenceTerrorismAmount +
+              excessProtectorAmount +
+              basicAmount;
+
+            var levies =  Math.ceil(quoteAmount * (rate.levies / 100));
+            quoteAmount = quoteAmount + levies + rate.stampDuty;
+            var quoteObject = {
+              quoteAmount: quoteAmount,
+              basic: basicAmount,
+              excessProtector: excessProtectorAmount,
+              politicalViolenceTerrorism: politicalViolenceTerrorismAmount,
+              passengerLegalLiability: passengerLegalLiability,
+              roadsideAssistance: roadsideAssistanceAmount,
+              levies: levies,
+              stampDuty: rate.stampDuty,
+              courtesyCar: courtesyCarAmount,
+              underwriter: rate.Underwriter,
+            };
+            quoteObjectsArray.push(quoteObject);
+          } else {
+            //calculate basic
+            var basicAmount = 0;
+            var tempAmount = (estimatedCarValue * rate.basic) / 100;
+            if (tempAmount < rate.minimumPremium) {
+              basicAmount = rate.minimumPremium;
+            } else {
+              basicAmount = tempAmount;
+            }
+            //calculate excessProtector
+            var excessProtectorAmount = 0;
+            if (excessProtector) {
+              tempAmount = (estimatedCarValue * rate.excessProtector) / 100;
+              if (tempAmount < rate.minimumExcess) {
+                excessProtectorAmount =  Math.ceil(rate.minimumExcess);
+              } else {
+                excessProtectorAmount =  Math.ceil(tempAmount);
+              }
+            }
+            //calculate PLT
+            var politicalViolenceTerrorismAmount = 0;
+            if (politicalViolenceTerrorism) {
+              tempAmount =
+                (estimatedCarValue * rate.politicalViolenceTerrorism) / 100;
+              if (tempAmount < rate.minimumPremium) {
+                politicalViolenceTerrorismAmount =
+                Math.ceil(rate.minimumPoliticalViolenceTerrorism);
+              } else {
+                politicalViolenceTerrorismAmount =  Math.ceil(tempAmount);
+              }
+            }
+            //calculate pll
+            var passengerLegalLiability = 0;
+            if ([4, 5].indexOf(classId) > -1) {
+              passengerLegalLiability =
+              Math.ceil(rate.passengerLegalLiability * noOfSeats);
+            }
+
+            //Assign Roadside  Asssistance
+            var roadsideAssistanceAmount = 0;
+            if (roadsideAssistance) {
+              roadsideAssistanceAmount =  Math.ceil(rate.roadsideAssistance);
+            }
+            //Courtesy Car
+            var courtesyCarAmount = 0;
+            if (courtesyCar) {
+              courtesyCarAmount =  Math.ceil(rate.courtesyCar);
+            }
+            quoteAmount =
+              courtesyCarAmount +
+              roadsideAssistanceAmount +
+              politicalViolenceTerrorismAmount +
+              excessProtectorAmount +
+              basicAmount +
+              passengerLegalLiability;
+            var levies = Math.ceil(quoteAmount * (rate.levies / 100));
+            quoteAmount = Math.ceil(quoteAmount + levies + rate.stampDuty);
+            var quoteObject = {
+              quoteAmount: quoteAmount,
+              basic: basicAmount,
+              excessProtector: excessProtectorAmount,
+              politicalViolenceTerrorism: politicalViolenceTerrorismAmount,
+              passengerLegalLiability: passengerLegalLiability,
+              roadsideAssistance: roadsideAssistanceAmount,
+              levies: levies,
+              stampDuty: rate.stampDuty,
+              courtesyCar: courtesyCarAmount,
+              underwriter: rate.Underwriter,
+            };
+            quoteObjectsArray.push(quoteObject);
+          }
         });
-        console.log(quoteObjectsArray)
         res.send(quoteObjectsArray);
-        sendMail(req, res, quoteObjectsArray);
+
+        var motorQuoteEmailJson = {};
+        const planDetails = { motorRates: quoteObjectsArray };
+        const userDetails = { user: req.user };
+        const userInput = { userInput: req.body };
+        Object.assign(motorQuoteEmailJson, planDetails);
+        Object.assign(motorQuoteEmailJson, userDetails);
+        Object.assign(motorQuoteEmailJson, userInput);
+        const policyPdfDirectory =
+          "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
+        await motorQuotePdf.createInvoice(
+          motorQuoteEmailJson,
+          policyPdfDirectory
+        );
+
+        var mailOptions = {
+          from: senderEmailAdress,
+          to: req.user.email,
+          cc: process.env.spireReceivingEmailAddress,
+          subject: "Motor Insurance Quote",
+          html: invoiceTemplates.invoiceQuoteEmail(req),
+          attachments: [
+            {
+              // file on disk as an attachment
+              filename: "motorquote.pdf",
+              path: policyPdfDirectory, // stream this file
+            },
+          ],
+        };
+        // console.log(motorQuoteEmailJson);
+        Transporter.transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
+            console.log(err);
+          } else {
+            const notice = `Email sent: ` + info.response;
+            console.log(notice);
+          }
+        });
       })
       .catch((err) => {
         res.status(500).send(err);
