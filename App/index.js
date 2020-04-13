@@ -54,8 +54,3 @@ else if (process.env.NODE_ENV === "TEST") {
 } else if(process.env.NODE_ENV === "UAT"){
   sequelizeConnection.sync();
 }
-
-app.get("/*", function(req, res) {
-  res.sendFile(path.join(__dirname, "../build", "index.html"));
-  //log number of visits
-});
