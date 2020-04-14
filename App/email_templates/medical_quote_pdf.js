@@ -88,7 +88,7 @@ function generatePlanDetails(doc, invoice) {
       planDetailsTop + 30
     )
     .text("Chronic Cases:", 300, planDetailsTop)
-    .text("KES " + invoice.planDetails.chronicCases, 400, planDetailsTop)
+    .text(formatCurrency( invoice.planDetails.chronicCases), 400, planDetailsTop)
     .text("Maternity Cover Limit:", 300, planDetailsTop + 15)
     .text(
       formatCurrency(invoice.planDetails.maternityCoverLimit),
@@ -117,32 +117,32 @@ function generateInvoiceTable(doc, invoice) {
     doc,
     invoiceTableTop + 30,
     "Principal Rate Inpatient",
-    invoice.principalRate
+    formatCurrency(invoice.principalRate)
   );
   generateTableRow(
     doc,
     invoiceTableTop + 60,
     "Principal Rate Outpatient",
-    invoice.principalRateOutpatient
+    formatCurrency(invoice.principalRateOutpatient)
   );
   generateTableRow(
     doc,
     invoiceTableTop + 90,
     "Spouse Rate Inpatient",
-    invoice.spouseRate
+    formatCurrency(invoice.spouseRate)
   );
   generateTableRow(
     doc,
     invoiceTableTop + 120,
     "Spouse Rate Outpatient",
-    invoice.spouseRateOutpatient
+    formatCurrency(invoice.spouseRateOutpatient)
   );
   generateTableRow(
     doc,
     invoiceTableTop + 150,
     "Children Rate Inpatient",
 
-    invoice.childrenRate
+    formatCurrency(invoice.childrenRate)
   );
   generateTableRow(
     doc,
