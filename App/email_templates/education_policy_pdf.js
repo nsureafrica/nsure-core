@@ -29,7 +29,7 @@ function generateHeader(doc) {
 }
 
 function generateCustomerInformation(doc, invoice) {
-  doc.fillColor("#444444").fontSize(20).text("Travel Cover Details", 50, 160);
+  doc.fillColor("#444444").fontSize(20).text("Education Cover Details", 50, 160);
 
   generateHr(doc, 185);
 
@@ -78,7 +78,7 @@ function generatePlanDetails(doc, invoice) {
     .text("Date Of Birth", 50, planDetailsTop + 30)
     .text(moment(invoice.dob).format("Do MMM YYYY"), 300, planDetailsTop + 30)
     .text("Expected Commencement Date:", 50, planDetailsTop + 45)
-    .text(moment(invoice.expectedCommencementDate).format("Do MMM YYYY"), 150, planDetailsTop +45)
+    .text(moment(invoice.expectedCommencementDate).format("Do MMM YYYY"), 300, planDetailsTop +45)
     .text("Frequency :", 50, planDetailsTop + 60)
     .text(lodash.startCase(invoice.frequency), 300, planDetailsTop + 60)
     .moveDown();
