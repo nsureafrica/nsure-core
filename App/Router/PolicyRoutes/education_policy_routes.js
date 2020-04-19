@@ -1,7 +1,7 @@
 //@ts-check
 const EducationPolicyController = require("../../Controllers/PolicyControllers/education_policy_controller");
 
-module.exports = app => {
+module.exports = (app) => {
   app
     .route("/policies/education/:userId")
     .get(EducationPolicyController.getUserEducationPolicies);
@@ -19,4 +19,8 @@ module.exports = app => {
   app
     .route("/policies/education/activateEducationPolicy")
     .put(EducationPolicyController.activateEducationPolicy);
+
+  app
+    .route("/policies/education/exportDataAsCsv")
+    .get(EducationPolicyController.exportDataAsCsv);
 };

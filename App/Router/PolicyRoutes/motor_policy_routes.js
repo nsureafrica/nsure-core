@@ -3,7 +3,7 @@
 const MotorPolicyController = require("./../../Controllers/PolicyControllers/motor_policy_controller");
 const Storage = require("../../Storage/storage");
 
-module.exports = app => {
+module.exports = (app) => {
   // Motor Policies
   app
     .route("/policies/motor/:email")
@@ -16,7 +16,7 @@ module.exports = app => {
     Storage.uploadLogbook.fields([
       { name: "logbook", maxCount: 5 },
       { name: "kraPin", maxCount: 5 },
-      { name: "nationalID", maxCount: 5 }
+      { name: "nationalID", maxCount: 5 },
     ]),
     MotorPolicyController.createMotorPolicy
   ); // requires auth
@@ -28,7 +28,7 @@ module.exports = app => {
   app
     .route("/policies/motor/activateMotorPolicy")
     .put(MotorPolicyController.activateMotorPolicy);
-  // app
-  //   .route("/policies/motor/policies")
-  //   .get(MotorPolicyController.getAllMotorPolicies);
+  app
+    .route("/policies/medical/exportDataAsCsv")
+    .get(MotorPolicyController.exportDataAsCsv);
 };

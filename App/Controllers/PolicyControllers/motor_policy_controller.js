@@ -4,45 +4,45 @@ const Bill = require("./../../Models/Bill");
 const CustomFilter = require("./custom_filter_policy_controller");
 const transporter = require("../../Utils/mailService");
 const invoiceEmail = require("./../../email_templates/invoicetemplate");
-const SharedControllers = require("./../SharedControllers/shared_controllers")
+const SharedControllers = require("./../SharedControllers/shared_controllers");
 module.exports = {
   getAllMotorPolicies: (req, res) => {
     MotorPolicy.findAll({
       order: [["updatedAt", "DESC"]],
-      include: [Bill]
+      include: [Bill],
     })
-      .then(policies => {
+      .then((policies) => {
         res.status(200).send(policies);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
   getUserMotorPolicies: (req, res) => {
     MotorPolicy.findAll({
       where: {
-        UserId: req.user.id
+        UserId: req.user.id,
       },
-      include: [Bill]
+      include: [Bill],
     })
-      .then(policies => {
+      .then((policies) => {
         res.status(200).send(policies);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
   getMotorPolicy: (req, res) => {
     MotorPolicy.findOne({
       where: {
-        id: req.params.policyId
+        id: req.params.policyId,
       },
-      include: [Bill]
+      include: [Bill],
     })
-      .then(policy => {
+      .then((policy) => {
         res.send(policy);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
@@ -50,20 +50,20 @@ module.exports = {
     var logbookPathArray = [];
     var kraFilesArray = [];
     var nationalIDArray = [];
-    req.files.kraPin.forEach(fileName => {
+    req.files.kraPin.forEach((fileName) => {
       kraFilesArray.push(fileName.filename);
     });
-    req.files.logbook.forEach(fileName => {
+    req.files.logbook.forEach((fileName) => {
       logbookPathArray.push(fileName.filename);
     });
-    req.files.nationalID.forEach(fileName => {
+    req.files.nationalID.forEach((fileName) => {
       nationalIDArray.push(fileName.filename);
     });
     //create a bill
     Bill.create({
-      amount: req.body.quoteAmount
+      amount: req.body.quoteAmount,
     })
-      .then(billResponse => {
+      .then((billResponse) => {
         MotorPolicy.create({
           vehicleEstimatedValue: req.body.vehicleEstimatedValue,
           vehicleModelAndMake: req.body.vehicleModelAndMake,
@@ -91,8 +91,8 @@ module.exports = {
           idNumber: nationalIDArray.toString(),
           UnderwriterId: req.body.underWriter,
           VehicleClassId: req.body.vehicleClass,
-          BillId: billResponse.dataValues.id
-        }).then(sequelizeResponse => {
+          BillId: billResponse.dataValues.id,
+        }).then((sequelizeResponse) => {
           //Generate quote here
           res.status(200).send(sequelizeResponse);
 
@@ -104,7 +104,7 @@ module.exports = {
             from: process.env.senderEmailAdress,
             to: `${req.user.email},${process.env.spireReceivingEmailAddress}`,
             subject: "Motor Policy Created",
-            html: invoiceEmail.invoicePolicyEmail(req)
+            html: invoiceEmail.invoicePolicyEmail(req),
           };
           // transporter.transporter.sendMail(mailOptions, (err, info) => {
           //   if (err) {
@@ -116,16 +116,19 @@ module.exports = {
           // });
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         res.status(500).send(err);
       });
   },
   //Activate Motor Policy
   activateMotorPolicy: (req, res) => {
-    SharedControllers.activatePolicy(req,res,MotorPolicy);
+    SharedControllers.activatePolicy(req, res, MotorPolicy);
   },
   //custom filter
   customFilterMotorPolicy: (req, res) =>
-    CustomFilter.customPolicyFilter(MotorPolicy, req, res)
+    CustomFilter.customPolicyFilter(MotorPolicy, req, res),
+  exportDataAsCsv: (req, res) => {
+    SharedControllers.exportDataAsCsv(req, res, MotorPolicy);
+  },
 };

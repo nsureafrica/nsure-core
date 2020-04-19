@@ -6,7 +6,7 @@ const transporter = require("../../Utils/mailService");
 const Bill = require("../../Models/Bill");
 const invoiceEmail = require("./../../email_templates/invoicetemplate");
 const SharedControllers = require("./../SharedControllers/shared_controllers");
-const TravelPolicyPDF = require("./../../email_templates/travel_policy_pdf")
+const TravelPolicyPDF = require("./../../email_templates/travel_policy_pdf");
 module.exports = {
   getUserTravelPolicy: (req, res) => {
     TravelPolicy.findAll({
@@ -81,7 +81,10 @@ module.exports = {
           Object.assign(travelPolicyEmailJson, userDetails);
           const policyPdfDirectory =
             "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
-          await TravelPolicyPDF.createInvoice(travelPolicyEmailJson, policyPdfDirectory);
+          await TravelPolicyPDF.createInvoice(
+            travelPolicyEmailJson,
+            policyPdfDirectory
+          );
 
           var mailOptions = {
             from: process.env.senderEmailAdress,
@@ -121,4 +124,8 @@ module.exports = {
   //custom filter
   customFilterTravelPolicy: (req, res) =>
     CustomFilter.customPolicyFilter(TravelPolicy, req, res),
+
+  exportDataAsCsv: (req, res) => {
+    SharedControllers.exportDataAsCsv(req, res, TravelPolicy);
+  },
 };

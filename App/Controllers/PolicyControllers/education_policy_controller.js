@@ -4,55 +4,53 @@ const EducationPolicy = require("../../Models/education_policy");
 const CustomFilter = require("./custom_filter_policy_controller");
 const transporter = require("../../Utils/mailService");
 const invoiceEmail = require("./../../email_templates/invoicetemplate");
-const Bill = require("../../Models/Bill")
+const Bill = require("../../Models/Bill");
 const SharedControllers = require("./../SharedControllers/shared_controllers");
-const EducationPolicyPDF = require("./../../email_templates/education_policy_pdf")
+const EducationPolicyPDF = require("./../../email_templates/education_policy_pdf");
 module.exports = {
   //education policies
   getUserEducationPolicies: (req, res) => {
     EducationPolicy.findAll({
       where: {
-        UserId: req.user.id
+        UserId: req.user.id,
       },
-      include: [Bill]
+      include: [Bill],
     })
-      .then(policies => {
+      .then((policies) => {
         res.send(policies);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
   getEducationPolicy: (req, res) => {
     EducationPolicy.findOne({
       where: {
-        id: req.params.policyId
+        id: req.params.policyId,
       },
-      include: [Bill]
-
+      include: [Bill],
     })
-      .then(policy => {
+      .then((policy) => {
         res.status(200).send(policy);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
 
   getAllEducationPolicies: (req, res) => {
-    console.log("called")
-    EducationPolicy.findAll({      include: [Bill]
-    })
-      .then(educationPolicies => {
+    console.log("called");
+    EducationPolicy.findAll({ include: [Bill] })
+      .then((educationPolicies) => {
         res.status(200).send(educationPolicies);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(200).send(err);
       });
   },
   createEducationPolicy: (req, res) => {
     EducationPolicy.create(req.body)
-      .then(async response => {
+      .then(async (response) => {
         res.status(200).send(response);
         //SEND AN EMAIL
         var PolicyEmailJson = {};
@@ -61,7 +59,10 @@ module.exports = {
         Object.assign(PolicyEmailJson, userDetails);
         const policyPdfDirectory =
           "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
-        await EducationPolicyPDF.createInvoice(PolicyEmailJson, policyPdfDirectory);
+        await EducationPolicyPDF.createInvoice(
+          PolicyEmailJson,
+          policyPdfDirectory
+        );
 
         var mailOptions = {
           from: process.env.senderEmailAdress,
@@ -87,16 +88,20 @@ module.exports = {
           }
         });
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
-  
+
   //Activate Last Expense Policy
   activateEducationPolicy: (req, res) => {
     SharedControllers.activatePolicy(req, res, EducationPolicy);
   },
   //custom filter
   customFilterEducationPolicy: (req, res) =>
-    CustomFilter.customPolicyFilter(EducationPolicy, req, res)
+    CustomFilter.customPolicyFilter(EducationPolicy, req, res),
+
+  exportDataAsCsv: (req, res) => {
+    SharedControllers.exportDataAsCsv(req, res, EducationPolicy);
+  },
 };

@@ -18,4 +18,6 @@ module.exports = app => {
   .get(LastExpensePolicyController.getAllLastExpensePolicies)
 
   app.route("/policies/lastexpense/activateLastExpensePolicy").put(LastExpensePolicyController.activateLastExpensePolicy)
+
+  app.route("/policies/lastexpense/exportDataAsCsv").get(LastExpensePolicyController.exportDataAsCsv)
 }

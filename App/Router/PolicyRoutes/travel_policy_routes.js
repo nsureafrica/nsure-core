@@ -2,7 +2,7 @@
 const TravelPolicyController = require("../../Controllers/PolicyControllers/travel_policy_controller");
 const Storage = require("../../Storage/storage");
 
-module.exports = app => {
+module.exports = (app) => {
   app
     .route("/policies/travel/:userId")
     .get(TravelPolicyController.getUserTravelPolicy);
@@ -13,7 +13,7 @@ module.exports = app => {
     Storage.uploadLogbook.fields([
       { name: "passport", maxCount: 5 },
       { name: "nationalId", maxCount: 5 },
-      { name: "kraPin", maxCount: 5 }
+      { name: "kraPin", maxCount: 5 },
     ]),
     TravelPolicyController.createTravelPolicy
   );
@@ -24,4 +24,8 @@ module.exports = app => {
   app
     .route("/policies/travel/activateTravelPolicy")
     .put(TravelPolicyController.activateTravelPolicy);
+
+  app
+    .route("/policies/medical/exportDataAsCsv")
+    .get(TravelPolicyController.exportDataAsCsv);
 };

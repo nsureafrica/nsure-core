@@ -33,5 +33,9 @@ module.exports = {
   //Activate Last Expense Policy
   activateLastExpensePolicy: (req, res) => {
     SharedControllers.activatePolicy(req, res, LastExpensePolicyModel);
+  },
+
+  exportDataAsCsv: (req,res) => {
+    SharedControllers.exportDataAsCsv(req,res,LastExpensePolicyModel)
   }
 };

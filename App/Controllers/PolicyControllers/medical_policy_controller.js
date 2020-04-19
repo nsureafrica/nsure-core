@@ -5,48 +5,46 @@ const CustomFilter = require("./custom_filter_policy_controller");
 const Bill = require("./../../Models/Bill");
 const transporter = require("../../Utils/mailService");
 const invoiceEmail = require("./../../email_templates/invoicetemplate");
-const SharedControllers = require("./../SharedControllers/shared_controllers")
+const SharedControllers = require("./../SharedControllers/shared_controllers");
 module.exports = {
   //medical policy
   getUserMedicalPolicies: (req, res) => {
     MedicalPolicy.findAll({
       order: [["updatedAt", "DESC"]],
       where: {
-        UserId: req.user.id
+        UserId: req.user.id,
       },
-      include: [Bill]
-
+      include: [Bill],
     })
-      .then(policies => {
+      .then((policies) => {
         res.status(200).send(policies);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
   getMedicalPolicy: (req, res) => {
     MedicalPolicy.findOne({
       where: {
-        id: req.params.policyId
+        id: req.params.policyId,
       },
-      include: [Bill]
-
+      include: [Bill],
     })
-      .then(policy => {
+      .then((policy) => {
         res.send(policy);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
   createMedicalPolicy: (req, res) => {
     Bill.create({
-      amount: req.body.quoteAmount
-    }).then(billResponse => {
+      amount: req.body.quoteAmount,
+    }).then((billResponse) => {
       const billId = { BillId: billResponse.dataValues.id };
       Object.assign(req.body, billId);
       MedicalPolicy.create(req.body)
-        .then(response => {
+        .then((response) => {
           console.log(response);
           res.status(200).send(response);
           var selelectedOptionsRow = "";
@@ -58,7 +56,7 @@ module.exports = {
             from: process.env.senderEmailAdress,
             to: `${req.user.email},${process.env.spireReceivingEmailAddress}`,
             subject: "Medical Policy Created",
-            html: invoiceEmail.invoicePolicyEmail(req)
+            html: invoiceEmail.invoicePolicyEmail(req),
           };
           // transporter.transporter.sendMail(mailOptions, (err, info) => {
           //   if (err) {
@@ -69,7 +67,7 @@ module.exports = {
           //   }
           // });
         })
-        .catch(err => {
+        .catch((err) => {
           res.status(500).send(err);
         });
     });
@@ -78,20 +76,23 @@ module.exports = {
   getAllMedicalPolicies: (req, res) => {
     MedicalPolicy.findAll({
       order: [["updatedAt", "DESC"]],
-      include: [Bill]
+      include: [Bill],
     })
-      .then(medicalPolicies => {
+      .then((medicalPolicies) => {
         res.status(200).send(medicalPolicies);
       })
-      .catch(error => {
+      .catch((error) => {
         res.status(200).send(error);
       });
   },
-    //Activate Medical Policy
-    activateMedicalPolicy: (req, res) => {
-      SharedControllers.activatePolicy(req,res,MedicalPolicy);
-    },
+  //Activate Medical Policy
+  activateMedicalPolicy: (req, res) => {
+    SharedControllers.activatePolicy(req, res, MedicalPolicy);
+  },
   //custom filter
   customFilterMedicalPolicy: (req, res) =>
-    CustomFilter.customPolicyFilter(MedicalPolicy, req, res)
+    CustomFilter.customPolicyFilter(MedicalPolicy, req, res),
+  exportDataAsCsv: (req, res) => {
+    SharedControllers.exportDataAsCsv(req, res, MedicalPolicy);
+  },
 };

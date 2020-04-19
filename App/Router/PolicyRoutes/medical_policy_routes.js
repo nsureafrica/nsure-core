@@ -1,8 +1,8 @@
 //@ts-check
-const MedicalPolicyController = require("../../Controllers/PolicyControllers/medical_policy_controller")
+const MedicalPolicyController = require("../../Controllers/PolicyControllers/medical_policy_controller");
 
-module.exports = app => {
-    app
+module.exports = (app) => {
+  app
     .route("/policies/medical/:userId")
     .get(MedicalPolicyController.getUserMedicalPolicies);
   app
@@ -11,10 +11,16 @@ module.exports = app => {
   app
     .route("/policies/medical/policy")
     .post(MedicalPolicyController.createMedicalPolicy);
-  
-  app
-  .route("/policies/allmedicalpolicies")
-  .get(MedicalPolicyController.getAllMedicalPolicies)
 
-  app.route("/policies/medical/activateMedicalPolicy").put(MedicalPolicyController.activateMedicalPolicy)
-}
+  app
+    .route("/policies/allmedicalpolicies")
+    .get(MedicalPolicyController.getAllMedicalPolicies);
+
+  app
+    .route("/policies/medical/activateMedicalPolicy")
+    .put(MedicalPolicyController.activateMedicalPolicy);
+
+  app
+    .route("/policies/medical/exportDataAsCsv")
+    .get(MedicalPolicyController.exportDataAsCsv);
+};
