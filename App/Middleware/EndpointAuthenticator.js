@@ -1,17 +1,17 @@
 const jwt = require("./../Utils/jwt");
 const lodash = require("lodash");
-const endpointAuthenitcator = function(req, res, next) {
-  console.log(req.url);
+const LogIt = require("./../Utils/AuditLog");
 
+const endpointAuthenitcator = function (req, res, next) {
   //create a list of whitelisted urls
   var whitelistedUrl = [
     "/signin",
     "/forgotPassword",
     "/signup",
     "/changePassword",
-    "/verifyUser"
+    "/verifyUser",
   ];
-  if (whitelistedUrl.find(element => element === req.url) == undefined) {
+  if (whitelistedUrl.find((element) => element === req.url) == undefined) {
     var token = req.headers["x-access-token"];
     if (!token) {
       res.status(401).send({ auth: false, message: "No token provided." });
@@ -25,10 +25,12 @@ const endpointAuthenitcator = function(req, res, next) {
         //add user object to the request
         const userObject = { user: user };
         Object.assign(req, userObject);
+        LogIt(req);
         next();
       }
     }
   } else {
+    //log it!
     next();
   }
 };

@@ -5,6 +5,7 @@ const jwt = require("../Utils/jwt");
 const UserModel = require("../Models/User");
 const bCrypt = require("bcrypt-nodejs");
 const nodemailer = require("nodemailer");
+const logIt = require("./../Utils/AuditLog")
 require("../passport");
 const passwordGenerator = require("./../Utils/passwordGenerator");
 
@@ -36,6 +37,10 @@ module.exports = {
           delete user.createdAt;
           delete user.updatedAt;
           var token = jwt.sign(user);
+          //log this
+          const userObject = { user: user };
+          Object.assign(req, userObject);
+          logIt(req)
           res.status(200).send({ message, token });
         }
       }
