@@ -3,17 +3,17 @@ const MedicalPolicyController = require("../../Controllers/PolicyControllers/med
 
 module.exports = (app) => {
   app
-    .route("/policies/medical/:userId")
+    .route("/policies/medical/getUserPolicies")
     .get(MedicalPolicyController.getUserMedicalPolicies);
   app
-    .route("/policies/medical/policy/:policyId")
+    .route("/policies/medical/getMedicalPolicy")
     .get(MedicalPolicyController.getMedicalPolicy);
   app
-    .route("/policies/medical/policy")
+    .route("/policies/medical/createMedicalPolicy")
     .post(MedicalPolicyController.createMedicalPolicy);
 
   app
-    .route("/policies/allmedicalpolicies")
+    .route("/policies/medical/getAllMedicalPolicies")
     .get(MedicalPolicyController.getAllMedicalPolicies);
 
   app

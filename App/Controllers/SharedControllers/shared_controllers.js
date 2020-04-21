@@ -2,6 +2,8 @@
 
 const Bill = require("./../../Models/Bill");
 const transporter = require("../../Utils/mailService");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 const _ = require("lodash");
 const ExportToCsv = require("export-to-csv").ExportToCsv;
 module.exports = {
@@ -9,15 +11,29 @@ module.exports = {
   //get all by user id
 
   getAllPolicies: (req, res, model) => {
+    var whereObject = {};
+    //Date Search
+    if (req.query.startDate && req.query.endDate) {
+      var dateQuery = {
+        createdAt: {
+          [Op.between]: [req.query.startDate, req.query.endDate],
+        },
+      };
+      Object.assign(whereObject, dateQuery);
+    }
+
+    console.log(whereObject);
     model
       .findAll({
         order: [["updatedAt", "DESC"]],
         include: [Bill],
+        where: whereObject,
       })
       .then((policies) => {
         res.status(200).send(policies);
       })
       .catch((err) => {
+        console.log(err);
         res.status(500).send(err);
       });
   },
@@ -123,11 +139,11 @@ module.exports = {
       })
       .then((policies) => {
         try {
-          const meh = []
-          policies.map(policy => {
-            meh.push(policy.dataValues)
-          })
-          const data = meh
+          const meh = [];
+          policies.map((policy) => {
+            meh.push(policy.dataValues);
+          });
+          const data = meh;
           const header =
             Object.keys(data[0])
               .map((_) => JSON.stringify(_))

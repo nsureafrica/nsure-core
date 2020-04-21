@@ -7,16 +7,7 @@ const invoiceEmail = require("./../../email_templates/invoicetemplate");
 const SharedControllers = require("./../SharedControllers/shared_controllers");
 module.exports = {
   getAllMotorPolicies: (req, res) => {
-    MotorPolicy.findAll({
-      order: [["updatedAt", "DESC"]],
-      include: [Bill],
-    })
-      .then((policies) => {
-        res.status(200).send(policies);
-      })
-      .catch((err) => {
-        res.status(500).send(err);
-      });
+    SharedControllers.getAllPolicies(req,res,MotorPolicy)
   },
   getUserMotorPolicies: (req, res) => {
     MotorPolicy.findAll({

@@ -39,14 +39,7 @@ module.exports = {
   },
 
   getAllEducationPolicies: (req, res) => {
-    console.log("called");
-    EducationPolicy.findAll({ include: [Bill] })
-      .then((educationPolicies) => {
-        res.status(200).send(educationPolicies);
-      })
-      .catch((err) => {
-        res.status(200).send(err);
-      });
+    SharedControllers.getAllPolicies(req, res, EducationPolicy);
   },
   createEducationPolicy: (req, res) => {
     EducationPolicy.create(req.body)

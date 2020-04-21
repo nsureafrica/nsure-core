@@ -38,9 +38,8 @@ module.exports = {
   },
 
   getAllTravelPolicies: (req, res) => {
-    TravelPolicy.findAll({ include: [Bill] }).then((travelPolicies) => {
-      res.status(200).send(travelPolicies);
-    });
+    SharedControllers.getAllPolicies(req,res,TravelPolicy)
+
   },
   createTravelPolicy: (req, res) => {
     Bill.create({

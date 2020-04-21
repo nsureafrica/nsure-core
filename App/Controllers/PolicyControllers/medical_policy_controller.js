@@ -26,7 +26,7 @@ module.exports = {
   getMedicalPolicy: (req, res) => {
     MedicalPolicy.findOne({
       where: {
-        id: req.params.policyId,
+        id: req.query.policyId,
       },
       include: [Bill],
     })
@@ -74,16 +74,7 @@ module.exports = {
   },
   //get all medical policies
   getAllMedicalPolicies: (req, res) => {
-    MedicalPolicy.findAll({
-      order: [["updatedAt", "DESC"]],
-      include: [Bill],
-    })
-      .then((medicalPolicies) => {
-        res.status(200).send(medicalPolicies);
-      })
-      .catch((error) => {
-        res.status(200).send(error);
-      });
+    SharedControllers.getAllPolicies(req,res,MedicalPolicy)
   },
   //Activate Medical Policy
   activateMedicalPolicy: (req, res) => {

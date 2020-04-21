@@ -3,17 +3,17 @@ const EducationPolicyController = require("../../Controllers/PolicyControllers/e
 
 module.exports = (app) => {
   app
-    .route("/policies/education/:userId")
+    .route("/policies/education/getUserPolicies")
     .get(EducationPolicyController.getUserEducationPolicies);
   app
-    .route("/policies/education/policy/:policyId")
+    .route("/policies/education/getOneEducationPolicy/:policyId")
     .get(EducationPolicyController.getEducationPolicy);
   app
-    .route("/policies/education/policy")
+    .route("/policies/education/createEducationPolicy")
     .post(EducationPolicyController.createEducationPolicy);
 
   app
-    .route("/policies/alleducationpolicies")
+    .route("/policies/education/getAllEducationPolicies")
     .get(EducationPolicyController.getAllEducationPolicies);
 
   app

@@ -4,7 +4,7 @@ const Storage = require("../../Storage/storage");
 
 module.exports = (app) => {
   app
-    .route("/policies/travel/:userId")
+    .route("/policies/travel/getUserPolicies")
     .get(TravelPolicyController.getUserTravelPolicy);
   app
     .route("/policies/travel/policy/:policyId")

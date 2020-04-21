@@ -1,8 +1,8 @@
 //@ts-check
 const SalamahTransitionController = require("../../Controllers/PolicyControllers/salamah_policy_controller");
 
-module.exports = app => {
-    app
+module.exports = (app) => {
+  app
     .route("/policies/salamahTransition/:userId")
     .get(SalamahTransitionController.getUserSalamahTransitionPolicies);
 
@@ -13,5 +13,7 @@ module.exports = app => {
   app
     .route("/policies/salamahTransition/policy")
     .post(SalamahTransitionController.createSalamahTransitionPolicy);
-  app.route("/policies/getallsalamahpolicies").get(SalamahTransitionController.getAllSalamahPolices)
-}
+  app
+    .route("/policies/getallsalamahpolicies")
+    .get(SalamahTransitionController.getAllSalamahPolices);
+};

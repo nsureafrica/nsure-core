@@ -4,20 +4,20 @@ const LastExpensePolicyController = require('./../../Controllers/PolicyControlle
 
 module.exports = app => {
     app
-    .route("/policies/lastexpense/:userId")
+    .route("/policies/lastExpense/getUserPolicies")
     .get(LastExpensePolicyController.getUsersLastExpensePolicy);
   app
-    .route("/policies/lastexpense/policy/:policyId")
+    .route("/policies/lastExpense/getOneLastExpensePolicy")
     .get(LastExpensePolicyController.getOneLastExpensePolicy);
   app
-    .route("/policies/lastexpense/createpolicy")
+    .route("/policies/lastExpense/createPolicy")
     .post(LastExpensePolicyController.createLastExpensePolicy);
   
   app
-  .route("/policies/alllastexpensepolicies")
+  .route("/policies/lastExpense/getAllLastExpensePolicies")
   .get(LastExpensePolicyController.getAllLastExpensePolicies)
 
-  app.route("/policies/lastexpense/activateLastExpensePolicy").put(LastExpensePolicyController.activateLastExpensePolicy)
+  app.route("/policies/lastExpense/activateLastExpensePolicy").put(LastExpensePolicyController.activateLastExpensePolicy)
 
-  app.route("/policies/lastexpense/exportDataAsCsv").get(LastExpensePolicyController.exportDataAsCsv)
+  app.route("/policies/lastExpense/exportDataAsCsv").get(LastExpensePolicyController.exportDataAsCsv)
 }
