@@ -87,19 +87,19 @@ function generatePlanDetails(doc, invoice) {
       160,
       planDetailsTop + 30
     )
-    .text("Chronic Cases:", 300, planDetailsTop)
-    .text(formatCurrency( invoice.planDetails.chronicCases), 400, planDetailsTop)
-    .text("Maternity Cover Limit:", 300, planDetailsTop + 15)
+    // .text("Chronic Cases:", 300, planDetailsTop)
+    // .text(formatCurrency( invoice.planDetails.chronicCases), 400, planDetailsTop)
+    .text("Maternity Cover Limit:", 300, planDetailsTop)
     .text(
       formatCurrency(invoice.planDetails.maternityCoverLimit),
       400,
-      planDetailsTop + 15
+      planDetailsTop
     )
-    .text("Personal Accident:", 300, planDetailsTop + 30)
+    .text("Personal Accident:", 300, planDetailsTop + 15)
     .text(
       formatCurrency(invoice.planDetails.personalAccident),
       400,
-      planDetailsTop + 30
+      planDetailsTop + 15
     )
 
     .moveDown();

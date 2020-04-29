@@ -25,7 +25,6 @@ var job = new CronJob(
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getFullYear() + 1);
 
-    // console.log(tomorrow);
   },
   null,
   true,
@@ -119,12 +118,12 @@ const checkPoliciesForExpiry = new CronJob("30 9 * * *", () => {
     "Last Expense Policy"
   );
   //Travel Policy
-  checkAndMailForPolicyExpiration(TravelPolicyModel, "Travel Policy");
+  // checkAndMailForPolicyExpiration(TravelPolicyModel, "Travel Policy");
   //Education Policy
   checkAndMailForPolicyExpiration(EducationPolicyModel, "Education Policy");
 });
 
-var billsCronJob = new CronJob("1-59/2 * * * *", () => {
+var billsCronJob = new CronJob("0 0 1 * *", () => {
   console.info("Bills cron job is running ");
   // Motor policies
   mailBillReminder(MotorPoliciesModel, "Motor Policy");
@@ -138,5 +137,5 @@ var billsCronJob = new CronJob("1-59/2 * * * *", () => {
   mailBillReminder(EducationPolicyModel, "Education Policy");
 });
 //Start the cron jobs
-// checkPoliciesForExpiry.start();
-// billsCronJob.start();
+checkPoliciesForExpiry.start();
+billsCronJob.start();
