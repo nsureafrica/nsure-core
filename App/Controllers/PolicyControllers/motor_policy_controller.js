@@ -26,7 +26,7 @@ module.exports = {
   getMotorPolicy: (req, res) => {
     MotorPolicy.findOne({
       where: {
-        id: req.params.policyId,
+        id: req.query.policyId,
       },
       include: [Bill],
     })

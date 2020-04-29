@@ -139,11 +139,10 @@ module.exports = {
       })
       .then((policies) => {
         try {
-          const meh = [];
+          const data = [];
           policies.map((policy) => {
-            meh.push(policy.dataValues);
+            data.push(policy.dataValues);
           });
-          const data = meh;
           const header =
             Object.keys(data[0])
               .map((_) => JSON.stringify(_))

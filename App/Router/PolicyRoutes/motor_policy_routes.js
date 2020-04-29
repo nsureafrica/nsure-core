@@ -9,7 +9,7 @@ module.exports = (app) => {
     .route("/policies/motor/getUserPolicies")
     .get(MotorPolicyController.getUserMotorPolicies); // requires auth
   app
-    .route("/policies/motor/getMedicalPolicy/:policyId")
+    .route("/policies/motor/getMedicalPolicy")
     .get(MotorPolicyController.getMotorPolicy); // requires auth
   app.post(
     "/policies/motor/policy",
@@ -29,6 +29,6 @@ module.exports = (app) => {
     .route("/policies/motor/activateMotorPolicy")
     .put(MotorPolicyController.activateMotorPolicy);
   app
-    .route("/policies/medical/exportDataAsCsv")
+    .route("/policies/motor/exportDataAsCsv")
     .get(MotorPolicyController.exportDataAsCsv);
 };

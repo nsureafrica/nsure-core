@@ -25,7 +25,7 @@ module.exports = {
   getTravelPolicy: (req, res) => {
     TravelPolicy.findOne({
       where: {
-        id: req.params.policyId,
+        id: req.query.policyId,
       },
       include: [Bill],
     })

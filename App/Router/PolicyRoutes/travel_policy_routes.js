@@ -26,6 +26,6 @@ module.exports = (app) => {
     .put(TravelPolicyController.activateTravelPolicy);
 
   app
-    .route("/policies/medical/exportDataAsCsv")
+    .route("/policies/travel/exportDataAsCsv")
     .get(TravelPolicyController.exportDataAsCsv);
 };
