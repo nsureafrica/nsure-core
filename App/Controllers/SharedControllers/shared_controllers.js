@@ -1,6 +1,7 @@
 //@ts-check
 
 const Bill = require("./../../Models/Bill");
+const User = require("./../../Models/User")
 const transporter = require("../../Utils/mailService");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -26,7 +27,7 @@ module.exports = {
     model
       .findAll({
         order: [["updatedAt", "DESC"]],
-        include: [Bill],
+        include: [Bill,User],
         where: whereObject,
       })
       .then((policies) => {
