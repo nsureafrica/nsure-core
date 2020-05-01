@@ -2,6 +2,6 @@
 
 const dashboardController = require("./../../Controllers/dashboard_controller")
 module.exports = app => {
-    app.route("/dashboard/getdashboarddata").get(dashboardController.getDashboardData);
+    app.route("/dashboard/getDashboardData").get(dashboardController.getDashboardData);
 
 }

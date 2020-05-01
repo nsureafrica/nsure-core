@@ -119,6 +119,7 @@ const checkPoliciesForExpiry = new CronJob("30 9 * * *", () => {
   );
   //Travel Policy
   // checkAndMailForPolicyExpiration(TravelPolicyModel, "Travel Policy");
+  
   //Education Policy
   checkAndMailForPolicyExpiration(EducationPolicyModel, "Education Policy");
 });
