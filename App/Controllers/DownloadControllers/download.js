@@ -17,23 +17,33 @@ module.exports = {
   },
 
   downloadMotorDocuments: async (req, res) => {
-    const MotorPolicyModelResponse = await MotorPolicyModel.findOne({
-      where: { id: req.query.motorPolicyId },
-    });
-    var kraPinArray = MotorPolicyModelResponse.kraPin.split(",");
-    var idNumberArray = MotorPolicyModelResponse.idNumber.split(",");
-    var logbookPathArray = MotorPolicyModelResponse.logbookPath.split(",");
-    var filesArray = [...kraPinArray, ...idNumberArray, ...logbookPathArray];
-    archiver.archiveFunction(req, res, "logbooks", filesArray);
+    try {
+      const MotorPolicyModelResponse = await MotorPolicyModel.findOne({
+        where: { id: req.query.motorPolicyId },
+      });
+      var kraPinArray = MotorPolicyModelResponse.kraPin.split(",");
+      var idNumberArray = MotorPolicyModelResponse.idNumber.split(",");
+      var logbookPathArray = MotorPolicyModelResponse.logbookPath.split(",");
+      var filesArray = [...kraPinArray, ...idNumberArray, ...logbookPathArray];
+      archiver.archiveFunction(req, res, "logbooks", filesArray);
+    } catch (error) {
+     res.status(500).send(error) 
+    }
+    
   },
 
   downloadClaimDocuments: async (req, res) => {
-    const ClaimModelResponse = await ClaimModel.findOne({
-      where: { id: req.query.claimId },
-    });
-    var claimPhotosArray = ClaimModelResponse.claimForms.split(",");
-    var claimDocs = ClaimModelResponse.claimPhotos.split(",");
-    var filesArray = [...claimPhotosArray, ...claimDocs];
-    archiver.archiveFunction(req, res, "claimDocuments", filesArray);
+    try {
+      const ClaimModelResponse = await ClaimModel.findOne({
+        where: { id: req.query.claimId },
+      });
+      var claimPhotosArray = ClaimModelResponse.claimForms.split(",");
+      var claimDocs = ClaimModelResponse.claimPhotos.split(",");
+      var filesArray = [...claimPhotosArray, ...claimDocs];
+      archiver.archiveFunction(req, res, "claimDocuments", filesArray);
+    } catch (error) {
+      res.status(500).send(error)
+    }
+
   },
 };

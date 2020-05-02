@@ -26,6 +26,16 @@ const User = sequelizeConnection.define("User", {
       isEmail: true
     }
   },
+  country: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: "KE"
+  },
+  city: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: "Nairobi"
+  },
   password: {
     type: Sequelize.STRING,
     allowNull: false,

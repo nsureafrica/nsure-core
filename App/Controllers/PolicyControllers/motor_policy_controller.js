@@ -38,6 +38,7 @@ module.exports = {
       });
   },
   createMotorPolicy: (req, res) => {
+    //check for files
     var logbookPathArray = [];
     var kraFilesArray = [];
     var nationalIDArray = [];
