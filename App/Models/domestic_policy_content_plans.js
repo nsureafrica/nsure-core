@@ -23,3 +23,5 @@ const DomesticPolicyContentPlansModel = sequelizeConnection.define(
 );
 
 DomesticPolicyContentPlansModel.belongsTo(UnderwriterModel)
+
+module.exports = DomesticPolicyContentPlansModel

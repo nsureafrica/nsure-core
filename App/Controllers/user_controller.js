@@ -69,6 +69,8 @@ module.exports = {
             lastName: req.body.lastName,
             phoneNumber: req.body.phoneNumber,
             email: req.body.email,
+            country: req.body.country,
+            city: req.body.city,
             password: hashedPassword,
             tempPassword: false,
             isVerified: true,

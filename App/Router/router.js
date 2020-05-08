@@ -127,13 +127,20 @@ module.exports = (app) => {
   lastExpenseRateRoutes(app);
 
   //last expense plan routes
-  const lastexpenseplanroutes = require("./PlanRoutes/last_expense_plan_routes");
-  lastexpenseplanroutes(app);
+  const lastExpensePlanRoutes = require("./PlanRoutes/last_expense_plan_routes");
+  lastExpensePlanRoutes(app);
 
   //last expense policy routes
-  const lastexpensepolicyroutes = require("./PolicyRoutes/last_expense_policy_routes");
-  lastexpensepolicyroutes(app);
+  const lastExpensePolicyRoutes = require("./PolicyRoutes/last_expense_policy_routes");
+  lastExpensePolicyRoutes(app);
 
+  //domestic policy routes
+  const domesticPolicyRoutes = require("./DomesticPolicyRoutes/domestic_policy_routes");
+  domesticPolicyRoutes(app)
+
+  //domestic policy plan routes
+  const domesticPolicyPlanRoutes = require("./DomesticPolicyRoutes/domestic_policy_plans_routes");
+  domesticPolicyPlanRoutes(app)
   //dashboard routes
   const dashboardRoutes = require("./DashboardRoutes/dashboard_routes");
   dashboardRoutes(app);

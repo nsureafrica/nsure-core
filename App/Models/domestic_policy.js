@@ -83,12 +83,22 @@ const DomesticPolicyModel = sequelizeConnection.define("DomesticPolicy", {
     type: Sequelize.BOOLEAN,
     allowNull: false,
   },
-  valid_from: {
+  //cover details
+  coverStart:{
     type: Sequelize.DATE,
-    allowNull: true,
+    allowNull:true
   },
-  valid_till: {
-    type: Sequelize.DATE,
+  coverEnd:{
+    type:Sequelize.DATE,
+    allowNull:true
+  },
+  active: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  activatedBy:{
+    type: Sequelize.INTEGER,
     allowNull: true,
   }
 });
