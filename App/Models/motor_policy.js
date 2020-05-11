@@ -8,126 +8,146 @@ const MotorPolicy = sequelizeConnection.define("MotorPolicy", {
   // AUTOMOBILE INFORMATION
   vehicleEstimatedValue: {
     type: Sequelize.FLOAT,
-    allowNull: false
+    allowNull: false,
   },
   vehicleModelAndMake: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   //
   coverType: {
     type: Sequelize.ENUM("comprehensive", "thirdParty"),
-    allowNull: false
+    allowNull: false,
   },
 
   registrationNumber: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   chasisNumber: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   engineNumber: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   yearOfManufacture: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   numberOfSeats: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   engineCapacity: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   natureOfGoods: {
     type: Sequelize.ENUM("generalCartage", "ownGoods"),
-    allowNull: true
+    allowNull: true,
   },
   vehicleType: {
     type: Sequelize.ENUM("private", "commercial"),
-    allowNull: false
+    allowNull: false,
   },
   logbookPath: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
 
   politicalViolenceTerrorism: {
     type: Sequelize.BOOLEAN,
     allowNull: true,
-    defaultValue: false
+    defaultValue: false,
   },
   excessProtector: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: false
+    defaultValue: false,
   },
   courtesyCarOption: {
     type: Sequelize.BOOLEAN,
-    allowNull: false
+    allowNull: false,
   },
   roadsideAssistance: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: false
+    defaultValue: false,
   },
 
   //CONTACT INFORMATION
   firstName: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   lastName: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   address: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   emailAddress: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   city: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   country: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   postalCode: { type: Sequelize.STRING, allowNull: false },
   kraPin: { type: Sequelize.STRING, allowNull: false },
   idNumber: { type: Sequelize.STRING, allowNull: false },
   //quote or paid policy
-   //cover details
-   coverStart:{
+  //cover details
+  coverStart: {
     type: Sequelize.DATE,
-    allowNull:true
+    allowNull: true,
   },
-  coverEnd:{
-    type:Sequelize.DATE,
-    allowNull:true
+  coverEnd: {
+    type: Sequelize.DATE,
+    allowNull: true,
   },
   active: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: false
+    defaultValue: false,
   },
   activatedBy: {
     type: Sequelize.INTEGER,
-    allowNull: true
-  }
+    allowNull: true,
+  },
 });
 
-MotorPolicy.belongsTo(User);
-MotorPolicy.belongsTo(VehicleClass);
-MotorPolicy.belongsTo(UnderWriter);
-MotorPolicy.belongsTo(Bill);
+MotorPolicy.belongsTo(User, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
+MotorPolicy.belongsTo(VehicleClass, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
+MotorPolicy.belongsTo(UnderWriter, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
+MotorPolicy.belongsTo(Bill, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
 module.exports = MotorPolicy;

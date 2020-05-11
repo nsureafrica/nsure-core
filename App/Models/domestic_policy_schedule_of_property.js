@@ -16,6 +16,9 @@ const DomesticPolicyScheduleOfPropertyModel = sequelizeConnection.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    category: {
+      type: Sequelize.ENUM("computers","mobilePhone","photographicEquipment","jewelary","others")
+    },
     serial_number: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -27,6 +30,11 @@ const DomesticPolicyScheduleOfPropertyModel = sequelizeConnection.define(
   }
 );
 
-DomesticPolicyScheduleOfPropertyModel.belongsTo(DomesticPolicyModel);
+DomesticPolicyScheduleOfPropertyModel.belongsTo(DomesticPolicyModel, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
 
 module.exports = DomesticPolicyScheduleOfPropertyModel;

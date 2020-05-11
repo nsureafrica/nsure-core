@@ -1,22 +1,19 @@
 //@ts-check
-const chalk = require("chalk");
 const MotorRates = require("../../Models/motor_rates");
-const SharedRateControllers = require("./shared_rate_controllers")
-const SharedControllers = require("./../SharedControllers/shared_controllers")
+const SharedRateControllers = require("./shared_rate_controllers");
+const SharedControllers = require("./../SharedControllers/shared_controllers");
 
 module.exports = {
   getOneMotorRate: (req, res) => {
     MotorRates.findAll({
       where: {
-        userId: req.user.id
+        userId: req.user.id,
       },
-
     })
-      .then(rates => {
-        console.log(chalk.blue(rates));
+      .then((rates) => {
         res.send(rates);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
@@ -24,44 +21,47 @@ module.exports = {
   getMotorRates: (req, res) => {
     MotorRates.findAll({
       where: {
-        userId: req.user.id
-      }
+        userId: req.user.id,
+      },
     })
-      .then(rates => {
-        console.log(chalk.blue(rates));
+      .then((rates) => {
         res.send(rates);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
   getAllMotorRates: (req, res) => {
     MotorRates.findAll({})
-      .then(rates => {
-
+      .then((rates) => {
         res.send(rates);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
   //
 
   getAllMotorRatesGroupedByUnderwriters: (req, res) => {
-    SharedRateControllers.getGroupedByFieldRates(req, res, "UnderwriterId",MotorRates);
+    SharedRateControllers.getGroupedByFieldRates(
+      req,
+      res,
+      "UnderwriterId",
+      MotorRates
+    );
   },
 
   //Create a motor rate
   createMotorRate: (req, res) => {
     MotorRates.create(req.body)
-      .then(response => {
+      .then((response) => {
         res.send(response);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(err);
       });
   },
-  updateMotorRatesById: (req,res) => {
-    SharedControllers.updateEntryById(req,res,MotorRates)
-  }
+  updateMotorRatesById: (req, res) => {
+    SharedControllers.updateEntryById(req, res, MotorRates);
+  },
 };

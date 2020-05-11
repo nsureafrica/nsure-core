@@ -30,6 +30,11 @@ const DomesticPolicyBuildingPlanModel = sequelizeConnection.define(
   }
 );
 
-DomesticPolicyBuildingPlanModel.belongsTo(UnderwriterModel);
+DomesticPolicyBuildingPlanModel.belongsTo(UnderwriterModel, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
 
 module.exports = DomesticPolicyBuildingPlanModel

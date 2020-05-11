@@ -11,4 +11,6 @@ module.exports = app => {
 
     //last expense quote
     app.route("/quotes/lastexpense").post(QuoteController.getLastExpenseQuote);
+
+    app.route("/quotes/domestic").post(QuoteController.getDomesticQuote)
 }

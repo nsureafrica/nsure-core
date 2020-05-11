@@ -10,6 +10,16 @@ const DomesticPolicyModel = sequelizeConnection.define("DomesticPolicy", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  ownerLiability: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  personalLiability:{
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
   type_of_dwelling: {
     type: Sequelize.ENUM("private","selfContained"),
     allowNull: false,
@@ -103,7 +113,17 @@ const DomesticPolicyModel = sequelizeConnection.define("DomesticPolicy", {
   }
 });
 
-DomesticPolicyModel.belongsTo(User);
-DomesticPolicyModel.belongsTo(Bill);
+DomesticPolicyModel.belongsTo(User, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
+DomesticPolicyModel.belongsTo(Bill, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
 
 module.exports = DomesticPolicyModel;
