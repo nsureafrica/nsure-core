@@ -2,11 +2,13 @@
 
 //all put requests will be here
 //all controllers grouped by here
-
+const UnderwriterModel = require("./../../Models/underwriters")
 module.exports = {
 
     getGroupedByFieldRates: (req,res,field,model)=>{
-        model.findAll({})
+        model.findAll({
+          include: [UnderwriterModel],
+        })
         .then(rates => {
           var outObject = rates.reduce(function(a, e) {
             let estKey = (e[field]);         
