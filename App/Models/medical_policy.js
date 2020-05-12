@@ -83,4 +83,5 @@ const MedicalPolicy = sequelizeConnection.define("MedicalPolicy", {
 
 MedicalPolicy.belongsTo(User);
 MedicalPolicy.belongsTo(Bill);
+// MedicalPolicy.hasMany()
 module.exports = MedicalPolicy;

@@ -89,12 +89,12 @@ function mailBillReminder(model, policyName) {
 }
 
 function checkAndMailForPolicyExpiration(model, policyName) {
-  var nextYear = new Date();
-  nextYear.setFullYear(nextYear.getFullYear() + 1);
+  var date = new Date();
+  date.setMonth( date.getMonth() - 3 );
   MotorPoliciesModel.findAll({
     where: {
-      createdAt: {
-        [Op.gt]: nextYear.toISOString()
+      coverEnd: {
+        [Op.lte]: date.toISOString()
       }
     }
   })

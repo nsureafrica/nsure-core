@@ -7,14 +7,14 @@ module.exports = app => {
     .route("/policies/domestic/getUserPolicies")
     .get(DomesticPolicyController.getUsersPolicy);
   app
-    .route("/policies/domestic/getOneLastExpensePolicy")
+    .route("/policies/domestic/getOnePolicy")
     .get(DomesticPolicyController.getOnePolicy);
   app
     .route("/policies/domestic/createPolicy")
     .post(DomesticPolicyController.createPolicy);
   
   app
-  .route("/policies/lastExpense/getAllDomesticPolicies")
+  .route("/policies/domestic/getAllPolicies")
   .get(DomesticPolicyController.getAllPolicies)
 
   app.route("/policies/domestic/activateDomesticPolicy").put(DomesticPolicyController.activatePolicy)

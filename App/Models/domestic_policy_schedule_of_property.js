@@ -17,7 +17,7 @@ const DomesticPolicyScheduleOfPropertyModel = sequelizeConnection.define(
       allowNull: false,
     },
     category: {
-      type: Sequelize.ENUM("computers","mobilePhone","photographicEquipment","jewelary","others")
+      type: Sequelize.ENUM("computers","mobilePhone","photographicEquipment","jewelry","others")
     },
     serial_number: {
       type: Sequelize.STRING,

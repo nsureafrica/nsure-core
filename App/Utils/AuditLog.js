@@ -1,8 +1,8 @@
-
 const AuditLogModel = require("./../Models/AuditLogs");
 const iplocate = require("node-iplocate");
 
 const LogIt = function (req) {
+  if (req.method != "GET") {
     iplocate(req.ip)
       .then(function (results) {
         AuditLogModel.create({
@@ -21,7 +21,7 @@ const LogIt = function (req) {
       .catch((err) => {
         console.error(err);
       });
-  };
+  }
+};
 
-  
 module.exports = LogIt;

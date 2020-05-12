@@ -64,10 +64,17 @@ module.exports = (app) => {
   const salamahTransitionPolicyRoutes = require("./PolicyRoutes/salamah_policy_routes");
   salamahTransitionPolicyRoutes(app);
 
+  //TRAVEL POLICY
   //Travel policy routes
-  const travelPolicyRourtes = require("./PolicyRoutes/travel_policy_routes");
-  travelPolicyRourtes(app);
+  const travelPolicyRoutes = require("./PolicyRoutes/travel_policy_routes");
+  travelPolicyRoutes(app);
 
+  const travelRateRoutes = require("./TravelPolicyRoutes/travel_rate_routes")
+  travelRateRoutes(app)
+
+  //Travel Plan Routes
+  const travelPlanRoutes = require("./TravelPolicyRoutes/travel_plan_routes")
+  travelPlanRoutes(app)
   // Sendy Routes
   const sendyRoutes = require("./sendy_routes");
   sendyRoutes(app);
