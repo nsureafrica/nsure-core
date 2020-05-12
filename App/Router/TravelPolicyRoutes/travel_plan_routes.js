@@ -15,6 +15,9 @@ module.exports = app => {
   app
     .route("/travelPlans/getTravelPlans")
     .get(TravelPlanController.getAllPlans);
+  app
+  .route("/travelRates/getAllTravelPlansGroupedByType")
+  .get(TravelPlanController.getAllGroupedByType);
   // app
     // .route("/plans/domesticPlans/updatemedicalplansbyid/:id")
     // .put(TravelPlanController.updatePlanById);

@@ -41,4 +41,7 @@ module.exports = {
   getRateByPlanId: (req, res) => {
     SharedRateControllers.getRateByPlanId(req, res, TravelRatesModel);
   },
+  getAllRatesGroupedByType: (req, res) => {
+    SharedRateControllers.getGroupedByFieldRates(req, res, "type",TravelRatesModel);
+  },
 };

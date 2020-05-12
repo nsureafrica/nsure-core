@@ -2,6 +2,8 @@
 const UnderwriterModel = require("../../Models/underwriters");
 const SharedControllers = require("./../SharedControllers/shared_controllers");
 const TravelPolicyPlansModel = require("./../../Models/travel_policy_plans");
+const SharedRateControllers = require("./../RateControllers/shared_rate_controllers");
+
 module.exports = {
   createPlan: (req, res) => {
     TravelPolicyPlansModel.create(req.body)
@@ -52,5 +54,8 @@ module.exports = {
   },
   updatePlanById: (req, res) => {
     SharedControllers.updateEntryById(req, res, TravelPolicyPlansModel);
+  },
+  getAllGroupedByType: (req, res) => {
+    SharedRateControllers.getGroupedByFieldRates(req, res, "type",TravelPolicyPlansModel);
   },
 };

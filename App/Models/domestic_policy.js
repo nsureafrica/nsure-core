@@ -21,7 +21,7 @@ const DomesticPolicyModel = sequelizeConnection.define("DomesticPolicy", {
     defaultValue: false
   },
   type_of_dwelling: {
-    type: Sequelize.ENUM("private","selfContained"),
+    type: Sequelize.ENUM("private","selfContainedFlat","roomsNotSelfContained"),
     allowNull: false,
   },
   rooms_not_self_contained: {

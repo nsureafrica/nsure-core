@@ -2,7 +2,7 @@
 
 const TravelRatesController = require("../../Controllers/TravelPolicyControllers/travel_rates_controller");
 
-module.exports = app => {
+module.exports = (app) => {
   app
     .route("/travelRates/createTravelRate")
     .post(TravelRatesController.createRate);
@@ -12,17 +12,18 @@ module.exports = app => {
   app
     .route("/travelRates/getAllTravelRates")
     .get(TravelRatesController.getAllRates);
-//   app
-//     .route("/medicalRates/getMedicalRates")
-//     .get(TravelRatesController.getMedicalRates);
-//   app
-//     .route("/medicalRates/getallmedicalratesgroupedbyunderwriter")
-//     .get(TravelRatesController.getAllMedicalRatesGroupedByUnderwriters);
 
-//   app
-//     .route("/rates/medicalRates/getmedicalratesbyplanid/:id")
-//     .get(TravelRatesController.getMedicalRateByPlanId);
-//   app
-//     .route("/medicalRates/updatemedicalratebyid/:id")
-//     .put(TravelRatesController.updateMedicalRatesById);
+  //   app
+  //     .route("/medicalRates/getMedicalRates")
+  //     .get(TravelRatesController.getMedicalRates);
+  // app
+  //   .route("/travelRates/getAllTravelRatesGroupedByType")
+  //   .get(TravelRatesController.getAllRatesGroupedByType);
+
+  //   app
+  //     .route("/rates/medicalRates/getmedicalratesbyplanid/:id")
+  //     .get(TravelRatesController.getMedicalRateByPlanId);
+  //   app
+  //     .route("/medicalRates/updatemedicalratebyid/:id")
+  //     .put(TravelRatesController.updateMedicalRatesById);
 };
