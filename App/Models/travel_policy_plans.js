@@ -84,6 +84,32 @@ const TravelPolicyPlansModel = sequelizeConnection.define("TravelPolicyPlans", {
     type: Sequelize.DOUBLE,
     allowNull: false,
   },
+  //Madison Specific
+  personalCivilLiability: {
+    type: Sequelize.DOUBLE,
+    allowNull: true,
+  },
+  hijackInMeansOfPublicTransport:{
+    type: Sequelize.DOUBLE,
+    allowNull: true,
+  },
+  journeyCancelation: {
+    type: Sequelize.DOUBLE,
+    allowNull: true
+  },
+  journeyCurtailment: {
+    type: Sequelize.DOUBLE,
+    allowNull: true
+  },
+  missedTravelConnection: {
+    type: Sequelize.DOUBLE,
+    allowNull: true
+  },
+  winterSports: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  }
 });
 
 TravelPolicyPlansModel.belongsTo(underwritterModel, {
