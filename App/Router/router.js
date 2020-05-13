@@ -151,4 +151,13 @@ module.exports = (app) => {
   //dashboard routes
   const dashboardRoutes = require("./DashboardRoutes/dashboard_routes");
   dashboardRoutes(app);
+
+  //BUSINESS COMBINED
+  //business combined routes
+  const businessCombinedClassesRoutes = require("./BusinessCombinedRoutes/business_combined_classes_routes")
+  businessCombinedClassesRoutes(app)
+  const businessCombinedConditionsRoutes = require("./BusinessCombinedRoutes/business_combined_conditions_routes")
+  businessCombinedConditionsRoutes(app)
+  const businessCombinedPolicyRoutes = require("./BusinessCombinedRoutes/business_combined_policy_routes")
+  businessCombinedPolicyRoutes(app)
 };

@@ -12,9 +12,6 @@ module.exports = (app) => {
   app
     .route("/domesticPlans/getAllDomesticBuildingPlans")
     .get(domesticPolicyBuildingPlansController.getAllPlans);
-  app
-    .route("/domesticPlans/getDomesticBuildingPlans")
-    .get(domesticPolicyBuildingPlansController.getAllPlans);
 //   app
 //     .route("/plans/domesticPlans/updatemedicalplansbyid/:id")
 //     .put(domesticPolicyBuildingPlansController.updatePlanById);
