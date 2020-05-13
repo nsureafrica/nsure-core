@@ -20,7 +20,7 @@ module.exports = {
         where: { UnderwriterId: 9 },
       });
       buildingPlans.map(buildingPlan => {
-        if (buildingValue > buildingPlan.lower_value && buildingValue < buildingPlan.higher_value) {
+        if (buildingValue >= buildingPlan.lower_value && buildingValue < buildingPlan.higher_value) {
           buildingValueAmount = buildingPlan.annual_premium
         }
       })   

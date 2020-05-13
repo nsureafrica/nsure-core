@@ -57,7 +57,7 @@ const DomesticPolicyModel = sequelizeConnection.define("DomesticPolicy", {
     allowNull: false,
   },
   days_without_inhabitants: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   consecutive_days_without_inhabitants: {
