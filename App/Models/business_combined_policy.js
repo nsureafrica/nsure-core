@@ -65,6 +65,6 @@ const BusinessComibinedPolicyModel = sequelizeConnection.define(
 );
 
 BusinessComibinedPolicyModel.belongsTo(UserModel,)
-BusinessComibinedPolicyModel.hasOne(BillModel,)
+BusinessComibinedPolicyModel.belongsTo(BillModel,)
 
 module.exports = BusinessComibinedPolicyModel;
