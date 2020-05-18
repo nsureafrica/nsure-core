@@ -160,4 +160,8 @@ module.exports = (app) => {
   businessCombinedConditionsRoutes(app)
   const businessCombinedPolicyRoutes = require("./BusinessCombinedRoutes/business_combined_policy_routes")
   businessCombinedPolicyRoutes(app)
+
+  //AUDIT LOGS
+  const auditLogsRoutes = require("./AuditLogRoutes/audit_log_routes")
+  auditLogsRoutes(app)
 };
