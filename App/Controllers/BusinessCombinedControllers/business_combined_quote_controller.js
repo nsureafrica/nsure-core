@@ -155,7 +155,9 @@ module.exports = {
             totalValue: totalValue,
           };
         }
-        res.send({
+        var quoteAmount = fireAndPerilsObject.totalValue + electronicComputersPolicyObject.totalValue + allRisksForComputersObject.totalValue + fidelityGuaranteeObject.totalValue + moneyObject.totalValue + policalAndTerrorismObject.totalValue + burglaryObject.totalValue + publicLiabilityObject.totalValue;
+        res.status(200).send({
+          quoteAmount: quoteAmount,
           fireAndPerils: fireAndPerilsObject,
           electronicComputersPolicy: electronicComputersPolicyObject,
           allRisksForComputers: allRisksForComputersObject,
