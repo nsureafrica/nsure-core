@@ -85,7 +85,6 @@ module.exports = {
       model
         .create(req.body)
         .then((response) => {
-          console.log(response);
           res.status(200).send(response);
           // transporter.transporter.sendMail(mailOptions, (err, info) => {
           //   if (err) {

@@ -29,6 +29,16 @@ module.exports = {
       function calculateLevies(value) {
         return value * (0.45 / 100);
       }
+
+      function calculateQuoteAmount(totalAmounts) {
+        quoteAmount = 0
+        totalAmounts.map(value => {
+            if (value != null) {
+              quoteAmount = quoteAmount + value.totalValue
+            }
+        })
+        return quoteAmount
+      }
       //FIRE AND PERILS
       var fireAndPerilsObject = null;
       if (fireAndPerilsBuildingsValue || fireAndPerilsContentsValue) {
@@ -155,7 +165,7 @@ module.exports = {
             totalValue: totalValue,
           };
         }
-        var quoteAmount = fireAndPerilsObject.totalValue + electronicComputersPolicyObject.totalValue + allRisksForComputersObject.totalValue + fidelityGuaranteeObject.totalValue + moneyObject.totalValue + policalAndTerrorismObject.totalValue + burglaryObject.totalValue + publicLiabilityObject.totalValue;
+        var quoteAmount = calculateQuoteAmount([fireAndPerilsObject,electronicComputersPolicyObject,allRisksForComputersObject,fidelityGuaranteeObject,moneyObject,policalAndTerrorismObject,burglaryObject,publicLiabilityObject]);
         res.status(200).send({
           quoteAmount: quoteAmount,
           fireAndPerils: fireAndPerilsObject,
@@ -169,6 +179,7 @@ module.exports = {
         });
       }
     } catch (error) {
+      console.log(error)
       res.status(500).send(error);
     }
   },
