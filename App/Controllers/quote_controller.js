@@ -6,6 +6,7 @@ const MedicalQuoteController = require("./QuoteControllers/medical_quote_control
 const LastExpenseQuoteController = require("./QuoteControllers/last_expense_quote_controller")
 const DomesticQuoteController = require("./DomesticPolicyControllers/domestic_policy_quote_controller")
 const BusinessCombinedQuoteController = require("./BusinessCombinedControllers/business_combined_quote_controller")
+const TravelQuoteController = require("./../Controllers/TravelPolicyControllers/travel_quote_controller")
 module.exports = {
   getMotorQuote: (req,res,sequelizeResponse) => {
     MotorQuoteController.getMotorQuote(req,res)
@@ -23,5 +24,8 @@ module.exports = {
 
   getBusinessCombinedQuote: (req,res) =>{
     BusinessCombinedQuoteController.getQuote(req,res)
+  },
+  getTravelQuote: (req,res)=>{
+    TravelQuoteController.getQuote(req,res)
   }
 };

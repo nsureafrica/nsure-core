@@ -1,7 +1,7 @@
 //@ts-check
 
 const Bill = require("./../../Models/Bill");
-const User = require("./../../Models/User")
+const User = require("./../../Models/User");
 const transporter = require("../../Utils/mailService");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -27,7 +27,7 @@ module.exports = {
     model
       .findAll({
         order: [["updatedAt", "DESC"]],
-        include: [Bill,User],
+        include: [Bill, User],
         where: whereObject,
       })
       .then((policies) => {
@@ -133,45 +133,38 @@ module.exports = {
     }
   },
   exportDataAsCsv: async (req, res, model) => {
-    model
-      .findAll({
+    try {
+      const policies = await model.findAll({
         order: [["updatedAt", "DESC"]],
-      })
-      .then((policies) => {
-        try {
-          const data = [];
-          policies.map((policy) => {
-            data.push(policy.dataValues);
-          });
-          const header =
-            Object.keys(data[0])
-              .map((_) => JSON.stringify(_))
-              .join(",") + "\n";
-          const outData = data.reduce((acc, row) => {
-            return (
-              acc +
-              Object.values(row)
-                .map((_) => JSON.stringify(_))
-                .join(",") +
-              "\n"
-            );
-          }, header);
-
-          // CSV Specification
-          //www.ietf.org/rfc/rfc4180.txt
-
-          http: res.setHeader("Content-Type", "text/csv");
-          res.write(outData);
-          res.end();
-        } catch (error) {
-          console.log(error);
-        }
-        // policies = _.toArray(policies)
-
-        // res.send(policies)
-      })
-      .catch((err) => {
-        res.status(500).send(err);
       });
+
+      const data = [];
+      policies.map((policy) => {
+        data.push(policy.dataValues);
+      });
+      const header =
+        Object.keys(data[0])
+          .map((_) => JSON.stringify(_))
+          .join(",") + "\n";
+      const outData = data.reduce((acc, row) => {
+        return (
+          acc +
+          Object.values(row)
+            .map((_) => JSON.stringify(_).replace(/,/g, "|"))
+            .join(",") +
+          "\n"
+        );
+      }, header);
+
+      // CSV Specification
+      //www.ietf.org/rfc/rfc4180.txt
+
+      http: res.setHeader("Content-Type", "text/csv");
+      res.write(outData);
+      res.end();
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error)
+    }
   },
 };

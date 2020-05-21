@@ -15,4 +15,6 @@ module.exports = app => {
     app.route("/quotes/domestic").post(QuoteController.getDomesticQuote)
 
     app.route("/quotes/businessCombined").post(QuoteController.getBusinessCombinedQuote)
+
+    app.route("/quotes/travel").post(QuoteController.getTravelQuote)
 }
