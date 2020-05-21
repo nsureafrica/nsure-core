@@ -9,7 +9,7 @@ module.exports = (app) => {
   app
     .route("/policies/travel/policy/:policyId")
     .get(TravelPolicyController.getTravelPolicy);
-  app.route("/policies/travel/policy").post(
+  app.route("/policies/travel/createTravelPolicy").post(
     Storage.uploadLogbook.fields([
       { name: "passport", maxCount: 5 },
       { name: "nationalId", maxCount: 5 },
