@@ -24,10 +24,20 @@ module.exports = {
       if (Rate.currency != "KES") {
         conversionRate = 102.12
         convertedAmount = Rate.amount * conversionRate
+      }else{
+        conversionRate = 1
+        convertedAmount = Rate.amount * conversionRate
       }
+      var schengenCountriesAmount = 0
+      var winterSportsAmount = 0
+      var quoteAmount = Rate.amount + schengenCountriesAmount + winterSportsAmount
+
       var QuoteObject = {
+        "quoteAmount": quoteAmount,
         "numberOfDays": Rate.numberOfDays,
         "amount": Rate.amount,
+        "schengenCountriesAmount":schengenCountriesAmount,
+        "winterSportsAmount":winterSportsAmount,
         "convertedAmount":convertedAmount,
         "conversionRate":conversionRate,
         "currency": Rate.currency,
