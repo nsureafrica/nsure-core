@@ -31,19 +31,32 @@ module.exports = {
       }
 
       function calculateQuoteAmount(totalAmounts) {
-        quoteAmount = 0
-        totalAmounts.map(value => {
-            if (value != null) {
-              quoteAmount = quoteAmount + value.totalValue
-            }
-        })
-        return quoteAmount
+        quoteAmount = 0;
+        totalAmounts.map((value) => {
+          if (value != null) {
+            quoteAmount = quoteAmount + value.totalValue;
+          }
+        });
+        return quoteAmount;
+      }
+
+      function calculateTotalAmount(amounts) {
+        var totalAmount = 0;
+        amounts.map((value) => {
+          if (value != null) {
+            totalAmount = totalAmount + value;
+          }
+        });
+        return totalAmount;
       }
       //FIRE AND PERILS
       var fireAndPerilsObject = null;
       if (fireAndPerilsBuildingsValue || fireAndPerilsContentsValue) {
-        var basicPremium =
-          (fireAndPerilsBuildingsValue + fireAndPerilsContentsValue) * 0.001;
+        var additionOfValues = calculateTotalAmount([
+          fireAndPerilsBuildingsValue,
+          fireAndPerilsContentsValue,
+        ]);
+        var basicPremium = additionOfValues * 0.001;
         var levies = calculateLevies(basicPremium);
         var totalValue = basicPremium + levies + stampDuty;
         fireAndPerilsObject = {
@@ -83,7 +96,11 @@ module.exports = {
         //FIDELTY GUARANTEE
         var fidelityGuaranteeObject = null;
         if (cashiersValue || salesPersonValue || perCapitaValue) {
-          var basicPremium = (cashiersValue + salesPersonValue) * (3.5 / 100);
+          var additionOfValues = calculateTotalAmount([
+            cashiersValue,
+            salesPersonValue,
+          ]);
+          var basicPremium = additionOfValues * (3.5 / 100);
           var levies = calculateLevies(basicPremium);
           var totalValue = basicPremium + levies + stampDuty;
           fidelityGuaranteeObject = {
@@ -105,15 +122,16 @@ module.exports = {
           damageToSafeValue ||
           estAnnualCarryValue
         ) {
-          var basicPremium =
-            (moneyInTransitValue +
-              moneyInPremisesValue +
-              lockedSafeBusinessHoursValue +
-              lockedSafeOutsideSafeBusinessHoursValue +
-              cashValue +
-              damageToSafeValue +
-              estAnnualCarryValue) *
-            (0.1 / 100);
+          var additionOfValues = calculateTotalAmount([
+            moneyInTransitValue,
+            moneyInPremisesValue,
+            lockedSafeBusinessHoursValue,
+            lockedSafeOutsideSafeBusinessHoursValue,
+            cashValue,
+            damageToSafeValue,
+            estAnnualCarryValue,
+          ]);
+          var basicPremium = additionOfValues * (0.1 / 100);
           var levies = calculateLevies(basicPremium);
           var totalValue = basicPremium + levies + stampDuty;
           moneyObject = {
@@ -126,7 +144,11 @@ module.exports = {
         //POLITICAL & TERRORISM
         var policalAndTerrorismObject = null;
         if (materialDamageValue || moneyValue) {
-          var basicPremium = (materialDamageValue + moneyValue) * (0.1 / 100);
+          var additionOfValues = calculateTotalAmount([
+            materialDamageValue,
+            moneyValue,
+          ]);
+          var basicPremium = additionOfValues * (0.1 / 100);
           var levies = calculateLevies(basicPremium);
           var totalValue = basicPremium + levies + stampDuty;
           policalAndTerrorismObject = {
@@ -154,8 +176,11 @@ module.exports = {
         // PUBLIC LIABILITY
         var publicLiabilityObject = null;
         if (occurrenceValue || periodOfInsuranceValue) {
-          var basicPremium =
-            (periodOfInsuranceValue + occurrenceValue) * (0.1 / 100);
+          var additionOfValues = calculateTotalAmount([
+            periodOfInsuranceValue,
+            occurrenceValue,
+          ]);
+          var basicPremium = additionOfValues * (0.1 / 100);
           var levies = calculateLevies(basicPremium);
           var totalValue = basicPremium + levies + stampDuty;
           publicLiabilityObject = {
@@ -165,7 +190,16 @@ module.exports = {
             totalValue: totalValue,
           };
         }
-        var quoteAmount = calculateQuoteAmount([fireAndPerilsObject,electronicComputersPolicyObject,allRisksForComputersObject,fidelityGuaranteeObject,moneyObject,policalAndTerrorismObject,burglaryObject,publicLiabilityObject]);
+        var quoteAmount = calculateQuoteAmount([
+          fireAndPerilsObject,
+          electronicComputersPolicyObject,
+          allRisksForComputersObject,
+          fidelityGuaranteeObject,
+          moneyObject,
+          policalAndTerrorismObject,
+          burglaryObject,
+          publicLiabilityObject,
+        ]);
         res.status(200).send({
           quoteAmount: quoteAmount,
           fireAndPerils: fireAndPerilsObject,
@@ -179,7 +213,6 @@ module.exports = {
         });
       }
     } catch (error) {
-      console.log(error)
       res.status(500).send(error);
     }
   },
