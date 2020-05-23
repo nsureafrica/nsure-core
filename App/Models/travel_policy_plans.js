@@ -105,10 +105,34 @@ const TravelPolicyPlansModel = sequelizeConnection.define("TravelPolicyPlans", {
     type: Sequelize.DOUBLE,
     allowNull: true
   },
-  winterSports: {
+  //OPTIONALS
+  schengenCountries: {
     type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false
+    defaultValue: false,
+    allowNull:false
+  },
+  schengenCountriesRate:{
+    type:Sequelize.DOUBLE,
+    allowNull: true
+  },
+  winterSports:{
+    type:Sequelize.BOOLEAN,
+    defaultValue:false,
+    allowNull:false
+  },
+  winterSportsRate:{
+    type:Sequelize.BOOLEAN,
+    allowNull:true
+  },
+  maxAge:{
+    type:Sequelize.INTEGER,
+    defaultValue:75,
+    allowNull:false
+  },
+  minAge:{
+    type:Sequelize.INTEGER,
+    defaultValue:0,
+    allowNull:false
   }
 });
 

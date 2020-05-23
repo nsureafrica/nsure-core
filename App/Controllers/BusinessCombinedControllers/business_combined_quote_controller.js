@@ -44,7 +44,7 @@ module.exports = {
         var totalAmount = 0;
         amounts.map((value) => {
           if (value != null) {
-            totalAmount = totalAmount + value;
+            totalAmount = totalAmount + parseFloat(value);
           }
         });
         return totalAmount;
