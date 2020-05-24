@@ -4,6 +4,7 @@
 //age
 const TravelPolicyRatesModel = require("./../../Models/travel_policy_rates");
 const TravelPolicyPlansModel = require("./../../Models/travel_policy_plans");
+const ConversionRateModel = require("./../../Models/conversion_rates")
 const axios = require("axios");
 const { Op } = require('sequelize')
 
@@ -11,8 +12,6 @@ module.exports = {
   getQuote: async (req, res) => {
     try {
       const TravelPolicyPlanId = req.body.travelPolicyPlanId;
-      const winterSports = false;
-
       //calculate age
       const age =
         // @ts-ignore
@@ -44,7 +43,13 @@ module.exports = {
       var convertedAmount = null;
       var conversionRate = 1;
       if (Rate.currency != "KES") {
-        conversionRate = 102.12;
+        const ConversionRate = await ConversionRateModel.findOne({
+          where : {
+            "from": Rate.currency,
+	          "to":"KES",
+          }
+        })
+        conversionRate = ConversionRate.rate;
         convertedAmount = Rate.amount * conversionRate;
       } else {
         conversionRate = 1;

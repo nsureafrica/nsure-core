@@ -164,4 +164,8 @@ module.exports = (app) => {
   //AUDIT LOGS
   const auditLogsRoutes = require("./AuditLogRoutes/audit_log_routes")
   auditLogsRoutes(app)
+
+  //CONVERSION RATES
+  const conversionRateRoutes = require("./ConversionRateRoutes/conversion_rate_routes")
+  conversionRateRoutes(app)
 };
