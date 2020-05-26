@@ -10,6 +10,8 @@ const endpointAuthenitcator = function (req, res, next) {
     "/signup",
     "/changePassword",
     "/verifyUser",
+    "/transactions/confirmUnsuccessfulIpayTransaction",
+    "/transactions/confirmSuccessfulIpayTransaction"
   ];
   if (whitelistedUrl.find((element) => element === req.url) == undefined) {
     var token = req.headers["x-access-token"];

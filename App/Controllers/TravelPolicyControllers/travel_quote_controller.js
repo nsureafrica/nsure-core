@@ -5,7 +5,9 @@
 const TravelPolicyRatesModel = require("./../../Models/travel_policy_rates");
 const TravelPolicyPlansModel = require("./../../Models/travel_policy_plans");
 const ConversionRateModel = require("./../../Models/conversion_rates")
-const axios = require("axios");
+const InvoiceTemplates = require("../../email_templates/invoicetemplate");
+const Transporter = require("../../Utils/mailService");
+
 const { Op } = require('sequelize')
 
 module.exports = {
@@ -39,7 +41,6 @@ module.exports = {
         return Rates.reduce((min, p) => p.amount < min ? p.amount : min, Rates[0]);
       }
       const Rate = getRate()
-      console.log(Rate)
       var convertedAmount = null;
       var conversionRate = 1;
       if (Rate.currency != "KES") {
@@ -114,6 +115,32 @@ module.exports = {
       };
       res.status(200).send(QuoteObject);
       //get rates and loop to find appropriate
+
+      //send the mail
+      var mailOptions = {
+        from: process.env.senderEmailAdress,
+        to: req.user.email,
+        cc: process.env.spireReceivingEmailAddress,
+        subject: "Travel Insurance Quote",
+        html: InvoiceTemplates.invoiceQuoteEmail(req),
+        // attachments: [
+        //   {
+        //     // file on disk as an attachment
+        //     filename: "motorquote.pdf",
+        //     path: policyPdfDirectory, // stream this file
+        //   },
+        // ],
+      };
+
+      Transporter.transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
+          console.log(err);
+        } else {
+          const notice = `Email sent: ` + info.response;
+          console.log(notice);
+        }
+      });
     } catch (error) {
       res.status(500).send(error);
     }

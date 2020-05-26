@@ -4,6 +4,7 @@ const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const User = require("./User");
 const Bill = require("./Bill");
+const TravelPolicyPlan = require("./travel_policy_plans")
 
 const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
   //MEDICAL EXPENSES
@@ -95,4 +96,5 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
 
 TravelPolicy.belongsTo(User);
 TravelPolicy.belongsTo(Bill);
+TravelPolicy.belongsTo(TravelPolicyPlan);
 module.exports = TravelPolicy;

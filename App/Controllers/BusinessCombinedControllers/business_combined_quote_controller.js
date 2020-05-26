@@ -27,7 +27,11 @@ module.exports = {
 
       var stampDuty = 40;
       function calculateLevies(value) {
-        return value * (0.45 / 100);
+        var levies = value * (0.45/100)
+        return parseFloat(levies.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }));
       }
 
       function calculateQuoteAmount(totalAmounts) {
@@ -37,7 +41,10 @@ module.exports = {
             quoteAmount = quoteAmount + value.totalValue;
           }
         });
-        return quoteAmount;
+        return parseFloat(quoteAmount.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }));
       }
 
       function calculateTotalAmount(amounts) {
@@ -47,7 +54,10 @@ module.exports = {
             totalAmount = totalAmount + parseFloat(value);
           }
         });
-        return totalAmount;
+        return totalAmount.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
       }
       //FIRE AND PERILS
       var fireAndPerilsObject = null;

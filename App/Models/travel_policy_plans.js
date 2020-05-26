@@ -2,8 +2,7 @@
 
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
-const underwritterModel = require("./underwriters")
-const travelPolicyRateModel = require("./travel_policy_rates")
+const underwritterModel = require("./underwriters");
 
 const TravelPolicyPlansModel = sequelizeConnection.define("TravelPolicyPlans", {
   name: {
@@ -22,7 +21,7 @@ const TravelPolicyPlansModel = sequelizeConnection.define("TravelPolicyPlans", {
   currency: {
     type: Sequelize.ENUM("USD", "KES"),
     allowNull: false,
-    defaultValue: "KES"
+    defaultValue: "KES",
   },
   medicalExpenses: {
     type: Sequelize.DOUBLE,
@@ -89,51 +88,51 @@ const TravelPolicyPlansModel = sequelizeConnection.define("TravelPolicyPlans", {
     type: Sequelize.DOUBLE,
     allowNull: true,
   },
-  hijackInMeansOfPublicTransport:{
+  hijackInMeansOfPublicTransport: {
     type: Sequelize.DOUBLE,
     allowNull: true,
   },
   journeyCancelation: {
     type: Sequelize.DOUBLE,
-    allowNull: true
+    allowNull: true,
   },
   journeyCurtailment: {
     type: Sequelize.DOUBLE,
-    allowNull: true
+    allowNull: true,
   },
   missedTravelConnection: {
     type: Sequelize.DOUBLE,
-    allowNull: true
+    allowNull: true,
   },
   //OPTIONALS
   schengenCountries: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-    allowNull:false
+    allowNull: false,
   },
-  schengenCountriesRate:{
-    type:Sequelize.DOUBLE,
-    allowNull: true
+  schengenCountriesRate: {
+    type: Sequelize.DOUBLE,
+    allowNull: true,
   },
-  winterSports:{
-    type:Sequelize.BOOLEAN,
-    defaultValue:false,
-    allowNull:false
+  winterSports: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
   },
-  winterSportsRate:{
-    type:Sequelize.BOOLEAN,
-    allowNull:true
+  winterSportsRate: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
   },
-  maxAge:{
-    type:Sequelize.INTEGER,
-    defaultValue:75,
-    allowNull:false
+  maxAge: {
+    type: Sequelize.INTEGER,
+    defaultValue: 75,
+    allowNull: false,
   },
-  minAge:{
-    type:Sequelize.INTEGER,
-    defaultValue:0,
-    allowNull:false
-  }
+  minAge: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+    allowNull: false,
+  },
 });
 
 TravelPolicyPlansModel.belongsTo(underwritterModel, {
@@ -141,6 +140,5 @@ TravelPolicyPlansModel.belongsTo(underwritterModel, {
     allowNull: false,
   },
   onDelete: "cascade",
-})
+});
 module.exports = TravelPolicyPlansModel;
-

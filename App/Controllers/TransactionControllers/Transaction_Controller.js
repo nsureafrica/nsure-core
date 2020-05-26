@@ -117,5 +117,13 @@ module.exports = {
         })
         .catch(err => res.status(500).send(err));
     }
-  }
+  },
+      //IPAY ENDPOINTS
+      confirmSuccessfulTransaction: (req,res) => {
+        console.log(res)
+      },
+      confirmUnsuccessfulTransaction: (req,res)=>{
+        console.log(res)
+      }
+  
 };

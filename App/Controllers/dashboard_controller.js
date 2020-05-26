@@ -6,6 +6,8 @@ const MedicalPolicyModel = require("./../Models/medical_policy");
 const EducationPolicyModel = require("./../Models/education_policy");
 const TravelPolicyModel = require("./../Models/travel_policy");
 const LastExpensePolicyModel = require("./../Models/last_expense_policy");
+const BusinessCombinedPolicyModel = require("./../Models/business_combined_policy");
+const AuditLogsModel = require("./../Models/AuditLogs")
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
 const { QueryTypes, Op } = require("sequelize");
 
@@ -30,7 +32,7 @@ module.exports = {
 
       var dateQuery = {
         createdAt: {
-          [Op.between]: [req.query.startDate, req.query.endDate],
+          [Op.between]: [startDate, endDate],
         },
       };
 
@@ -51,7 +53,18 @@ module.exports = {
       const numberOfLastExpensePolicies = await LastExpensePolicyModel.count({
         where: dateQuery,
       });
+      const numberOfBusinessCombinedPolicies = await BusinessCombinedPolicyModel.count({
+        where: dateQuery
+      })
 
+      const numberOfLoginsOnSpecificDate = await AuditLogsModel.count({
+        where: {
+          action: "/signin",
+          createdAt: {
+            [Op.between]: [startDate, endDate],
+          },
+        }
+      })
       const sumOfMotorQuoteAmount = await sequelizeConnection.query(
         "SELECT SUM(Bills.amount) as total_amount FROM MotorPolicies INNER JOIN Bills ON Bills.id = BillId WHERE MotorPolicies.createdAt BETWEEN :startDate AND :endDate ",
         {
@@ -91,6 +104,16 @@ module.exports = {
         }
       );
 
+      const sumOfBusinessCombinedQuoteAmounts = await sequelizeConnection.query(
+        "SELECT SUM(Bills.amount) as total_amount FROM LastExpensePolicies INNER JOIN Bills ON Bills.id = BillId WHERE LastExpensePolicies.createdAt BETWEEN :startDate AND :endDate",
+        {
+          replacements: { startDate: startDate, endDate: endDate },
+          type: QueryTypes.SELECT,
+        }
+      )
+
+
+
       var dashboardDataObject = {
         numberofUsers,
         numberOfMotorPolicies,
@@ -98,13 +121,15 @@ module.exports = {
         numberOfEducationPolicies,
         numberOfTravelPolicies,
         numberOfLastExpensePolicies,
+        numberOfBusinessCombinedPolicies,
+        numberOfLoginsOnSpecificDate,
         sumOfMotorQuoteAmount,
         sumOfMedicalQuoteAmount,
         sumOfEducationQuoteAmount,
         sumOfTravelQuoteAmount,
         sumOfLastExpenseQuoteAmounts,
+        sumOfBusinessCombinedQuoteAmounts
       };
-      console.log(dashboardDataObject);
       res.send(dashboardDataObject);
     } catch (error) {
       res.send(error);

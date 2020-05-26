@@ -12,4 +12,9 @@ module.exports = app => {
    app.route("/transactions/confirmtransaction").post(TransactionsController.confirmTransaction)
 
    app.route("/transactions/gettransactionbytransactionref").get(TransactionsController.getTransactionByTransactionRef)
+
+   app.route("/transactions/confirmSuccessfulIpayTransaction").get(TransactionsController.confirmSuccessfulTransaction);
+
+   app.route("/transactions/confirmUnsuccessfulIpayTransaction").get(TransactionsController.confirmUnsuccessfulTransaction);
+
 }
