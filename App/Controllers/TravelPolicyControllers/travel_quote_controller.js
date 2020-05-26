@@ -7,6 +7,7 @@ const TravelPolicyPlansModel = require("./../../Models/travel_policy_plans");
 const ConversionRateModel = require("./../../Models/conversion_rates")
 const InvoiceTemplates = require("../../email_templates/invoicetemplate");
 const Transporter = require("../../Utils/mailService");
+const TravelQuotePdf = require("./../../email_templates/travel_quote_pdf");
 
 const { Op } = require('sequelize')
 
@@ -116,6 +117,16 @@ module.exports = {
       res.status(200).send(QuoteObject);
       //get rates and loop to find appropriate
 
+      var travelQuoteEmailJson = TravelPolicy.dataValues;
+      const userDetails = { user: req.user };
+      Object.assign(travelQuoteEmailJson, userDetails);
+
+      const policyPdfDirectory =
+      "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
+    await TravelQuotePdf.createInvoice(
+      travelQuoteEmailJson,
+      policyPdfDirectory
+    );
       //send the mail
       var mailOptions = {
         from: process.env.senderEmailAdress,
@@ -123,13 +134,13 @@ module.exports = {
         cc: process.env.spireReceivingEmailAddress,
         subject: "Travel Insurance Quote",
         html: InvoiceTemplates.invoiceQuoteEmail(req),
-        // attachments: [
-        //   {
-        //     // file on disk as an attachment
-        //     filename: "motorquote.pdf",
-        //     path: policyPdfDirectory, // stream this file
-        //   },
-        // ],
+        attachments: [
+          {
+            // file on disk as an attachment
+            filename: "travelQuote.pdf",
+            path: policyPdfDirectory, // stream this file
+          },
+        ],
       };
 
       Transporter.transporter.sendMail(mailOptions, (err, info) => {

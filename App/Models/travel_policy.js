@@ -96,5 +96,10 @@ const TravelPolicy = sequelizeConnection.define("TravelPolicy", {
 
 TravelPolicy.belongsTo(User);
 TravelPolicy.belongsTo(Bill);
-TravelPolicy.belongsTo(TravelPolicyPlan);
+TravelPolicy.belongsTo(TravelPolicyPlan, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
 module.exports = TravelPolicy;
