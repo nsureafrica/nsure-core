@@ -54,7 +54,7 @@ function generateCustomerInformation(doc, invoice) {
     )
 
     .text("Destination:", 50, customerInformationTop + 30)
-    .text(invoice.destination, 150, customerInformationTop + 30)
+    .text(invoice.userInput.country, 150, customerInformationTop + 30)
     .font("Helvetica-Bold")
     .text(
       invoice.user.firstName + " " + invoice.user.lastName,
@@ -80,20 +80,21 @@ function generateQuoteDetails(doc, invoice) {
 
   doc
     .fontSize(10)
-    .text("Number Of Days:", 50, planDetailsTop)
-    .font("Helvetica-Bold")
-    .text(invoice.userInput.numberOfDays, 300, planDetailsTop)
     .font("Helvetica")
+    .text("Number Of Days:", 50, planDetailsTop)
+    .text(invoice.userInput.numberOfDays, 300, planDetailsTop)
     .text("Amount :", 50, planDetailsTop + 20)
-    .text(invoice.userInput.amount, 50, planDetailsTop + 20)
+    .text(formatCurrency(invoice.userInput.amount,invoice), 300, planDetailsTop + 20)
     .text("Schengen Countries Amount :", 50, planDetailsTop + 40)
-    .text(invoice.userInput.schengenCountriesAmount, 150, planDetailsTop + 40)
+    .text(formatCurrency(invoice.userInput.schengenCountriesAmount,invoice), 300, planDetailsTop + 40)
     .text("Winter Sports Amount :", 50, planDetailsTop + 60)
-    .text(invoice.userInput.winterSportsAmount, 150, planDetailsTop + 60)
+    .text(formatCurrency(invoice.userInput.winterSportsAmount,invoice), 300, planDetailsTop + 60)
     .text("Currency :", 50, planDetailsTop + 80)
     .text(invoice.userInput.currency, 300, planDetailsTop + 80)
-    .text("Quote Amount :", 50, planDetailsTop + 100)
-    .text(invoice.userInput.quoteAmount, 300, planDetailsTop + 100)
+    .text("Underwritter :", 50, planDetailsTop + 100)
+    .text(invoice.Underwriter.name, 300, planDetailsTop + 100)
+    .text("Quote Amount :", 50, planDetailsTop + 120)
+    .text(formatCurrency(invoice.userInput.quoteAmount,invoice), 300, planDetailsTop + 120)
 
     .moveDown();
 }
@@ -103,11 +104,10 @@ function generatePlanDetails(doc, invoice) {
   var planDetailsTop = 50;
   doc.fillColor("#444444").fontSize(20).text("Plan Details", 50, planDetailsTop);
 
-  planDetailsTop + 30
+  planDetailsTop + 150
   doc.font("Helvetica-Bold");
   generateTableRow(doc, planDetailsTop, "Cover", "Value");
   generateHr(doc, planDetailsTop + 20);
-  console.log(invoice.Underwriter.name)
   planDetailsTop = planDetailsTop + 30;
 
   doc.fontSize(11).font("Helvetica");
@@ -154,7 +154,7 @@ function generatePlanDetails(doc, invoice) {
 
   var i;
   for (i = 0; i < meh.length; i++) {
-    doc.text(meh[i].label, 50, planDetailsTop + 15 * i);
+    doc.text(meh[i].label, 50, planDetailsTop + 20 * i);
     doc.text(
       formatCurrency(meh[i].value, invoice),
       300,
@@ -179,14 +179,19 @@ function generateHr(doc, y) {
 }
 
 function formatCurrency(amount, invoice) {
-  return (
-    invoice.currency +
-    " " +
-    parseFloat(amount).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })
-  );
+  if (amount) {
+    return (
+      invoice.currency +
+      " " +
+      parseFloat(amount).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    );
+  }else{
+    return("Not Applicable")
+  }
+ 
 }
 
 function formatDate(date) {
