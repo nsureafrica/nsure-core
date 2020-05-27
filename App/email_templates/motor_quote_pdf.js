@@ -97,7 +97,6 @@ function generateInvoiceTable(doc, invoice) {
     generateHr(doc, invoiceTableTop + 20);
     doc.font("Helvetica");
 
-    const position = invoiceTableTop + (counter - 1) * 30;
     generateTableHeader(
       doc,
       invoiceTableTop + 1 * 30,

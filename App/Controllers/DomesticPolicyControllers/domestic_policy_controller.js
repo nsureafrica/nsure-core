@@ -17,7 +17,8 @@ module.exports = {
     createPolicy: (req, res) => {
       var mailOptions = {
         from: process.env.senderEmailAdress,
-        to: `${req.user.email},${process.env.spireReceivingEmailAddress}`,
+        to: `${req.user.email}`,
+        bcc: `${process.env.spireReceivingEmailAddress},${process.env.businessTeamEmail}`,
         subject: "Domestic Policy Created",
         html: invoiceEmail.invoicePolicyEmail(req)
       };

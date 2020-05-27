@@ -8,6 +8,7 @@ function createInvoice(invoice, path) {
 
   generateHeader(doc);
   generateCustomerInformation(doc, invoice);
+  generateQuoteDetails(doc, invoice)
   generatePlanDetails(doc, invoice);
   generateFooter(doc);
 
@@ -67,12 +68,47 @@ function generateCustomerInformation(doc, invoice) {
 
   // generateHr(doc, 252);
 }
+function generateTableRow(doc, y, item, value) {
+  doc.font("Helvetica").fontSize(10).text(item, 50, y).text(value, 300, y);
+}
 
-function generatePlanDetails(doc, invoice) {
-  doc.fillColor("#444444").fontSize(20).text("Details", 50, 280);
+function generateQuoteDetails(doc, invoice) {
+  doc.fillColor("#444444").fontSize(20).text("Quote Details", 50, 280);
   generateHr(doc, 305);
 
   const planDetailsTop = 320;
+
+  doc
+    .fontSize(10)
+    .text("Number Of Days:", 50, planDetailsTop)
+    .font("Helvetica-Bold")
+    .text(invoice.userInput.numberOfDays, 300, planDetailsTop)
+    .font("Helvetica")
+    .text("Amount :", 50, planDetailsTop + 20)
+    .text(invoice.userInput.amount, 50, planDetailsTop + 20)
+    .text("Schengen Countries Amount :", 50, planDetailsTop + 40)
+    .text(invoice.userInput.schengenCountriesAmount, 150, planDetailsTop + 40)
+    .text("Winter Sports Amount :", 50, planDetailsTop + 60)
+    .text(invoice.userInput.winterSportsAmount, 150, planDetailsTop + 60)
+    .text("Currency :", 50, planDetailsTop + 80)
+    .text(invoice.userInput.currency, 300, planDetailsTop + 80)
+    .text("Quote Amount :", 50, planDetailsTop + 100)
+    .text(invoice.userInput.quoteAmount, 300, planDetailsTop + 100)
+
+    .moveDown();
+}
+
+function generatePlanDetails(doc, invoice) {
+  doc.addPage();
+  var planDetailsTop = 50;
+  doc.fillColor("#444444").fontSize(20).text("Plan Details", 50, planDetailsTop);
+
+  planDetailsTop + 30
+  doc.font("Helvetica-Bold");
+  generateTableRow(doc, planDetailsTop, "Cover", "Value");
+  generateHr(doc, planDetailsTop + 20);
+  console.log(invoice.Underwriter.name)
+  planDetailsTop = planDetailsTop + 30;
 
   doc.fontSize(11).font("Helvetica");
   var meh = [
@@ -119,7 +155,11 @@ function generatePlanDetails(doc, invoice) {
   var i;
   for (i = 0; i < meh.length; i++) {
     doc.text(meh[i].label, 50, planDetailsTop + 15 * i);
-    doc.text(formatCurrency(meh[i].value,invoice), 300, planDetailsTop + 15 * i);
+    doc.text(
+      formatCurrency(meh[i].value, invoice),
+      300,
+      planDetailsTop + 20 * i
+    );
   }
 
   doc.moveDown();
@@ -138,9 +178,10 @@ function generateHr(doc, y) {
   doc.strokeColor("#aaaaaa").lineWidth(1).moveTo(50, y).lineTo(550, y).stroke();
 }
 
-function formatCurrency(amount,invoice) {
+function formatCurrency(amount, invoice) {
   return (
-    invoice.currency + " " +
+    invoice.currency +
+    " " +
     parseFloat(amount).toLocaleString(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,

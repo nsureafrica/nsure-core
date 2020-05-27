@@ -1,15 +1,14 @@
 //@ts-check
 
-//wintersports
-//age
 const TravelPolicyRatesModel = require("./../../Models/travel_policy_rates");
 const TravelPolicyPlansModel = require("./../../Models/travel_policy_plans");
-const ConversionRateModel = require("./../../Models/conversion_rates")
+const ConversionRateModel = require("./../../Models/conversion_rates");
+const UnderwritterModel = require("./../../Models/underwriters");
 const InvoiceTemplates = require("../../email_templates/invoicetemplate");
 const Transporter = require("../../Utils/mailService");
 const TravelQuotePdf = require("./../../email_templates/travel_quote_pdf");
 
-const { Op } = require('sequelize')
+const { Op } = require("sequelize");
 
 module.exports = {
   getQuote: async (req, res) => {
@@ -23,34 +22,41 @@ module.exports = {
 
       const TravelPolicy = await TravelPolicyPlansModel.findOne({
         where: { id: TravelPolicyPlanId },
+        include: [UnderwritterModel]
       });
       // check max age
       if (age > TravelPolicy.maxAge || age < TravelPolicy.minAge) {
         throw new Error("too old mate");
       }
       const Rates = await TravelPolicyRatesModel.findAll({
-        where: { TravelPolicyPlanId: TravelPolicyPlanId,numberOfDays:{
-          [Op.gte]: req.body.numberOfDays
-        }},
+        where: {
+          TravelPolicyPlanId: TravelPolicyPlanId,
+          numberOfDays: {
+            [Op.gte]: req.body.numberOfDays,
+          },
+        },
       });
 
       if (Rates.length < 1) {
-        throw new Error("No available rates")
+        throw new Error("No available rates");
       }
 
       function getRate() {
-        return Rates.reduce((min, p) => p.amount < min ? p.amount : min, Rates[0]);
+        return Rates.reduce(
+          (min, p) => (p.amount < min ? p.amount : min),
+          Rates[0]
+        );
       }
-      const Rate = getRate()
+      const Rate = getRate();
       var convertedAmount = null;
       var conversionRate = 1;
       if (Rate.currency != "KES") {
         const ConversionRate = await ConversionRateModel.findOne({
-          where : {
-            "from": Rate.currency,
-	          "to":"KES",
-          }
-        })
+          where: {
+            from: Rate.currency,
+            to: "KES",
+          },
+        });
         conversionRate = ConversionRate.rate;
         convertedAmount = Rate.amount * conversionRate;
       } else {
@@ -91,14 +97,15 @@ module.exports = {
         if (schengenCountries.includes(req.body.country)) {
           //get total and sum it up
           schengenCountriesAmount =
-            Rate.amount * (TravelPolicy.schengenCountriesRate/100);
+            Rate.amount * (TravelPolicy.schengenCountriesRate / 100);
         }
       }
 
       var winterSportsAmount = 0;
       //check whether the rate supports winter sports and at what rate
       if (req.body.winterSports && TravelPolicy.winterSports) {
-        winterSportsAmount = Rate.amount * (TravelPolicy.winterSportsRate/100);
+        winterSportsAmount =
+          Rate.amount * (TravelPolicy.winterSportsRate / 100);
       }
       var quoteAmount =
         Rate.amount + schengenCountriesAmount + winterSportsAmount;
@@ -112,6 +119,7 @@ module.exports = {
         convertedAmount: convertedAmount,
         conversionRate: conversionRate,
         currency: Rate.currency,
+        country: req.body.country,
         TravelPolicyPlanId: Rate.TravelPolicyPlanId,
       };
       res.status(200).send(QuoteObject);
@@ -119,19 +127,22 @@ module.exports = {
 
       var travelQuoteEmailJson = TravelPolicy.dataValues;
       const userDetails = { user: req.user };
+      const userInput = { userInput: QuoteObject };
       Object.assign(travelQuoteEmailJson, userDetails);
+      Object.assign(travelQuoteEmailJson, userInput);
 
+      console.log(travelQuoteEmailJson)
       const policyPdfDirectory =
-      "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
-    await TravelQuotePdf.createInvoice(
-      travelQuoteEmailJson,
-      policyPdfDirectory
-    );
+        "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
+      await TravelQuotePdf.createInvoice(
+        travelQuoteEmailJson,
+        policyPdfDirectory
+      );
       //send the mail
       var mailOptions = {
         from: process.env.senderEmailAdress,
         to: req.user.email,
-        cc: process.env.spireReceivingEmailAddress,
+        bcc: `${process.env.spireReceivingEmailAddress},${process.env.businessTeamEmail}`,
         subject: "Travel Insurance Quote",
         html: InvoiceTemplates.invoiceQuoteEmail(req),
         attachments: [
@@ -149,10 +160,10 @@ module.exports = {
           console.log(err);
         } else {
           const notice = `Email sent: ` + info.response;
-          console.log(notice);
         }
       });
     } catch (error) {
+      console.log(error)
       res.status(500).send(error);
     }
   },

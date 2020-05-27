@@ -193,7 +193,7 @@ module.exports = {
         var mailOptions = {
           from: senderEmailAdress,
           to: req.user.email,
-          cc: process.env.spireReceivingEmailAddress,
+          bcc: `${process.env.spireReceivingEmailAddress},${process.env.businessTeamEmail}`,
           subject: "Motor Insurance Quote",
           html: invoiceTemplates.invoiceQuoteEmail(req),
           attachments: [

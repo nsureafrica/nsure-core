@@ -94,7 +94,8 @@ module.exports = {
           }
           var mailOptions = {
             from: process.env.senderEmailAdress,
-            to: `${req.user.email},${process.env.spireReceivingEmailAddress}`,
+            to: `${req.user.email}`,
+            bcc: `${process.env.spireReceivingEmailAddress},${process.env.businessTeamEmail}`,
             subject: "Motor Policy Created",
             html: invoiceEmail.invoicePolicyEmail(req),
           };

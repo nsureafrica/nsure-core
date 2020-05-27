@@ -88,7 +88,7 @@ module.exports = {
           var mailOptions = {
             from: process.env.senderEmailAdress,
             to: req.user.email,
-            cc: `${process.env.spireReceivingEmailAddress2}`,
+            bcc: `${process.env.spireReceivingEmailAddress2},${process.env.businessTeamEmail}`,
             subject: "Travel Policy Created",
             html: invoiceEmail.invoicePolicyEmail(req),
             attachments: [
