@@ -69,7 +69,7 @@ function generateCustomerInformation(doc, invoice) {
   // generateHr(doc, 252);
 }
 function generateTableRow(doc, y, item, value) {
-  doc.font("Helvetica").fontSize(10).text(item, 50, y).text(value, 300, y);
+  doc.font("Helvetica").fontSize(10).text(item, 150, y).text(value, 300, y);
 }
 
 function generateQuoteDetails(doc, invoice) {
