@@ -70,13 +70,13 @@ module.exports = {
             where: { BillId: Bill.id, verified: true }
           });
 
-          var totalAmountPaid = AllBillTransactions.reduce(function(
+          var totalAmountPaid = AllBillTransactions.reduce(function (
             amount,
             transaction
           ) {
             return amount + transaction.amount;
           },
-          0);
+            0);
 
           //check if the total amount paid is greater than the amount on the bill
           if (totalAmountPaid >= Bill.amount) {
@@ -118,12 +118,12 @@ module.exports = {
         .catch(err => res.status(500).send(err));
     }
   },
-      //IPAY ENDPOINTS
-      confirmSuccessfulTransaction: (req,res) => {
-        console.log(res)
-      },
-      confirmUnsuccessfulTransaction: (req,res)=>{
-        console.log(res)
-      }
-  
+  //IPAY ENDPOINTS
+  confirmSuccessfulTransaction: (req, res) => {
+    console.log(res)
+  },
+  confirmUnsuccessfulTransaction: (req, res) => {
+    console.log(res)
+  }
+
 };

@@ -131,7 +131,6 @@ module.exports = {
       Object.assign(travelQuoteEmailJson, userDetails);
       Object.assign(travelQuoteEmailJson, userInput);
 
-      console.log(travelQuoteEmailJson)
       const policyPdfDirectory =
         "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
       await TravelQuotePdf.createInvoice(

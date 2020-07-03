@@ -10,5 +10,10 @@ const Bill = sequelizeConnection.define("Bill", {
   amountPaid: {type: Sequelize.DOUBLE, allowNull: false, defaultValue: 0}
 });
 
-Bill.hasMany(TransactionModel);
+Bill.hasMany(TransactionModel,{
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
 module.exports = Bill;

@@ -1,7 +1,10 @@
 //@ts-check
+const InvoiceTemplates = require("../../email_templates/invoicetemplate");
+const Transporter = require("../../Utils/mailService");
+const pdf = require("./../../email_templates/business_quote_pdf");
 
 module.exports = {
-  getQuote: (req, res) => {
+  getQuote: async (req, res) => {
     try {
       var fireAndPerilsBuildingsValue = req.body.fireAndPerilsBuildingsValue;
       var fireAndPerilsContentsValue = req.body.fireAndPerilsContentsValue;
@@ -34,10 +37,10 @@ module.exports = {
         }));
       }
 
-      function calculateQuoteAmount(totalAmounts) {
+      async function calculateQuoteAmount(totalAmounts) {
         quoteAmount = 0;
-        totalAmounts.map((value) => {
-          if (value != null) {
+         totalAmounts.map((value) => {
+          if (value != null || value != undefined) {
             quoteAmount = quoteAmount + value.totalValue;
           }
         });
@@ -47,7 +50,7 @@ module.exports = {
         }));
       }
 
-      function calculateTotalAmount(amounts) {
+      async function calculateTotalAmount(amounts) {
         var totalAmount = 0;
         amounts.map((value) => {
           if (value != null) {
@@ -57,12 +60,14 @@ module.exports = {
         return totalAmount.toLocaleString(undefined, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
-        });
-      }
+        });      }
+
+
+
       //FIRE AND PERILS
       var fireAndPerilsObject = null;
       if (fireAndPerilsBuildingsValue || fireAndPerilsContentsValue) {
-        var additionOfValues = calculateTotalAmount([
+        var additionOfValues = await calculateTotalAmount([
           fireAndPerilsBuildingsValue,
           fireAndPerilsContentsValue,
         ]);
@@ -106,7 +111,7 @@ module.exports = {
         //FIDELTY GUARANTEE
         var fidelityGuaranteeObject = null;
         if (cashiersValue || salesPersonValue || perCapitaValue) {
-          var additionOfValues = calculateTotalAmount([
+          var additionOfValues = await calculateTotalAmount([
             cashiersValue,
             salesPersonValue,
           ]);
@@ -132,7 +137,7 @@ module.exports = {
           damageToSafeValue ||
           estAnnualCarryValue
         ) {
-          var additionOfValues = calculateTotalAmount([
+          var additionOfValues = await calculateTotalAmount([
             moneyInTransitValue,
             moneyInPremisesValue,
             lockedSafeBusinessHoursValue,
@@ -154,7 +159,7 @@ module.exports = {
         //POLITICAL & TERRORISM
         var policalAndTerrorismObject = null;
         if (materialDamageValue || moneyValue) {
-          var additionOfValues = calculateTotalAmount([
+          var additionOfValues = await calculateTotalAmount([
             materialDamageValue,
             moneyValue,
           ]);
@@ -186,7 +191,7 @@ module.exports = {
         // PUBLIC LIABILITY
         var publicLiabilityObject = null;
         if (occurrenceValue || periodOfInsuranceValue) {
-          var additionOfValues = calculateTotalAmount([
+          var additionOfValues = await calculateTotalAmount([
             periodOfInsuranceValue,
             occurrenceValue,
           ]);
@@ -200,7 +205,7 @@ module.exports = {
             totalValue: totalValue,
           };
         }
-        var quoteAmount = calculateQuoteAmount([
+        var quoteAmount = await calculateQuoteAmount([
           fireAndPerilsObject,
           electronicComputersPolicyObject,
           allRisksForComputersObject,
@@ -222,6 +227,43 @@ module.exports = {
           publicLiability: publicLiabilityObject,
         });
       }
+
+      // var travelQuoteEmailJson = TravelPolicy.dataValues;
+      // const userDetails = { user: req.user };
+      // const userInput = { userInput: QuoteObject };
+      // Object.assign(travelQuoteEmailJson, userDetails);
+      // Object.assign(travelQuoteEmailJson, userInput);
+
+      // const policyPdfDirectory =
+      //   "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
+      // await pdf.createInvoice(
+      //   travelQuoteEmailJson,
+      //   policyPdfDirectory
+      // );
+      
+      var mailOptions = {
+        from: process.env.senderEmailAdress,
+        to: req.user.email,
+        bcc: `${process.env.spireReceivingEmailAddress},${process.env.businessTeamEmail}`,
+        subject: "Business Combined Insurance Quote",
+        html: InvoiceTemplates.invoiceQuoteEmail(req),
+        // attachments: [
+        //   {
+        //     // file on disk as an attachment
+        //     filename: "businessCombinedQuote.pdf",
+        //     path: policyPdfDirectory, // stream this file
+        //   },
+        // ],
+      };
+
+      Transporter.transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          //TODO save all failed mails to a certain table to be able to run a cron job hourly that resends all the mails
+          console.log(err);
+        } else {
+          const notice = `Email sent: ` + info.response;
+        }
+      });
     } catch (error) {
       res.status(500).send(error);
     }

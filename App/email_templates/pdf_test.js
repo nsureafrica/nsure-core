@@ -1,4 +1,4 @@
-const pdfcreation = require("./travel_quote_pdf");
+const pdfcreation = require("./business_quote_pdf");
 
 const travelPolicyExample = {
   id: 1,
@@ -51,6 +51,26 @@ const travelPolicyExample = {
     },
     iat: 1586691181,
     exp: 1586734381,
+  },
+  userInput: {
+    fireAndPerilsBuildingsValue: 121312,
+    fireAndPerilsContentsValue: 12012,
+    electronicComputersValue: 123123,
+    allRisksForComputersValue: 234324,
+    cashiersValue: 131231,
+    salesPersonValue: 23123,
+    perCapitaValue: 3424234,
+    moneyInTransitValue: 234234,
+    lockedSafeBusinessHoursValue: 123123,
+    lockedSafeOutsideSafeBusinessHoursValue: 123213,
+    cashValue: 123123,
+    damageToSafeValue: 123123,
+    estAnnualCarryValue: 23213,
+    materialDamageValue: 12312312,
+    moneyValue: 231212,
+    burglaryItemsValue: 12312312,
+    occurrenceValue: 12312,
+    periodOfInsuranceValue: 123123,
   },
 };
 

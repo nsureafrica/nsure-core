@@ -8,3 +8,4 @@ log
 ecosystem.config.js
 App/trasns.json
 .DS_Store
+build/

@@ -91,7 +91,7 @@ function mailBillReminder(model, policyName) {
 function checkAndMailForPolicyExpiration(model, policyName) {
   var date = new Date();
   date.setMonth( date.getMonth() - 3 );
-  MotorPoliciesModel.findAll({
+  model.findAll({
     where: {
       coverEnd: {
         [Op.lte]: date.toISOString()
