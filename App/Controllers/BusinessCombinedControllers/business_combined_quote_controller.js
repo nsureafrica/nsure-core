@@ -71,7 +71,7 @@ module.exports = {
           fireAndPerilsBuildingsValue,
           fireAndPerilsContentsValue,
         ]);
-        var basicPremium = additionOfValues * 0.001;
+        var basicPremium = parseFloat(additionOfValues)  * 0.001;
         var levies = calculateLevies(basicPremium);
         var totalValue = basicPremium + levies + stampDuty;
         fireAndPerilsObject = {
@@ -115,7 +115,7 @@ module.exports = {
             cashiersValue,
             salesPersonValue,
           ]);
-          var basicPremium = additionOfValues * (3.5 / 100);
+          var basicPremium = parseFloat(additionOfValues)  * (3.5 / 100);
           var levies = calculateLevies(basicPremium);
           var totalValue = basicPremium + levies + stampDuty;
           fidelityGuaranteeObject = {
@@ -146,7 +146,7 @@ module.exports = {
             damageToSafeValue,
             estAnnualCarryValue,
           ]);
-          var basicPremium = additionOfValues * (0.1 / 100);
+          var basicPremium = parseFloat(additionOfValues)  * (0.1 / 100);
           var levies = calculateLevies(basicPremium);
           var totalValue = basicPremium + levies + stampDuty;
           moneyObject = {
@@ -163,7 +163,7 @@ module.exports = {
             materialDamageValue,
             moneyValue,
           ]);
-          var basicPremium = additionOfValues * (0.1 / 100);
+          var basicPremium = parseFloat(additionOfValues)  * (0.1 / 100);
           var levies = calculateLevies(basicPremium);
           var totalValue = basicPremium + levies + stampDuty;
           policalAndTerrorismObject = {
@@ -195,7 +195,7 @@ module.exports = {
             periodOfInsuranceValue,
             occurrenceValue,
           ]);
-          var basicPremium = additionOfValues * (0.1 / 100);
+          var basicPremium = parseFloat(additionOfValues)  * (0.1 / 100);
           var levies = calculateLevies(basicPremium);
           var totalValue = basicPremium + levies + stampDuty;
           publicLiabilityObject = {
