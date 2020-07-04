@@ -2,7 +2,7 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit");
 const moment = require("moment");
-
+const _ = require("lodash")
 function createInvoice(invoice, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
@@ -132,7 +132,7 @@ function generateQuoteDetails(doc, invoice) {
     if (userInput[i].value != null) {
       doc.text(userInput[i].label, 50, planDetailsTop + 20 * i);
       doc.text(
-        formatCurrency(userInput[i].value, invoice),
+        formatCurrency(userInput[i].value),
         300,
         planDetailsTop + 20 * i
       );
@@ -155,9 +155,45 @@ function generatePlanDetails(doc, invoice) {
   generateHr(doc, planDetailsTop + 20);
   planDetailsTop = planDetailsTop + 30;
 
-  planDetailsTop + doc.fontSize(11).font("Helvetica");
-  
-  doc.moveDown();
+  //quote amount 
+  doc
+    .fontSize(20)
+    .font("Helvetica")
+    .text("Quote Amount :", 50, planDetailsTop)
+    .text(invoice.quoteAmount, 300, planDetailsTop)
+
+  planDetailsTop = planDetailsTop + 40
+  for (let i = 0; i < (Object.keys(invoice).length - 2); i++) {
+
+    if (i !== 0) {
+      if (invoice[Object.keys(invoice)[i]] !== null) {
+        doc
+          .fillColor("#444444")
+          .fontSize(15)
+          .text(_.startCase(Object.keys(invoice)[i]), 50, planDetailsTop);
+        doc
+          .fontSize(10)
+        doc
+          .text("Basic Premium :", 50, planDetailsTop + 30)
+          .text(formatCurrency(invoice[Object.keys(invoice)[i]].basicPremium), 300, planDetailsTop+30)
+        doc
+          .text("Levies :", 50, planDetailsTop + 50)
+          .text(formatCurrency(invoice[Object.keys(invoice)[i]].levies), 300, planDetailsTop + 50)
+        doc
+          .text("Stamp Duty :", 50, planDetailsTop + 70)
+          .text(formatCurrency(invoice[Object.keys(invoice)[i]].stampDuty), 300, planDetailsTop + 70)
+        doc
+          .text("Total Value :", 50, planDetailsTop + 90)
+          .text(formatCurrency(invoice[Object.keys(invoice)[i]].totalValue), 300, planDetailsTop + 90)
+
+        planDetailsTop = planDetailsTop + 130
+        if (planDetailsTop > 700) {
+          doc.addPage();
+          planDetailsTop = 20
+        }
+      }
+    }
+  }
 }
 
 function generateFooter(doc) {
@@ -173,10 +209,10 @@ function generateHr(doc, y) {
   doc.strokeColor("#aaaaaa").lineWidth(1).moveTo(50, y).lineTo(550, y).stroke();
 }
 
-function formatCurrency(amount, invoice) {
+function formatCurrency(amount) {
   if (amount) {
     return (
-      invoice.currency +
+      "KES" +
       " " +
       parseFloat(amount).toLocaleString(undefined, {
         minimumFractionDigits: 2,

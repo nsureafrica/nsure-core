@@ -2,7 +2,8 @@
 const InvoiceTemplates = require("../../email_templates/invoicetemplate");
 const Transporter = require("../../Utils/mailService");
 const pdf = require("./../../email_templates/business_quote_pdf");
-
+const _ = require("lodash");
+const e = require("express");
 module.exports = {
   getQuote: async (req, res) => {
     try {
@@ -30,37 +31,38 @@ module.exports = {
 
       var stampDuty = 40;
       function calculateLevies(value) {
-        var levies = value * (0.45/100)
-        return parseFloat(levies.toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }));
+
+        var levies = _.multiply(value, 0.0045)
+        return _.round(levies, 2);
       }
 
       async function calculateQuoteAmount(totalAmounts) {
         quoteAmount = 0;
-         totalAmounts.map((value) => {
+        totalAmounts.map((value) => {
           if (value != null || value != undefined) {
-            quoteAmount = quoteAmount + value.totalValue;
+            quoteAmount = _.add(quoteAmount, parseFloat(value));
           }
         });
-        return parseFloat(quoteAmount.toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }));
+        return _.round(quoteAmount, 0);
       }
 
       async function calculateTotalAmount(amounts) {
         var totalAmount = 0;
         amounts.map((value) => {
           if (value != null) {
-            totalAmount = totalAmount + parseFloat(value);
+            totalAmount = _.add(totalAmount, parseFloat(value));
           }
         });
-        return totalAmount.toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });      }
+        return totalAmount;
+      }
+
+      function calculateTotalValue(values) {
+        var totalValue = 0
+        values.map((value) => {
+          totalValue = _.add(totalValue, value)
+        })
+        return _.round(totalValue,2)
+      }
 
 
 
@@ -71,9 +73,9 @@ module.exports = {
           fireAndPerilsBuildingsValue,
           fireAndPerilsContentsValue,
         ]);
-        var basicPremium = parseFloat(additionOfValues)  * 0.001;
+        var basicPremium = _.round(_.multiply(additionOfValues, 0.001), 2);
         var levies = calculateLevies(basicPremium);
-        var totalValue = basicPremium + levies + stampDuty;
+        var totalValue = calculateTotalValue([basicPremium, levies, stampDuty]);
         fireAndPerilsObject = {
           basicPremium: basicPremium,
           levies: levies,
@@ -84,9 +86,9 @@ module.exports = {
       //ELECTRONIC COMPUTER POLICY
       var electronicComputersPolicyObject = null;
       if (electronicComputersValue) {
-        var basicPremium = electronicComputersValue * (1.5 / 100);
+        var basicPremium = _.round(_.multiply(electronicComputersValue, _.divide(1.5, 100)), 2);
         var levies = calculateLevies(basicPremium);
-        var totalValue = basicPremium + levies + stampDuty;
+        var totalValue = calculateTotalValue([basicPremium,levies,stampDuty]);
         electronicComputersPolicyObject = {
           basicPremium: basicPremium,
           levies: levies,
@@ -97,9 +99,9 @@ module.exports = {
         //ALL RISKS FOR COMPUTERS
         var allRisksForComputersObject = null;
         if (allRisksForComputersValue) {
-          var basicPremium = allRisksForComputersValue * (1.5 / 100);
+          var basicPremium = _.multiply(allRisksForComputersValue, _.divide(1.5, 100));
           var levies = calculateLevies(basicPremium);
-          var totalValue = basicPremium + levies + stampDuty;
+          var totalValue =calculateTotalValue([ basicPremium , levies , stampDuty]);
           allRisksForComputersObject = {
             basicPremium: basicPremium,
             levies: levies,
@@ -115,9 +117,9 @@ module.exports = {
             cashiersValue,
             salesPersonValue,
           ]);
-          var basicPremium = parseFloat(additionOfValues)  * (3.5 / 100);
+          var basicPremium = _.multiply(additionOfValues, _.divide(3.5, 100));
           var levies = calculateLevies(basicPremium);
-          var totalValue = basicPremium + levies + stampDuty;
+          var totalValue = calculateTotalValue([basicPremium , levies , stampDuty]);
           fidelityGuaranteeObject = {
             basicPremium: basicPremium,
             levies: levies,
@@ -146,9 +148,9 @@ module.exports = {
             damageToSafeValue,
             estAnnualCarryValue,
           ]);
-          var basicPremium = parseFloat(additionOfValues)  * (0.1 / 100);
+          var basicPremium = _.multiply(additionOfValues, _.divide(0.1, 100));
           var levies = calculateLevies(basicPremium);
-          var totalValue = basicPremium + levies + stampDuty;
+          var totalValue = calculateTotalValue([basicPremium , levies , stampDuty]);
           moneyObject = {
             basicPremium: basicPremium,
             levies: levies,
@@ -163,9 +165,9 @@ module.exports = {
             materialDamageValue,
             moneyValue,
           ]);
-          var basicPremium = parseFloat(additionOfValues)  * (0.1 / 100);
+          var basicPremium = _.multiply(additionOfValues, _.divide(0.1, 100));
           var levies = calculateLevies(basicPremium);
-          var totalValue = basicPremium + levies + stampDuty;
+          var totalValue = calculateTotalValue([basicPremium,levies,stampDuty]);
           policalAndTerrorismObject = {
             basicPremium: basicPremium,
             levies: levies,
@@ -177,9 +179,9 @@ module.exports = {
         // BURGLARY
         var burglaryObject = null;
         if (burglaryItemsValue) {
-          var basicPremium = burglaryItemsValue * (0.5 / 100);
+          var basicPremium = _.multiply(burglaryItemsValue, _.divide(0.5, 100));
           var levies = calculateLevies(basicPremium);
-          var totalValue = basicPremium + levies + stampDuty;
+          var totalValue = calculateTotalValue([basicPremium,levies,stampDuty]);
           burglaryObject = {
             basicPremium: basicPremium,
             levies: levies,
@@ -195,9 +197,9 @@ module.exports = {
             periodOfInsuranceValue,
             occurrenceValue,
           ]);
-          var basicPremium = parseFloat(additionOfValues)  * (0.1 / 100);
+          var basicPremium = _.multiply(additionOfValues, _.divide(0.1, 100));
           var levies = calculateLevies(basicPremium);
-          var totalValue = basicPremium + levies + stampDuty;
+          var totalValue = calculateTotalValue([basicPremium,levies,stampDuty]);
           publicLiabilityObject = {
             basicPremium: basicPremium,
             levies: levies,
@@ -206,16 +208,17 @@ module.exports = {
           };
         }
         var quoteAmount = await calculateQuoteAmount([
-          fireAndPerilsObject,
-          electronicComputersPolicyObject,
-          allRisksForComputersObject,
-          fidelityGuaranteeObject,
-          moneyObject,
-          policalAndTerrorismObject,
-          burglaryObject,
-          publicLiabilityObject,
+          fireAndPerilsObject.totalValue,
+          electronicComputersPolicyObject.totalValue,
+          allRisksForComputersObject.totalValue,
+          fidelityGuaranteeObject.totalValue,
+          moneyObject.totalValue,
+          policalAndTerrorismObject.totalValue,
+          burglaryObject.totalValue,
+          publicLiabilityObject.totalValue,
         ]);
-        res.status(200).send({
+
+        var QuoteObject = {
           quoteAmount: quoteAmount,
           fireAndPerils: fireAndPerilsObject,
           electronicComputersPolicy: electronicComputersPolicyObject,
@@ -225,35 +228,36 @@ module.exports = {
           policalAndTerrorism: policalAndTerrorismObject,
           burglary: burglaryObject,
           publicLiability: publicLiabilityObject,
-        });
+        }
+        res.status(200).send(QuoteObject);
       }
 
-      // var travelQuoteEmailJson = TravelPolicy.dataValues;
-      // const userDetails = { user: req.user };
-      // const userInput = { userInput: QuoteObject };
-      // Object.assign(travelQuoteEmailJson, userDetails);
-      // Object.assign(travelQuoteEmailJson, userInput);
+      var travelQuoteEmailJson = QuoteObject;
+      const userDetails = { user: req.user };
+      const userInput = { userInput: req.body };
+      Object.assign(travelQuoteEmailJson, userDetails);
+      Object.assign(travelQuoteEmailJson, userInput);
 
-      // const policyPdfDirectory =
-      //   "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
-      // await pdf.createInvoice(
-      //   travelQuoteEmailJson,
-      //   policyPdfDirectory
-      // );
-      
+      const policyPdfDirectory =
+        "./documentsStorage/PolicyPdf/" + Date.now() + ".pdf";
+      await pdf.createInvoice(
+        travelQuoteEmailJson,
+        policyPdfDirectory
+      );
+
       var mailOptions = {
         from: process.env.senderEmailAdress,
         to: req.user.email,
         bcc: `${process.env.spireReceivingEmailAddress},${process.env.businessTeamEmail}`,
         subject: "Business Combined Insurance Quote",
         html: InvoiceTemplates.invoiceQuoteEmail(req),
-        // attachments: [
-        //   {
-        //     // file on disk as an attachment
-        //     filename: "businessCombinedQuote.pdf",
-        //     path: policyPdfDirectory, // stream this file
-        //   },
-        // ],
+        attachments: [
+          {
+            // file on disk as an attachment
+            filename: "businessCombinedQuote.pdf",
+            path: policyPdfDirectory, // stream this file
+          },
+        ],
       };
 
       Transporter.transporter.sendMail(mailOptions, (err, info) => {
@@ -265,6 +269,7 @@ module.exports = {
         }
       });
     } catch (error) {
+      console.error(error)
       res.status(500).send(error);
     }
   },
