@@ -2,8 +2,8 @@
 
 const Sequelize = require("sequelize");
 const sequelizeConnection = require("../DB/database").sequelizeConnection;
-const underWriters = require("./underwriters");
-const vehicleClass = require("./motor_vehicle_class");
+const UnderwritterModel = require("./underwriters");
+const VehicleClassModel = require("./motor_vehicle_class");
 const MotorRates = sequelizeConnection.define("MotorRates", {
   basic: {
     type: Sequelize.DOUBLE,
@@ -73,6 +73,16 @@ const MotorRates = sequelizeConnection.define("MotorRates", {
     defaultValue: 40
   },
 });
-MotorRates.belongsTo(underWriters);
-MotorRates.belongsTo(vehicleClass);
+MotorRates.belongsTo(UnderwritterModel, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
+MotorRates.belongsTo(VehicleClassModel, {
+  foreignKey: {
+    allowNull: false,
+  },
+  onDelete: "cascade",
+});
 module.exports = MotorRates;
