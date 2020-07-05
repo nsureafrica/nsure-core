@@ -50,19 +50,17 @@ if (process.env.NODE_ENV === "PRODUCTION") {
   const privateKey = fs.readFileSync('/etc/letsencrypt/live/'+domainName+'/privkey.pem', 'utf8');
   const certificate = fs.readFileSync('/etc/letsencrypt/live/'+domainName+'/cert.pem', 'utf8');
   const ca = fs.readFileSync('/etc/letsencrypt/live/'+domainName+'/chain.pem', 'utf8');
-  const credentials = {
+  const options = {
     key: privateKey,
     cert: certificate,
-    ca: ca
+    ca: ca,
+    protocols: [ 'h2', 'spdy/3.1', 'http/1.1' ],
   };
 
   //CREATE A HTTPS SERVER HERE
-  const http2Server = spdy.createServer(credentials, app);
+  const spdyServer = spdy.createServer(options, app);
 
-  app.listen(port, () => {
-    console.log(`Server application running on port ${port}`);
-  });
-  http2Server.listen(HTTPS_PORT, () => {
+  spdyServer.listen(HTTPS_PORT, () => {
 
     console.log('prod https');
 
