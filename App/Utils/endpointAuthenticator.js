@@ -1,4 +1,4 @@
-const jwt = require("../Utils/jwt");
+const jwt = require("./jwt");
 
 module.exports = {
   authenticateUser: (req, res) => {

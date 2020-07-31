@@ -88,7 +88,7 @@ if (process.env.NODE_ENV === "DEVELOPMENT") {
   // sequelizeConnection.sync();
 }
 else if (process.env.NODE_ENV === "TEST") {
-  // sequelizeConnection.sync({force:true});
+  sequelizeConnection.sync();
 } else if (process.env.NODE_ENV === "PRODUCTION") {
   sequelizeConnection.sync();
 }

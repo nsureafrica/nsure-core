@@ -1,5 +1,4 @@
 const jwt = require("./../Utils/jwt");
-const lodash = require("lodash");
 const LogIt = require("./../Utils/AuditLog");
 
 const endpointAuthenitcator = function (req, res, next) {

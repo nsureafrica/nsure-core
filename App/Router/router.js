@@ -168,4 +168,19 @@ module.exports = (app) => {
   //CONVERSION RATES
   const conversionRateRoutes = require("./ConversionRateRoutes/conversion_rate_routes")
   conversionRateRoutes(app)
+
+
+  //Income protection policy
+  const IncomeProtectionPlansRoutes = require("./IncomeProtectionRoutes/income_protection_policy_plans_routes")
+  IncomeProtectionPlansRoutes(app)
+
+  const IncomeProtectionRatesRoutes = require("./IncomeProtectionRoutes/income_protection_policy_rates_routes")
+  IncomeProtectionRatesRoutes(app)
+
+  //golfer policy
+  const GolferPlansRoutes = require("./GolferRoutes/golfer_policy_plans_routes")
+  GolferPlansRoutes(app)
+
+  const GolferRatesRoutes = require("./GolferRoutes/golfer_policy_rates_routes")
+  GolferRatesRoutes(app)
 };
