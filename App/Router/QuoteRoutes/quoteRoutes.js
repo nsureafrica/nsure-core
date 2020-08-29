@@ -23,5 +23,6 @@ module.exports = app => {
 
     //golf  Quote
     app.route("/quotes/golf").post(QuoteController.getGolfQuote);
+    
 
 }
