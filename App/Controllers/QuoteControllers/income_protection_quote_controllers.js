@@ -1,6 +1,6 @@
 //@ts-check
-const IncomeProtectionRates = require("./income_protection_rates_controllers");
-const IncomeProtectionPlans = require("./income_protection_plan_controllers")
+const IncomeProtectionRates = require("../../Controllers/IncomeProtectionControllers/income_protection_rates_controllers");
+const IncomeProtectionPlans = require("../../Controllers/IncomeProtectionControllers/income_protection_plan_controllers")
 const Transporter = require("../../Utils/mailService");
 const UnderwriterModel = require("../../Models/underwriters");
 const invoiceTemplates = require("./../../email_templates/invoicetemplate");

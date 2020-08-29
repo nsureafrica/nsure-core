@@ -17,4 +17,11 @@ module.exports = app => {
     app.route("/quotes/businessCombined").post(QuoteController.getBusinessCombinedQuote)
 
     app.route("/quotes/travel").post(QuoteController.getTravelQuote)
+
+      //income protection  Quote
+    app.route("/quotes/income").post(QuoteController.getIncomeQuote);
+
+    //golf  Quote
+    app.route("/quotes/golf").post(QuoteController.getGolfQuote);
+
 }

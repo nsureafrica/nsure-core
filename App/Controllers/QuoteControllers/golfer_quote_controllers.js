@@ -1,6 +1,6 @@
 //@ts-check
-const GolferRates = require("./golfer_rate_controllers");
-const GolfersPlans = require("./golfer_plan_controllers")
+const GolferRates = require("../../Controllers/GolferControllers/golfer_rate_controllers");
+const GolfersPlans = require("../../Controllers/GolferControllers/golfer_plan_controllers")
 const Transporter = require("../../Utils/mailService");
 const UnderwriterModel = require("../../Models/underwriters");
 const invoiceTemplates = require("./../../email_templates/invoicetemplate");
