@@ -4,7 +4,7 @@
 const MotorQuoteController = require("./QuoteControllers/motor_quote_controller");
 const MedicalQuoteController = require("./QuoteControllers/medical_quote_controller");
 const IncomeProtectionQuoteController = require("./QuoteControllers/income_protection_quote_controllers");
-const GolfQuoteController = require("./QuoteControllers/golfer_quote_controllers");
+const GolferControllers = require("./QuoteControllers/golfer_quote_controllers");
 const LastExpenseQuoteController = require("./QuoteControllers/last_expense_quote_controller")
 const DomesticQuoteController = require("./DomesticPolicyControllers/domestic_policy_quote_controller")
 const BusinessCombinedQuoteController = require("./BusinessCombinedControllers/business_combined_quote_controller")
@@ -22,7 +22,7 @@ module.exports = {
   },
 
   getGolfQuote: (req, res) => {
-    GolfQuoteController.getGolfQuote(req,res)
+    GolferControllers.getGolfersQuote(req,res)
   },
 
   getLastExpenseQuote: (req,res) => {
