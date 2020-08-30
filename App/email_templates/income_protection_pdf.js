@@ -101,13 +101,13 @@ function generateInvoiceTable(doc, invoice) {
     "Rent Payment Cover Limit",
     formatCurrency(invoice.planDetails.rentPaymentCoverLimit)
   );
-  doc.font("Helvetica-Bold");
-  generateTableRow(
-    doc,
-    invoiceTableTop + 120,
-    "Total",
-    formatCurrency(invoice.quoteTotal)
-  );
+  // doc.font("Helvetica-Bold");
+  // generateTableRow(
+  //   doc,
+  //   invoiceTableTop + 120,
+  //   "Total",
+  //   formatCurrency(invoice.quoteTotal)
+  // );
 }
 
 function generateFooter(doc) {

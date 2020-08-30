@@ -1,6 +1,6 @@
 //@ts-check
-const GolferRates = require("../../Controllers/GolferControllers/golfer_rate_controllers");
-const GolfersPlans = require("../../Controllers/GolferControllers/golfer_plan_controllers")
+const GolferRatesModel = require("../../Models/golfers_policy_rates");
+const GolfersPlansModel = require("../../Models/golfers_policy_plans")
 const Transporter = require("../../Utils/mailService");
 const UnderwriterModel = require("../../Models/underwriters");
 const invoiceTemplates = require("./../../email_templates/invoicetemplate");
@@ -9,18 +9,18 @@ const golfersPdf = require("./../../email_templates/golfers_quote_pdf")
 module.exports = {
   getGolfersQuote: async (req, res) =>  {
     try {
-      const GolfersRate = await GolferRates.findOne({
+      const GolfersRate = await GolferRatesModel.findOne({
         include: [UnderwriterModel],
-        where: req.body.GolfersPlanId,
+        where: {"GolfersPlanId":req.body.GolfersPlanId},
       });
 
       //levies , total ,stampduty annualPremium and Total Amount Owed
-      const levies = Math.max(GolfersRate.levies * GolfersRate.annualPremium);
+      const levies = Math.ceil(GolfersRate.levies * GolfersRate.annualPremium);
       var quoteTotal =
-        levies + GolfersRate.stampDuty + GolferRates.annualPremium;
+        levies + GolfersRate.stampDuty + GolfersRate.annualPremium;
       var quoteObject = {
-        annualPremium: GolferRates.annualPremium,
-        stampDuty: GolferRates.stampDuty,
+        annualPremium: GolfersRate.annualPremium,
+        stampDuty: GolfersRate.stampDuty,
         levies: levies,
         quoteTotal: quoteTotal,
         golfersPlan: GolfersRate.GolfersPlanId,
@@ -29,7 +29,7 @@ module.exports = {
       res.status(200).send(quoteObject);
       //send a mail
 
-      const golfersPlan = await GolfersPlans.findOne({
+      const golfersPlan = await GolfersPlansModel.findOne({
         where: { id: req.body.GolfersPlanId },
       });
       const planDetails = { planDetails: golfersPlan.dataValues };
@@ -64,6 +64,7 @@ module.exports = {
         }
       });
     } catch (error) {
+      console.log(error)
       res.status(500).send(error);
     }
   },

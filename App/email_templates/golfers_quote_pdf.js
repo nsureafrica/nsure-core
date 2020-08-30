@@ -104,23 +104,23 @@ function generateInvoiceTable(doc, invoice) {
   );
   generateTableRow(
     doc,
-    invoiceTableTop + 90,
+    invoiceTableTop + 120,
     "Hole In One Cover Limit",
     formatCurrency(invoice.planDetails.holeInOneCoverLimit)
   );
   generateTableRow(
     doc,
-    invoiceTableTop + 90,
+    invoiceTableTop + 150,
     "Medical Expenses For Caddies Cover Limit",
     formatCurrency(invoice.planDetails.medicalExpensesForCaddiesCoverLimit)
   );
-  doc.font("Helvetica-Bold");
-  generateTableRow(
-    doc,
-    invoiceTableTop + 120,
-    "Total",
-    formatCurrency(invoice.quoteTotal)
-  );
+  // doc.font("Helvetica-Bold");
+  // generateTableRow(
+  //   doc,
+  //   invoiceTableTop + 180,
+  //   "Total",
+  //   formatCurrency(invoice.quoteTotal)
+  // );
 }
 
 function generateFooter(doc) {

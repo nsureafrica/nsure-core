@@ -1,6 +1,6 @@
 //@ts-check
-const IncomeProtectionRates = require("../../Controllers/IncomeProtectionControllers/income_protection_rates_controllers");
-const IncomeProtectionPlans = require("../../Controllers/IncomeProtectionControllers/income_protection_plan_controllers")
+const IncomeProtectionRatesModel = require("./../../Models/income_protection_rates");
+const IncomeProtectionPlansModel = require("./../../Models/income_protection_plans")
 const Transporter = require("../../Utils/mailService");
 const UnderwriterModel = require("../../Models/underwriters");
 const invoiceTemplates = require("./../../email_templates/invoicetemplate");
@@ -9,9 +9,9 @@ const incomeProtectionPdf = require("./../../email_templates/income_protection_p
 module.exports = {
   getQuote: async (req, res) =>  {
     try {
-      const IncomeProtectionRate = await IncomeProtectionRates.findOne({
+      const IncomeProtectionRate = await IncomeProtectionRatesModel.findOne({
         include: [UnderwriterModel],
-        where: req.body.IncomeProtectionPlanId,
+        where: {"IncomeProtectionPlanId": req.body.IncomeProtectionPlanId},
       });
 
       //levies , total ,stampduty annualPremium and Total Amount Owed
@@ -24,7 +24,7 @@ module.exports = {
       res.status(200).send(quoteObject);
       //send a mail
 
-      const plan = await IncomeProtectionPlans.findOne({
+      const plan = await IncomeProtectionPlansModel.findOne({
         where: { id: req.body.IncomeProtectionPlanId },
       });
       const planDetails = { planDetails: plan.dataValues };
@@ -59,6 +59,7 @@ module.exports = {
         }
       });
     } catch (error) {
+      console.log(error)
       res.status(500).send(error);
     }
   },
