@@ -12,7 +12,7 @@ module.exports = (app) => {
     .route("/api/policies/motor/getMedicalPolicy")
     .get(MotorPolicyController.getMotorPolicy); // requires auth
   app.post(
-    "/policies/motor/policy",
+    "/api/policies/motor/policy",
     Storage.uploadLogbook.fields([
       { name: "logbook", maxCount: 5 },
       { name: "kraPin", maxCount: 5 },
