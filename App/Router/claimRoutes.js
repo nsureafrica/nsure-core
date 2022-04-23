@@ -5,7 +5,7 @@ const Storage = require("../Storage/storage");
 
 module.exports = app => {
   app.post(
-    "/createClaim",
+    "/api/createClaim",
     Storage.uploadClaimDocs.fields([
       { name: "claimPhotos", maxCount: 5 },
       { name: "claimDocs", maxCount: 5 }
@@ -13,8 +13,8 @@ module.exports = app => {
     ClaimController.uploadClaim
   );
 
-  app.get("/getClaim/:claimId", ClaimController.getClaim);
-  app.get("/getUserClaims/:userId", ClaimController.getUserClaims);
-  app.get("/claims/getAllClaims",ClaimController.getAllClaims);
+  app.get("/api/getClaim/:claimId", ClaimController.getClaim);
+  app.get("/api/getUserClaims/:userId", ClaimController.getUserClaims);
+  app.get("/api/claims/getAllClaims", ClaimController.getAllClaims);
   // app.get("/ge")
 };

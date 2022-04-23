@@ -4,21 +4,21 @@ const IncomeProtectionPolicyRateController = require("./../../Controllers/Income
 
 module.exports = app => {
   app
-    .route("/incomeProtectionRate/createRate")
+    .route("/api/incomeProtectionRate/createRate")
     .post(IncomeProtectionPolicyRateController.createRate);
 
   app
-    .route("/incomeProtectionRate/getAllRates")
+    .route("/api/incomeProtectionRate/getAllRates")
     .get(IncomeProtectionPolicyRateController.getAllRates);
 
   app
-    .route("/rates/incomeProtectionRate/getAllRatesGroupedByUnderwritter")
+    .route("/api/rates/incomeProtectionRate/getAllRatesGroupedByUnderwritter")
     .get(IncomeProtectionPolicyRateController.getAllGroupedByUnderwriters);
 
   app
-    .route("/rates/incomeProtectionRate/getRateByPlanId/:planId")
+    .route("/api/rates/incomeProtectionRate/getRateByPlanId/:planId")
     .get(IncomeProtectionPolicyRateController.getRateByPlanId);
   app
-    .route("/rates/incomeProtectionRate/updateRateById/:id")
+    .route("/api/rates/incomeProtectionRate/updateRateById/:id")
     .put(IncomeProtectionPolicyRateController.updateRateById);
 };

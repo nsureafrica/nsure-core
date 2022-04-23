@@ -6,10 +6,10 @@ const Storage = require("../../Storage/storage");
 module.exports = (app) => {
   // Motor Policies
   app
-    .route("/policies/motor/getUserPolicies")
+    .route("/api/policies/motor/getUserPolicies")
     .get(MotorPolicyController.getUserMotorPolicies); // requires auth
   app
-    .route("/policies/motor/getMedicalPolicy")
+    .route("/api/policies/motor/getMedicalPolicy")
     .get(MotorPolicyController.getMotorPolicy); // requires auth
   app.post(
     "/policies/motor/policy",
@@ -22,13 +22,13 @@ module.exports = (app) => {
   ); // requires auth
 
   app
-    .route("/policies/motor/getAllMotorPolicies")
+    .route("/api/policies/motor/getAllMotorPolicies")
     .get(MotorPolicyController.getAllMotorPolicies);
 
   app
-    .route("/policies/motor/activateMotorPolicy")
+    .route("/api/policies/motor/activateMotorPolicy")
     .put(MotorPolicyController.activateMotorPolicy);
   app
-    .route("/policies/motor/exportDataAsCsv")
+    .route("/api/policies/motor/exportDataAsCsv")
     .get(MotorPolicyController.exportDataAsCsv);
 };

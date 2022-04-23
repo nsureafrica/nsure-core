@@ -3,17 +3,17 @@ const SalamahTransitionController = require("../../Controllers/PolicyControllers
 
 module.exports = (app) => {
   app
-    .route("/policies/salamahTransition/:userId")
+    .route("/api/policies/salamahTransition/:userId")
     .get(SalamahTransitionController.getUserSalamahTransitionPolicies);
 
   app
-    .route("/policies/salamahTransition/policy/:policyId")
+    .route("/api/policies/salamahTransition/policy/:policyId")
     .get(SalamahTransitionController.getSalamahTransitionPolicy);
 
   app
-    .route("/policies/salamahTransition/policy")
+    .route("/api/policies/salamahTransition/policy")
     .post(SalamahTransitionController.createSalamahTransitionPolicy);
   app
-    .route("/policies/getallsalamahpolicies")
+    .route("/api/policies/getallsalamahpolicies")
     .get(SalamahTransitionController.getAllSalamahPolices);
 };

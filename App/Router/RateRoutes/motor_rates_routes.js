@@ -4,17 +4,17 @@ const motorRatesController = require("../../Controllers/RateControllers/motor_ra
 
 module.exports = app => {
   app
-    .route("/motorRates/createMotorRate")
+    .route("/api/motorRates/createMotorRate")
     .post(motorRatesController.createMotorRate);
   app
-    .route("/motorRates/getMotorRate/:id")
+    .route("/api/motorRates/getMotorRate/:id")
     .get(motorRatesController.getOneMotorRate);
   app
-    .route("/motorRates/getAllMotorRates")
+    .route("/api/motorRates/getAllMotorRates")
     .get(motorRatesController.getAllMotorRates);
   app
-    .route("/motorRates/getMotorRates")
+    .route("/api/motorRates/getMotorRates")
     .get(motorRatesController.getMotorRates);
-  
-  app.route("/motorRates/updatemotorratebyid/:id").put(motorRatesController.updateMotorRatesById)
+
+  app.route("/api/motorRates/updatemotorratebyid/:id").put(motorRatesController.updateMotorRatesById)
 };

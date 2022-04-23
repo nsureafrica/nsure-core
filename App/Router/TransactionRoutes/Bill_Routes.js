@@ -3,6 +3,6 @@
 const BillController = require("../../Controllers/TransactionControllers/Bill_Controller");
 
 module.exports = app => {
-    app.route("/bill/getbill/:id").get(BillController.getTransctionsViaBillId)
+    app.route("/api/bill/getbill/:id").get(BillController.getTransctionsViaBillId)
 
 }

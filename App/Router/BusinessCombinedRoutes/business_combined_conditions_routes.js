@@ -4,19 +4,19 @@ const BusinessCombinedConditionsRoutes = require("../../Controllers/BusinessComb
 
 module.exports = (app) => {
   app
-    .route("/businessCombinedConditions/create")
+    .route("/api/businessCombinedConditions/create")
     .post(BusinessCombinedConditionsRoutes.createCondition);
   app
-    .route("/businessCombinedConditions/getCondition/:id")
+    .route("/api/businessCombinedConditions/getCondition/:id")
     .get(BusinessCombinedConditionsRoutes.getOneCondition);
   app
-    .route("/businessCombinedConditions/getAllConditions")
+    .route("/api/businessCombinedConditions/getAllConditions")
     .get(BusinessCombinedConditionsRoutes.getAllConditions);
   app
-    .route("/businessCombinedConditions/getAllCondtionsGroupedByClass")
+    .route("/api/businessCombinedConditions/getAllCondtionsGroupedByClass")
     .get(BusinessCombinedConditionsRoutes.getAllConditionsGroupedByType);
 
   app
-    .route("/businessCombinedConditions/getAllConditionsByClassId/:id")
+    .route("/api/businessCombinedConditions/getAllConditionsByClassId/:id")
     .get(BusinessCombinedConditionsRoutes.getConditionByClassId);
 };

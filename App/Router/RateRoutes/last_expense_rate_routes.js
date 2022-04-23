@@ -4,21 +4,21 @@ const lastexpenseratecontroller = require("./../../Controllers/RateControllers/l
 
 module.exports = app => {
   app
-    .route("/lastexpenserate/createlastexpenserate")
+    .route("/api/lastexpenserate/createlastexpenserate")
     .post(lastexpenseratecontroller.createLastExpenseRate);
 
   app
-    .route("/lastexpenserate/getalllastexpenserates")
+    .route("/api/lastexpenserate/getalllastexpenserates")
     .get(lastexpenseratecontroller.getAllLastExpenseRates);
 
   app
-    .route("/rates/lastexpenserate/getalllastexpenseratesgroupedbyunderwriter")
+    .route("/api/rates/lastexpenserate/getalllastexpenseratesgroupedbyunderwriter")
     .get(lastexpenseratecontroller.getAllLastExpenseRatesGroupedByUnderwriters);
 
   app
-    .route("/rates/lastexpenserate/getlastexpenseratebyplanid/:planId")
+    .route("/api/rates/lastexpenserate/getlastexpenseratebyplanid/:planId")
     .get(lastexpenseratecontroller.getLastExpenseRateByPlanId);
   app
-    .route("/rates/lastexpenserate/updatelastexpenseratebyid/:id")
+    .route("/api/rates/lastexpenserate/updatelastexpenseratebyid/:id")
     .put(lastexpenseratecontroller.updateLastExpenseRatesById);
 };

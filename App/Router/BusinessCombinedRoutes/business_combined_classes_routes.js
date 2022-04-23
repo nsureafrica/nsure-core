@@ -4,12 +4,12 @@ const BusinessCombinedClassesController = require("../../Controllers/BusinessCom
 
 module.exports = (app) => {
   app
-    .route("/businessCombinedClasses/create")
+    .route("/api/businessCombinedClasses/create")
     .post(BusinessCombinedClassesController.createClass);
   app
-    .route("/businessCombinedClasses/getClass/:id")
+    .route("/api/businessCombinedClasses/getClass/:id")
     .get(BusinessCombinedClassesController.getOneClass);
   app
-    .route("/businessCombinedClasses/getAllClasses")
+    .route("/api/businessCombinedClasses/getAllClasses")
     .get(BusinessCombinedClassesController.getAllClasses);
 };

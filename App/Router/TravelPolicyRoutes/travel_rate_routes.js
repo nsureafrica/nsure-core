@@ -4,13 +4,13 @@ const TravelRatesController = require("../../Controllers/TravelPolicyControllers
 
 module.exports = (app) => {
   app
-    .route("/travelRates/createTravelRate")
+    .route("/api/travelRates/createTravelRate")
     .post(TravelRatesController.createRate);
   app
-    .route("/travelRates/getTravelRate/:id")
+    .route("/api/travelRates/getTravelRate/:id")
     .get(TravelRatesController.getOneRate);
   app
-    .route("/travelRates/getAllTravelRates")
+    .route("/api/travelRates/getAllTravelRates")
     .get(TravelRatesController.getAllRates);
 
   //   app

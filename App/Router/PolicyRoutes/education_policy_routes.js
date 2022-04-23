@@ -3,24 +3,24 @@ const EducationPolicyController = require("../../Controllers/PolicyControllers/e
 
 module.exports = (app) => {
   app
-    .route("/policies/education/getUserPolicies")
+    .route("/api/policies/education/getUserPolicies")
     .get(EducationPolicyController.getUserEducationPolicies);
   app
-    .route("/policies/education/getOneEducationPolicy/:policyId")
+    .route("/api/policies/education/getOneEducationPolicy/:policyId")
     .get(EducationPolicyController.getEducationPolicy);
   app
-    .route("/policies/education/createEducationPolicy")
+    .route("/api/policies/education/createEducationPolicy")
     .post(EducationPolicyController.createEducationPolicy);
 
   app
-    .route("/policies/education/getAllEducationPolicies")
+    .route("/api/policies/education/getAllEducationPolicies")
     .get(EducationPolicyController.getAllEducationPolicies);
 
   app
-    .route("/policies/education/activateEducationPolicy")
+    .route("/api/policies/education/activateEducationPolicy")
     .put(EducationPolicyController.activateEducationPolicy);
 
   app
-    .route("/policies/education/exportDataAsCsv")
+    .route("/api/policies/education/exportDataAsCsv")
     .get(EducationPolicyController.exportDataAsCsv);
 };

@@ -4,18 +4,18 @@ const medicalPlansController = require("../../Controllers/PlanControllers/medica
 
 module.exports = app => {
   app
-    .route("/medicalPlans/createMedicalPlan")
+    .route("/api/medicalPlans/createMedicalPlan")
     .post(medicalPlansController.createMedicalPlan);
   app
-    .route("/medicalPlans/getMedicalPlan/:id")
+    .route("/api/medicalPlans/getMedicalPlan/:id")
     .get(medicalPlansController.getOneMedicalPlan);
   app
-    .route("/medicalPlans/getAllMedicalPlans")
+    .route("/api/medicalPlans/getAllMedicalPlans")
     .get(medicalPlansController.getAllMedicalPlans);
   app
-    .route("/medicalPlans/getMedicalPlans")
+    .route("/api/medicalPlans/getMedicalPlans")
     .get(medicalPlansController.getMedicalPlans);
   app
-    .route("/plans/medicalPlans/updatemedicalplansbyid/:id")
+    .route("/api/plans/medicalPlans/updatemedicalplansbyid/:id")
     .put(medicalPlansController.updateMedicalPlanById);
 };

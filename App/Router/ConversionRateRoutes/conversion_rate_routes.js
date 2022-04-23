@@ -4,6 +4,6 @@ const ConversionRateController = require("./../../Controllers/ConversionRateCont
 
 module.exports = (app) => {
     app
-    .route("/conversionRates/createConversionRate")
-    .post(ConversionRateController.create);
+        .route("/api/conversionRates/createConversionRate")
+        .post(ConversionRateController.create);
 }

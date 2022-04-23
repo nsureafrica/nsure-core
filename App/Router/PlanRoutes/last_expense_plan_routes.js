@@ -4,16 +4,16 @@ const LastExpensePlanController = require("../../Controllers/PlanControllers/las
 
 module.exports = app => {
   app
-    .route("/lastExpensePlans/createLastExpensePlan")
+    .route("/api/lastExpensePlans/createLastExpensePlan")
     .post(LastExpensePlanController.createLastExpensePlan);
 
   app
-    .route("/lastExpensePlans/getlastExpensePlan/:id")
+    .route("/api/lastExpensePlans/getlastExpensePlan/:id")
     .get(LastExpensePlanController.getOneLastExpensePlan);
   app
-    .route("/lastExpensePlans/getLastExpensePlans")
+    .route("/api/lastExpensePlans/getLastExpensePlans")
     .get(LastExpensePlanController.getAllLastExpensePlans);
   app
-    .route("/plans/lastExpensePlans/updatelastexpenseplanbyid/:id")
+    .route("/api/plans/lastExpensePlans/updatelastexpenseplanbyid/:id")
     .put(LastExpensePlanController.updateLastExpensePlanById);
 };

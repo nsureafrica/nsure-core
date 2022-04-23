@@ -2,5 +2,5 @@
 
 const SendMailController = require('./../../Controllers/send_mail_controller')
 module.exports = app => {
-    app.route("/sendMail/allUsers").post(SendMailController.sendMailToAllUsers);
+    app.route("/api/sendMail/allUsers").post(SendMailController.sendMailToAllUsers);
 }

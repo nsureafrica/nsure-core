@@ -3,18 +3,18 @@
 const TransactionsController = require("./../../Controllers/TransactionControllers/Transaction_Controller")
 
 module.exports = app => {
-   app.route("/transactions/createTransactions").post(TransactionsController.createNewTransaction)
+   app.route("/api/transactions/createTransactions").post(TransactionsController.createNewTransaction)
 
-   app.route("/transactions/getalltransactions").get(TransactionsController.getAllTransactions)
+   app.route("/api/transactions/getalltransactions").get(TransactionsController.getAllTransactions)
 
-   app.route("/transactions/getusertransactions/:userid").get(TransactionsController.getUserTransactions)
+   app.route("/api/transactions/getusertransactions/:userid").get(TransactionsController.getUserTransactions)
 
-   app.route("/transactions/confirmtransaction").post(TransactionsController.confirmTransaction)
+   app.route("/api/transactions/confirmtransaction").post(TransactionsController.confirmTransaction)
 
-   app.route("/transactions/gettransactionbytransactionref").get(TransactionsController.getTransactionByTransactionRef)
+   app.route("/api/transactions/gettransactionbytransactionref").get(TransactionsController.getTransactionByTransactionRef)
 
-   app.route("/transactions/confirmSuccessfulIpayTransaction").get(TransactionsController.confirmSuccessfulTransaction);
+   app.route("/api/transactions/confirmSuccessfulIpayTransaction").get(TransactionsController.confirmSuccessfulTransaction);
 
-   app.route("/transactions/confirmUnsuccessfulIpayTransaction").get(TransactionsController.confirmUnsuccessfulTransaction);
+   app.route("/api/transactions/confirmUnsuccessfulIpayTransaction").get(TransactionsController.confirmUnsuccessfulTransaction);
 
 }

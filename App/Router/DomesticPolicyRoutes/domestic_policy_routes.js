@@ -3,21 +3,21 @@
 const DomesticPolicyController = require('./../../Controllers/DomesticPolicyControllers/domestic_policy_controller')
 
 module.exports = app => {
-    app
-    .route("/policies/domestic/getUserPolicies")
+  app
+    .route("/api/policies/domestic/getUserPolicies")
     .get(DomesticPolicyController.getUsersPolicy);
   app
-    .route("/policies/domestic/getOnePolicy")
+    .route("/api/policies/domestic/getOnePolicy")
     .get(DomesticPolicyController.getOnePolicy);
   app
-    .route("/policies/domestic/createPolicy")
+    .route("/api/policies/domestic/createPolicy")
     .post(DomesticPolicyController.createPolicy);
-  
+
   app
-  .route("/policies/domestic/getAllPolicies")
-  .get(DomesticPolicyController.getAllPolicies)
+    .route("/api/policies/domestic/getAllPolicies")
+    .get(DomesticPolicyController.getAllPolicies)
 
-  app.route("/policies/domestic/activateDomesticPolicy").put(DomesticPolicyController.activatePolicy)
+  app.route("/api/policies/domestic/activateDomesticPolicy").put(DomesticPolicyController.activatePolicy)
 
-  app.route("/policies/domestic/exportDataAsCsv").get(DomesticPolicyController.exportDataAsCsv)
+  app.route("/api/policies/domestic/exportDataAsCsv").get(DomesticPolicyController.exportDataAsCsv)
 }

@@ -4,25 +4,25 @@ const medicalRatesController = require("../../Controllers/RateControllers/medica
 
 module.exports = app => {
   app
-    .route("/medicalRates/createMedicalRate")
+    .route("/api/medicalRates/createMedicalRate")
     .post(medicalRatesController.createMedicalRate);
   app
-    .route("/medicalRates/getMedicalRate/:id")
+    .route("/api/medicalRates/getMedicalRate/:id")
     .get(medicalRatesController.getOneMedicalRate);
   app
-    .route("/medicalRates/getAllMedicalRates")
+    .route("/api/medicalRates/getAllMedicalRates")
     .get(medicalRatesController.getAllMedicalRates);
   app
-    .route("/medicalRates/getMedicalRates")
+    .route("/api/medicalRates/getMedicalRates")
     .get(medicalRatesController.getMedicalRates);
   app
-    .route("/medicalRates/getallmedicalratesgroupedbyunderwriter")
+    .route("/api/medicalRates/getallmedicalratesgroupedbyunderwriter")
     .get(medicalRatesController.getAllMedicalRatesGroupedByUnderwriters);
 
   app
-    .route("/rates/medicalRates/getmedicalratesbyplanid/:id")
+    .route("/api/rates/medicalRates/getmedicalratesbyplanid/:id")
     .get(medicalRatesController.getMedicalRateByPlanId);
   app
-    .route("/medicalRates/updatemedicalratebyid/:id")
+    .route("/api/medicalRates/updatemedicalratebyid/:id")
     .put(medicalRatesController.updateMedicalRatesById);
 };

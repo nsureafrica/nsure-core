@@ -2,9 +2,9 @@ const MotorTonnageRatesController = require("./../../Controllers/RateControllers
 
 module.exports = app => {
     app
-    .route("/motorTonnageRates/createMotorTonnageRate")
-    .post(MotorTonnageRatesController.createMotorTonnageRate);  
+        .route("/api/motorTonnageRates/createMotorTonnageRate")
+        .post(MotorTonnageRatesController.createMotorTonnageRate);
 
-    app.route("/motorTonnageRates/updatemotortonnageratebyid/:id").put(MotorTonnageRatesController.updateMotorTonnageRatesById)
+    app.route("/api/motorTonnageRates/updatemotortonnageratebyid/:id").put(MotorTonnageRatesController.updateMotorTonnageRatesById)
 
 }

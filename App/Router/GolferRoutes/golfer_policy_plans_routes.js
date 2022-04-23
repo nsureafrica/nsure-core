@@ -4,16 +4,16 @@ const GolferPlanController = require("../../Controllers/GolferControllers/golfer
 
 module.exports = app => {
     app
-        .route("/golferPlans/createPlan")
+        .route("/api/golferPlans/createPlan")
         .post(GolferPlanController.createPlan);
 
     app
-        .route("/golferPlans/getPlan/:id")
+        .route("/api/golferPlans/getPlan/:id")
         .get(GolferPlanController.getOnePlan);
     app
-        .route("/golferPlans/getPlans")
+        .route("/api/golferPlans/getPlans")
         .get(GolferPlanController.getAllPlans);
     app
-        .route("/plans/golferPlans/updateById/:id")
+        .route("/api/plans/golferPlans/updateById/:id")
         .put(GolferPlanController.updatePlanById);
 };

@@ -4,21 +4,21 @@ const GolferPolicyRatesController = require("./../../Controllers/GolferControlle
 
 module.exports = app => {
   app
-    .route("/golferRate/createRate")
+    .route("/api/golferRate/createRate")
     .post(GolferPolicyRatesController.createRate);
 
   app
-    .route("/golferRate/getAllRates")
+    .route("/api/golferRate/getAllRates")
     .get(GolferPolicyRatesController.getAllRates);
 
   app
-    .route("/rates/golferRate/getAllRatesGroupedByUnderwritter")
+    .route("/api/rates/golferRate/getAllRatesGroupedByUnderwritter")
     .get(GolferPolicyRatesController.getAllGroupedByUnderwriters);
 
   app
-    .route("/rates/golferRate/getRateByPlanId/:planId")
+    .route("/api/rates/golferRate/getRateByPlanId/:planId")
     .get(GolferPolicyRatesController.getRateByPlanId);
   app
-    .route("/rates/golferRate/updateRateById/:id")
+    .route("/api/rates/golferRate/updateRateById/:id")
     .put(GolferPolicyRatesController.updateRateById);
 };

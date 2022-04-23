@@ -3,22 +3,22 @@
 const TravelPlanController = require("./../../Controllers/TravelPolicyControllers/travel_plans_controller")
 
 module.exports = app => {
-    app
-    .route("/travelPlans/createTravelPlan")
+  app
+    .route("/api/travelPlans/createTravelPlan")
     .post(TravelPlanController.createPlan);
   app
-    .route("/travelPlans/getTravelPlan/:id")
+    .route("/api/travelPlans/getTravelPlan/:id")
     .get(TravelPlanController.getOnePlan);
   app
-    .route("/travelPlans/getAllgetTravelPlans")
+    .route("/api/travelPlans/getAllgetTravelPlans")
     .get(TravelPlanController.getAllPlans);
   app
-    .route("/travelPlans/getTravelPlans")
+    .route("/api/travelPlans/getTravelPlans")
     .get(TravelPlanController.getAllPlans);
   app
-  .route("/travelRates/getAllTravelPlansGroupedByType")
-  .get(TravelPlanController.getAllGroupedByType);
+    .route("/api/travelRates/getAllTravelPlansGroupedByType")
+    .get(TravelPlanController.getAllGroupedByType);
   // app
-    // .route("/plans/domesticPlans/updatemedicalplansbyid/:id")
-    // .put(TravelPlanController.updatePlanById);
+  // .route("/plans/domesticPlans/updatemedicalplansbyid/:id")
+  // .put(TravelPlanController.updatePlanById);
 }

@@ -3,26 +3,26 @@ const QuoteController = require("../../Controllers/quote_controller");
 
 module.exports = app => {
 
-    //Motor Quote
-    app.route("/quotes/motor/").post(QuoteController.getMotorQuote);
+  //Motor Quote
+  app.route("/api/quotes/motor/").post(QuoteController.getMotorQuote);
 
-    //Medical Quote
-    app.route("/quotes/medical").post(QuoteController.getMedicalQuote);
+  //Medical Quote
+  app.route("/api/quotes/medical").post(QuoteController.getMedicalQuote);
 
-    //last expense quote
-    app.route("/quotes/lastexpense").post(QuoteController.getLastExpenseQuote);
+  //last expense quote
+  app.route("/api/quotes/lastexpense").post(QuoteController.getLastExpenseQuote);
 
-    app.route("/quotes/domestic").post(QuoteController.getDomesticQuote)
+  app.route("/api/quotes/domestic").post(QuoteController.getDomesticQuote)
 
-    app.route("/quotes/businessCombined").post(QuoteController.getBusinessCombinedQuote)
+  app.route("/api/quotes/businessCombined").post(QuoteController.getBusinessCombinedQuote)
 
-    app.route("/quotes/travel").post(QuoteController.getTravelQuote)
+  app.route("/api/quotes/travel").post(QuoteController.getTravelQuote)
 
-      //income protection  Quote
-    app.route("/quotes/income").post(QuoteController.getIncomeQuote);
+  //income protection  Quote
+  app.route("/api/quotes/income").post(QuoteController.getIncomeQuote);
 
-    //golf  Quote
-    app.route("/quotes/golf").post(QuoteController.getGolfQuote);
-    
+  //golf  Quote
+  app.route("/api/quotes/golf").post(QuoteController.getGolfQuote);
+
 
 }

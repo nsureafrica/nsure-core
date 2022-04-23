@@ -2,5 +2,5 @@
 
 const UserCategoryController = require("./../../Controllers/UserControllers/user_category_controller");
 module.exports = app => {
-  app.post("/usercategory/createCategory", UserCategoryController.createCategory);
+  app.post("/api/usercategory/createCategory", UserCategoryController.createCategory);
 };

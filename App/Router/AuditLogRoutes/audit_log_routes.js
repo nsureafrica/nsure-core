@@ -4,6 +4,6 @@ const AuditLogsController = require("./../../Controllers/AuditLogControllers/aud
 
 module.exports = (app) => {
     app
-    .route("/auditLogs/getAll")
-    .get(AuditLogsController.getAll);
+        .route("/api/auditLogs/getAll")
+        .get(AuditLogsController.getAll);
 }

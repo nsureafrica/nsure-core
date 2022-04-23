@@ -4,16 +4,16 @@ const IncomeProtectionPlanController = require("../../Controllers/IncomeProtecti
 
 module.exports = app => {
     app
-        .route("/incomeProtectionPlan/createPlan")
+        .route("/api/incomeProtectionPlan/createPlan")
         .post(IncomeProtectionPlanController.createPlan);
 
     app
-        .route("/incomeProtectionPlan/getPlan/:id")
+        .route("/api/incomeProtectionPlan/getPlan/:id")
         .get(IncomeProtectionPlanController.getOnePlan);
     app
-        .route("/incomeProtectionPlan/getPlans")
+        .route("/api/incomeProtectionPlan/getPlans")
         .get(IncomeProtectionPlanController.getAllPlans);
     app
-        .route("/plans/incomeProtectionPlan/updateById/:id")
+        .route("/api/plans/incomeProtectionPlan/updateById/:id")
         .put(IncomeProtectionPlanController.updatePlanById);
 };

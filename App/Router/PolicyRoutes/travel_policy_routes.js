@@ -4,12 +4,12 @@ const Storage = require("../../Storage/storage");
 
 module.exports = (app) => {
   app
-    .route("/policies/travel/getUserPolicies")
+    .route("/api/policies/travel/getUserPolicies")
     .get(TravelPolicyController.getUserTravelPolicy);
   app
-    .route("/policies/travel/policy/:policyId")
+    .route("/api/policies/travel/policy/:policyId")
     .get(TravelPolicyController.getTravelPolicy);
-  app.route("/policies/travel/createTravelPolicy").post(
+  app.route("/api/policies/travel/createTravelPolicy").post(
     Storage.uploadLogbook.fields([
       { name: "passport", maxCount: 5 },
       { name: "nationalId", maxCount: 5 },
@@ -18,14 +18,14 @@ module.exports = (app) => {
     TravelPolicyController.createTravelPolicy
   );
   app
-    .route("/policies/getalltravelpolicies")
+    .route("/api/policies/getalltravelpolicies")
     .get(TravelPolicyController.getAllTravelPolicies);
 
   app
-    .route("/policies/travel/activateTravelPolicy")
+    .route("/api/policies/travel/activateTravelPolicy")
     .put(TravelPolicyController.activateTravelPolicy);
 
   app
-    .route("/policies/travel/exportDataAsCsv")
+    .route("/api/policies/travel/exportDataAsCsv")
     .get(TravelPolicyController.exportDataAsCsv);
 };
