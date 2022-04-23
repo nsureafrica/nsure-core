@@ -6,13 +6,13 @@ const Storage = require("../../Storage/storage");
 module.exports = (app) => {
   // Motor Policies
   app
-    .route("/api/policies/motor/getUserPolicies")
+    .route("/api/policies/getUserPolicies")
     .get(MotorPolicyController.getUserMotorPolicies); // requires auth
   app
-    .route("/api/policies/motor/getMedicalPolicy")
+    .route("/api/policies/getMedicalPolicy")
     .get(MotorPolicyController.getMotorPolicy); // requires auth
   app.post(
-    "/api/policies/motor/policy",
+    "/api/policies/policy",
     Storage.uploadLogbook.fields([
       { name: "logbook", maxCount: 5 },
       { name: "kraPin", maxCount: 5 },
@@ -22,13 +22,13 @@ module.exports = (app) => {
   ); // requires auth
 
   app
-    .route("/api/policies/motor/getAllMotorPolicies")
+    .route("/api/policies/getAllMotorPolicies")
     .get(MotorPolicyController.getAllMotorPolicies);
 
   app
-    .route("/api/policies/motor/activateMotorPolicy")
+    .route("/api/policies/activateMotorPolicy")
     .put(MotorPolicyController.activateMotorPolicy);
   app
-    .route("/api/policies/motor/exportDataAsCsv")
+    .route("/api/policies/exportDataAsCsv")
     .get(MotorPolicyController.exportDataAsCsv);
 };
