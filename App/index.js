@@ -84,7 +84,7 @@ database.testConnection();
 //remember to disable alter
 
 if (process.env.NODE_ENV === "DEVELOPMENT") {
-  sequelizeConnection.sync({ alter: true });
+//  sequelizeConnection.sync({ alter: true });
   // sequelizeConnection.sync();
 }
 else if (process.env.NODE_ENV === "TEST") {

@@ -13,7 +13,7 @@ module.exports = (app) => {
    *      '200':
    *        description: A successful response
    */
-  app.route("/api/").get((req, res) => {
+  app.route("/").get((req, res) => {
     res.send("Welcome to Nsure");
   });
 
@@ -26,7 +26,7 @@ module.exports = (app) => {
    *      '200':
    *        description: A successful response
    */
-  app.route("/api/signin").post(UserController.signin);
+  app.route("/signin").post(UserController.signin);
 
   /**
    * @swagger
@@ -37,13 +37,13 @@ module.exports = (app) => {
    *      '200':
    *        description: A successful response
    */
-  app.route("/api/signup").post(UserController.signup);
+  app.route("/signup").post(UserController.signup);
 
-  app.route("/api/forgotPassword").put(UserController.forgotPassword);
+  app.route("/forgotPassword").put(UserController.forgotPassword);
 
-  app.route("/api/changePassword").post(UserController.changePassword);
+  app.route("/changePassword").post(UserController.changePassword);
 
-  app.route("/api/verifyUser").get(UserController.verifyUser);
+  app.route("/verifyUser").get(UserController.verifyUser);
   //Motor Policies
   const motorPolicyRoutes = require("./PolicyRoutes/motor_policy_routes");
   motorPolicyRoutes(app);
@@ -79,8 +79,8 @@ module.exports = (app) => {
   const sendyRoutes = require("./sendy_routes");
   sendyRoutes(app);
   //policy types
-  app.post("/api/createPolicyType", PolicyController.createPolicy);
-  app.route("/api/companyPolicies").get(PolicyController.getPolicies);
+  app.post("/createPolicyType", PolicyController.createPolicy);
+  app.route("/companyPolicies").get(PolicyController.getPolicies);
 
   // Download Routes
   const downloadRoutes = require("./downloadRoutes/download_routes");

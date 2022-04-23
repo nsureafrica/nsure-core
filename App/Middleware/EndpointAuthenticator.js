@@ -4,13 +4,13 @@ const LogIt = require("./../Utils/AuditLog");
 const endpointAuthenitcator = function (req, res, next) {
   //create a list of whitelisted urls
   var whitelistedUrl = [
-    "/signin",
-    "/forgotPassword",
-    "/signup",
-    "/changePassword",
-    "/verifyUser",
-    "/transactions/confirmUnsuccessfulIpayTransaction",
-    "/transactions/confirmSuccessfulIpayTransaction"
+    "/api/signin",
+    "/api/forgotPassword",
+    "/api/signup",
+    "/api/changePassword",
+    "/api/verifyUser",
+    "/api/transactions/confirmUnsuccessfulIpayTransaction",
+    "/api/transactions/confirmSuccessfulIpayTransaction"
   ];
   if (whitelistedUrl.find((element) => element === req.url) == undefined) {
     var token = req.headers["x-access-token"];
