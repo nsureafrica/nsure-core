@@ -36,7 +36,7 @@
     "deep-merge": "^1.0.0",
     "dotenv": "^8.1.0",
     "export-to-csv": "^0.2.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fs": "0.0.1-security",
     "googleapis": "^44.0.0",
     "gulp": "^4.0.2",
